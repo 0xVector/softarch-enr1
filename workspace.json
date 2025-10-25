@@ -1,0 +1,786 @@
+{
+  "configuration" : {
+    "scope" : "SoftwareSystem"
+  },
+  "description" : "Enrollment",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2025-10-25T13:27:10Z",
+  "model" : {
+    "people" : [ {
+      "id" : "1",
+      "location" : "Unspecified",
+      "name" : "Student",
+      "properties" : {
+        "structurizr.dsl.identifier" : "student"
+      },
+      "relationships" : [ {
+        "description" : "Uses",
+        "destinationId" : "5",
+        "id" : "31",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Uses",
+        "destinationId" : "4",
+        "id" : "32",
+        "linkedRelationshipId" : "31",
+        "sourceId" : "1"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "id" : "2",
+      "location" : "Unspecified",
+      "name" : "Teacher",
+      "properties" : {
+        "structurizr.dsl.identifier" : "teacher"
+      },
+      "relationships" : [ {
+        "description" : "Uses",
+        "destinationId" : "6",
+        "id" : "33",
+        "sourceId" : "2",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Uses",
+        "destinationId" : "4",
+        "id" : "34",
+        "linkedRelationshipId" : "33",
+        "sourceId" : "2"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "id" : "3",
+      "location" : "Unspecified",
+      "name" : "Admin",
+      "properties" : {
+        "structurizr.dsl.identifier" : "admin"
+      },
+      "relationships" : [ {
+        "description" : "Administers",
+        "destinationId" : "7",
+        "id" : "35",
+        "sourceId" : "3",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Administers",
+        "destinationId" : "4",
+        "id" : "36",
+        "linkedRelationshipId" : "35",
+        "sourceId" : "3"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "documentation" : { },
+        "id" : "5",
+        "name" : "Website View",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.webui"
+        },
+        "relationships" : [ {
+          "description" : "Makes API calls to",
+          "destinationId" : "9",
+          "id" : "43",
+          "sourceId" : "5",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "6",
+        "name" : "Teacher View",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.teacherui"
+        },
+        "relationships" : [ {
+          "description" : "Makes API calls to",
+          "destinationId" : "9",
+          "id" : "44",
+          "sourceId" : "6",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "7",
+        "name" : "Admin View",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.adminui"
+        },
+        "relationships" : [ {
+          "description" : "Makes API calls to",
+          "destinationId" : "9",
+          "id" : "45",
+          "sourceId" : "7",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "8",
+        "name" : "Notifcation UI",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.notify"
+        },
+        "relationships" : [ {
+          "description" : "Notifies",
+          "destinationId" : "1",
+          "id" : "37",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Notifies",
+          "destinationId" : "2",
+          "id" : "39",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Notifies",
+          "destinationId" : "3",
+          "id" : "41",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "9",
+        "name" : "ReverseProxy",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.proxy"
+        },
+        "relationships" : [ {
+          "description" : "Forwards to",
+          "destinationId" : "10",
+          "id" : "46",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Forwards to",
+          "destinationId" : "13",
+          "id" : "47",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Forwards to",
+          "destinationId" : "15",
+          "id" : "48",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "components" : [ {
+          "documentation" : { },
+          "id" : "11",
+          "name" : "EnrollmentCapturer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.coursemngr.enrollcapt"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "12",
+          "name" : "Course Validation",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.coursemngr.coursevalid"
+          },
+          "tags" : "Element,Component"
+        } ],
+        "documentation" : { },
+        "id" : "10",
+        "name" : "One Course Manager",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.coursemngr"
+        },
+        "relationships" : [ {
+          "description" : "Reads from / Writes to",
+          "destinationId" : "24",
+          "id" : "49",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Reads from / Writes to",
+          "destinationId" : "23",
+          "id" : "50",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Authorizes",
+          "destinationId" : "17",
+          "id" : "51",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Send notifications",
+          "destinationId" : "8",
+          "id" : "52",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Logs an action",
+          "destinationId" : "18",
+          "id" : "53",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "13",
+        "name" : "Course Dashboard",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.coursedash"
+        },
+        "relationships" : [ {
+          "description" : "Reads",
+          "destinationId" : "24",
+          "id" : "59",
+          "sourceId" : "13",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Reads",
+          "destinationId" : "23",
+          "id" : "60",
+          "sourceId" : "13",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Authorizes",
+          "destinationId" : "17",
+          "id" : "61",
+          "sourceId" : "13",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Send notifications",
+          "destinationId" : "8",
+          "id" : "62",
+          "sourceId" : "13",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Logs an action",
+          "destinationId" : "18",
+          "id" : "63",
+          "sourceId" : "13",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "14",
+        "name" : "Study Progress Manager",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.progressmngr"
+        },
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "15",
+        "name" : "Survey Manager",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.surveymngr"
+        },
+        "relationships" : [ {
+          "description" : "Reads from / writes to",
+          "destinationId" : "19",
+          "id" : "54",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Reads from / writes to",
+          "destinationId" : "21",
+          "id" : "55",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Authorizes",
+          "destinationId" : "17",
+          "id" : "56",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Send notifications",
+          "destinationId" : "8",
+          "id" : "57",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Logs an action",
+          "destinationId" : "18",
+          "id" : "58",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "16",
+        "name" : "StudyProgressManager",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.studyprogress"
+        },
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "17",
+        "name" : "Authenticator",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.authwallet"
+        },
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "18",
+        "name" : "Logger",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.logger"
+        },
+        "relationships" : [ {
+          "description" : "stores to",
+          "destinationId" : "28",
+          "id" : "67",
+          "sourceId" : "18",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "19",
+        "name" : "Survey Repository",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.surveyrepo"
+        },
+        "relationships" : [ {
+          "description" : "reads from / stores to",
+          "destinationId" : "26",
+          "id" : "66",
+          "sourceId" : "19",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "20",
+        "name" : "Student Repository",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.studrepo"
+        },
+        "relationships" : [ {
+          "description" : "reads from / stores to",
+          "destinationId" : "25",
+          "id" : "65",
+          "sourceId" : "20",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "21",
+        "name" : "Survey Cache",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.survcache"
+        },
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "22",
+        "name" : "Students Cache",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.studcache"
+        },
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "23",
+        "name" : "Course Cache",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.coursecache"
+        },
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "24",
+        "name" : "Course Repository",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.courserepo"
+        },
+        "relationships" : [ {
+          "description" : "reads from",
+          "destinationId" : "27",
+          "id" : "64",
+          "sourceId" : "24",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "documentation" : { },
+        "id" : "25",
+        "name" : "Students DB",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.studentdb"
+        },
+        "tags" : "Element,Container,Database"
+      }, {
+        "documentation" : { },
+        "id" : "26",
+        "name" : "Surveys / deleted surveys DB",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.surveydb"
+        },
+        "tags" : "Element,Container,Database"
+      }, {
+        "documentation" : { },
+        "id" : "27",
+        "name" : "Course DB",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.coursedb"
+        },
+        "tags" : "Element,Container,Database"
+      }, {
+        "documentation" : { },
+        "id" : "28",
+        "name" : "Logging Storage",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.logdb"
+        },
+        "tags" : "Element,Container,Database"
+      } ],
+      "documentation" : { },
+      "id" : "4",
+      "location" : "Unspecified",
+      "name" : "Software System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "ss"
+      },
+      "relationships" : [ {
+        "description" : "Fetches user's identity",
+        "destinationId" : "29",
+        "id" : "30",
+        "sourceId" : "4",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Notifies",
+        "destinationId" : "1",
+        "id" : "38",
+        "linkedRelationshipId" : "37",
+        "sourceId" : "4"
+      }, {
+        "description" : "Notifies",
+        "destinationId" : "2",
+        "id" : "40",
+        "linkedRelationshipId" : "39",
+        "sourceId" : "4"
+      }, {
+        "description" : "Notifies",
+        "destinationId" : "3",
+        "id" : "42",
+        "linkedRelationshipId" : "41",
+        "sourceId" : "4"
+      } ],
+      "tags" : "Element,Software System"
+    }, {
+      "documentation" : { },
+      "id" : "29",
+      "location" : "Unspecified",
+      "name" : "Authentication System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "auth"
+      },
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "SIS",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlICJTSVMiICJFbnJvbGxtZW50IiB7CgogICAgIWlkZW50aWZpZXJzIGhpZXJhcmNoaWNhbAoKICAgIG1vZGVsIHsKICAgICAgICBzdHVkZW50ID0gcGVyc29uICJTdHVkZW50IgoJdGVhY2hlciA9IHBlcnNvbiAiVGVhY2hlciIKCWFkbWluID0gcGVyc29uICJBZG1pbiIKCiAgICAgICAgc3MgPSBzb2Z0d2FyZVN5c3RlbSAiU29mdHdhcmUgU3lzdGVtIiB7CgkgICAgd2ViVUkgPSBjb250YWluZXIgIldlYnNpdGUgVmlldyIKICAgICAgICAgICAgdGVhY2hlclVJID0gY29udGFpbmVyICJUZWFjaGVyIFZpZXciCiAgICAgICAgICAgIGFkbWluVUkgPSBjb250YWluZXIgIkFkbWluIFZpZXciCgkgICAgbm90aWZ5ID0gY29udGFpbmVyICJOb3RpZmNhdGlvbiBVSSIKCSAgICBwcm94eSA9IGNvbnRhaW5lciAiUmV2ZXJzZVByb3h5IgogICAgICAgICAgICBjb3Vyc2VNbmdyID0gY29udGFpbmVyICJPbmUgQ291cnNlIE1hbmFnZXIiIHsKCQllbnJvbGxDYXB0ID0gY29tcG9uZW50ICJFbnJvbGxtZW50Q2FwdHVyZXIiCgkJY291cnNlVmFsaWQgPSBjb21wb25lbnQgIkNvdXJzZSBWYWxpZGF0aW9uIgogICAgICAgICAgICB9CiAgICAgICAgICAgIGNvdXJzZURhc2ggPSBjb250YWluZXIgIkNvdXJzZSBEYXNoYm9hcmQiCiAgICAgICAgICAgIHByb2dyZXNzTW5nciA9IGNvbnRhaW5lciAiU3R1ZHkgUHJvZ3Jlc3MgTWFuYWdlciIKICAgICAgICAgICAgc3VydmV5TW5nciA9IGNvbnRhaW5lciAiU3VydmV5IE1hbmFnZXIiCiAgICAgICAgICAgIHN0dWR5UHJvZ3Jlc3MgPSBjb250YWluZXIgIlN0dWR5UHJvZ3Jlc3NNYW5hZ2VyIgogICAgICAgICAgICBhdXRoV2FsbGV0ID0gY29udGFpbmVyICJBdXRoZW50aWNhdG9yIgoKCSAgICBsb2dnZXIgPSBjb250YWluZXIgIkxvZ2dlciIKCgkgICAgc3VydmV5UmVwbyA9IGNvbnRhaW5lciAiU3VydmV5IFJlcG9zaXRvcnkiCiAgICAgICAgICAgIHN0dWRSZXBvID0gY29udGFpbmVyICJTdHVkZW50IFJlcG9zaXRvcnkiCiAgICAgICAgICAgIHN1cnZDYWNoZSA9IGNvbnRhaW5lciAiU3VydmV5IENhY2hlIgoJICAgIHN0dWRDYWNoZSA9IGNvbnRhaW5lciAiU3R1ZGVudHMgQ2FjaGUiCgkgICAgY291cnNlQ2FjaGUgPSBjb250YWluZXIgIkNvdXJzZSBDYWNoZSIKICAgICAgICAgICAgY291cnNlUmVwbyA9IGNvbnRhaW5lciAiQ291cnNlIFJlcG9zaXRvcnkiIAoKICAgICAgICAgICAgc3R1ZGVudERCID0gY29udGFpbmVyICJTdHVkZW50cyBEQiIgeyAKCQkJCXRhZ3MgIkRhdGFiYXNlIiAKCQkJfQkKCSAgICBzdXJ2ZXlEQiA9IGNvbnRhaW5lciAiU3VydmV5cyAvIGRlbGV0ZWQgc3VydmV5cyBEQiIgeyAKCQkJCXRhZ3MgIkRhdGFiYXNlIiAKCQkJfQogICAgICAgICAgICBjb3Vyc2VEQiA9IGNvbnRhaW5lciAiQ291cnNlIERCIiB7IAoJCQkJdGFncyAiRGF0YWJhc2UiIAoJCQl9CiAgICAgICAgICAgIGxvZ0RCID0gY29udGFpbmVyICJMb2dnaW5nIFN0b3JhZ2UiIHsgCgkJCQl0YWdzICJEYXRhYmFzZSIgCgkJCX0KICAgICAgICAgICAgCiAgICAgICAgfQkKCglhdXRoID0gc29mdHdhcmVTeXN0ZW0gIkF1dGhlbnRpY2F0aW9uIFN5c3RlbSIKCiAgICAgICAgc3MgLT4gYXV0aCAiRmV0Y2hlcyB1c2VyJ3MgaWRlbnRpdHkiCgogICAgICAgIHN0dWRlbnQgLT4gc3Mud2ViVUkgIlVzZXMiCgl0ZWFjaGVyIC0+IHNzLnRlYWNoZXJVSSAiVXNlcyIKCWFkbWluIC0+IHNzLmFkbWluVUkgIkFkbWluaXN0ZXJzIgoKCXNzLm5vdGlmeSAtPiBzdHVkZW50ICJOb3RpZmllcyIKCXNzLm5vdGlmeSAtPiB0ZWFjaGVyICJOb3RpZmllcyIKICAgICAgICBzcy5ub3RpZnkgLT4gYWRtaW4gIk5vdGlmaWVzIgoKICAgICAgICBzcy53ZWJVSSAtPiBzcy5wcm94eSAiTWFrZXMgQVBJIGNhbGxzIHRvIgoJc3MudGVhY2hlclVJIC0+IHNzLnByb3h5ICJNYWtlcyBBUEkgY2FsbHMgdG8iCiAgICAgICAgc3MuYWRtaW5VSSAtPiBzcy5wcm94eSAiTWFrZXMgQVBJIGNhbGxzIHRvIgogICAgICAgIAoJc3MucHJveHkgLT4gc3MuY291cnNlTW5nciAiRm9yd2FyZHMgdG8iCglzcy5wcm94eSAtPiBzcy5jb3Vyc2VEYXNoICJGb3J3YXJkcyB0byIKCXNzLnByb3h5IC0+IHNzLnN1cnZleU1uZ3IgIkZvcndhcmRzIHRvIgoKCXNzLmNvdXJzZU1uZ3IgLT4gc3MuY291cnNlUmVwbyAiUmVhZHMgZnJvbSAvIFdyaXRlcyB0byIKICAgICAgICBzcy5jb3Vyc2VNbmdyIC0+IHNzLmNvdXJzZUNhY2hlICJSZWFkcyBmcm9tIC8gV3JpdGVzIHRvIgoJc3MuY291cnNlTW5nciAtPiBzcy5hdXRoV2FsbGV0ICJBdXRob3JpemVzIgogICAgICAgIHNzLmNvdXJzZU1uZ3IgLT4gc3Mubm90aWZ5ICJTZW5kIG5vdGlmaWNhdGlvbnMiCiAgICAgICAgc3MuY291cnNlTW5nciAtPiBzcy5Mb2dnZXIgIkxvZ3MgYW4gYWN0aW9uIgoKCXNzLnN1cnZleU1uZ3IgLT4gc3Muc3VydmV5UmVwbyAiUmVhZHMgZnJvbSAvIHdyaXRlcyB0byIKICAgICAgICBzcy5zdXJ2ZXlNbmdyIC0+IHNzLnN1cnZDYWNoZSAiUmVhZHMgZnJvbSAvIHdyaXRlcyB0byIKCXNzLnN1cnZleU1uZ3IgLT4gc3MuYXV0aFdhbGxldCAiQXV0aG9yaXplcyIKICAgICAgICBzcy5zdXJ2ZXlNbmdyIC0+IHNzLm5vdGlmeSAiU2VuZCBub3RpZmljYXRpb25zIgogICAgICAgIHNzLnN1cnZleU1uZ3IgLT4gc3MuTG9nZ2VyICJMb2dzIGFuIGFjdGlvbiIKCglzcy5jb3Vyc2VEYXNoIC0+IHNzLmNvdXJzZVJlcG8gIlJlYWRzIgogICAgICAgIHNzLmNvdXJzZURhc2ggLT4gc3MuY291cnNlQ2FjaGUgIlJlYWRzIgoJc3MuY291cnNlRGFzaCAtPiBzcy5hdXRoV2FsbGV0ICJBdXRob3JpemVzIgogICAgICAgIHNzLmNvdXJzZURhc2ggLT4gc3Mubm90aWZ5ICJTZW5kIG5vdGlmaWNhdGlvbnMiCiAgICAgICAgc3MuY291cnNlRGFzaCAtPiBzcy5Mb2dnZXIgIkxvZ3MgYW4gYWN0aW9uIgoKICAgICAgICBzcy5jb3Vyc2VSZXBvIC0+IHNzLmNvdXJzZURCICJyZWFkcyBmcm9tIgogICAgICAgIHNzLnN0dWRSZXBvIC0+IHNzLnN0dWRlbnREQiAicmVhZHMgZnJvbSAvIHN0b3JlcyB0byIKICAgICAgICBzcy5zdXJ2ZXlSZXBvIC0+IHNzLnN1cnZleURCICJyZWFkcyBmcm9tIC8gc3RvcmVzIHRvIgoJc3MubG9nZ2VyIC0+IHNzLmxvZ0RCICJzdG9yZXMgdG8iCiAgICAgICAgCiAgICB9CgogICAgdmlld3MgewogICAgICAgIHN5c3RlbUNvbnRleHQgc3MgIkxldmVsMSIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIHNzICJTSVNFbnJvbGxtZW50LUxldmVsMiIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgY29tcG9uZW50IHNzLmNvdXJzZU1uZ3IgIkNvdXJzZU1hbmFnZXItTGV2ZWwzIiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvbGF5b3V0IGxyCiAgICAgICAgfQoKICAgICAgICBzdHlsZXMgewogICAgICAgICAgICBlbGVtZW50ICJFbGVtZW50IiB7CiAgICAgICAgICAgICAgICBjb2xvciAjZjg4NzI4CiAgICAgICAgICAgICAgICBzdHJva2UgI2Y4ODcyOAogICAgICAgICAgICAgICAgc3Ryb2tlV2lkdGggNwogICAgICAgICAgICAgICAgc2hhcGUgcm91bmRlZGJveAogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIlBlcnNvbiIgewogICAgICAgICAgICAgICAgc2hhcGUgcGVyc29uCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiRGF0YWJhc2UiIHsKICAgICAgICAgICAgICAgIHNoYXBlIGN5bGluZGVyCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiQm91bmRhcnkiIHsKICAgICAgICAgICAgICAgIHN0cm9rZVdpZHRoIDUKICAgICAgICAgICAgfQogICAgICAgICAgICByZWxhdGlvbnNoaXAgIlJlbGF0aW9uc2hpcCIgewogICAgICAgICAgICAgICAgdGhpY2tuZXNzIDQKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KCiAgICBjb25maWd1cmF0aW9uIHsKICAgICAgICBzY29wZSBzb2Z0d2FyZXN5c3RlbQogICAgfQoKfQ=="
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "10",
+      "dimensions" : {
+        "height" : 1411,
+        "width" : 1037
+      },
+      "elements" : [ {
+        "id" : "11",
+        "x" : 293,
+        "y" : 185
+      }, {
+        "id" : "12",
+        "x" : 293,
+        "y" : 785
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "CourseManager-Level3",
+      "order" : 3
+    } ],
+    "configuration" : {
+      "branding" : { },
+      "lastSavedView" : "CourseManager-Level3",
+      "metadataSymbols" : "SquareBrackets",
+      "styles" : {
+        "elements" : [ {
+          "color" : "#f88728",
+          "shape" : "RoundedBox",
+          "stroke" : "#f88728",
+          "strokeWidth" : 7,
+          "tag" : "Element"
+        }, {
+          "shape" : "Person",
+          "tag" : "Person"
+        }, {
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        }, {
+          "strokeWidth" : 5,
+          "tag" : "Boundary"
+        } ],
+        "relationships" : [ {
+          "tag" : "Relationship",
+          "thickness" : 4
+        } ]
+      },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "25",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "27",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "28",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "SISEnrollment-Level2",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "31"
+      }, {
+        "id" : "33"
+      }, {
+        "id" : "35"
+      }, {
+        "id" : "37"
+      }, {
+        "id" : "39"
+      }, {
+        "id" : "41"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "44"
+      }, {
+        "id" : "45"
+      }, {
+        "id" : "46"
+      }, {
+        "id" : "47"
+      }, {
+        "id" : "48"
+      }, {
+        "id" : "49"
+      }, {
+        "id" : "50"
+      }, {
+        "id" : "51"
+      }, {
+        "id" : "52"
+      }, {
+        "id" : "53"
+      }, {
+        "id" : "54"
+      }, {
+        "id" : "55"
+      }, {
+        "id" : "56"
+      }, {
+        "id" : "57"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "59"
+      }, {
+        "id" : "60"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "62"
+      }, {
+        "id" : "63"
+      }, {
+        "id" : "64"
+      }, {
+        "id" : "65"
+      }, {
+        "id" : "66"
+      }, {
+        "id" : "67"
+      } ],
+      "softwareSystemId" : "4"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "29",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "Level1",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "30"
+      }, {
+        "id" : "32"
+      }, {
+        "id" : "34"
+      }, {
+        "id" : "36"
+      }, {
+        "id" : "38"
+      }, {
+        "id" : "40"
+      }, {
+        "id" : "42"
+      } ],
+      "softwareSystemId" : "4"
+    } ]
+  }
+}
