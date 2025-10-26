@@ -6,9 +6,10 @@
   "documentation" : { },
   "id" : 1,
   "lastModifiedAgent" : "structurizr-ui",
-  "lastModifiedDate" : "2025-10-25T13:27:10Z",
+  "lastModifiedDate" : "2025-10-25T20:00:16Z",
   "model" : {
     "people" : [ {
+      "description" : "University student enrolling in courses",
       "id" : "1",
       "location" : "Unspecified",
       "name" : "Student",
@@ -16,20 +17,21 @@
         "structurizr.dsl.identifier" : "student"
       },
       "relationships" : [ {
-        "description" : "Uses",
+        "description" : "Uses to search courses, enroll, view progress",
         "destinationId" : "5",
-        "id" : "31",
+        "id" : "37",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
-        "description" : "Uses",
+        "description" : "Uses to search courses, enroll, view progress",
         "destinationId" : "4",
-        "id" : "32",
-        "linkedRelationshipId" : "31",
+        "id" : "38",
+        "linkedRelationshipId" : "37",
         "sourceId" : "1"
       } ],
       "tags" : "Element,Person"
     }, {
+      "description" : "Course instructor",
       "id" : "2",
       "location" : "Unspecified",
       "name" : "Teacher",
@@ -37,20 +39,21 @@
         "structurizr.dsl.identifier" : "teacher"
       },
       "relationships" : [ {
-        "description" : "Uses",
-        "destinationId" : "6",
-        "id" : "33",
+        "description" : "Uses to manage courses and view enrollments",
+        "destinationId" : "5",
+        "id" : "39",
         "sourceId" : "2",
         "tags" : "Relationship"
       }, {
-        "description" : "Uses",
+        "description" : "Uses to manage courses and view enrollments",
         "destinationId" : "4",
-        "id" : "34",
-        "linkedRelationshipId" : "33",
+        "id" : "40",
+        "linkedRelationshipId" : "39",
         "sourceId" : "2"
       } ],
       "tags" : "Element,Person"
     }, {
+      "description" : "System administrator",
       "id" : "3",
       "location" : "Unspecified",
       "name" : "Admin",
@@ -58,442 +61,528 @@
         "structurizr.dsl.identifier" : "admin"
       },
       "relationships" : [ {
-        "description" : "Administers",
-        "destinationId" : "7",
-        "id" : "35",
+        "description" : "Uses to administer system",
+        "destinationId" : "5",
+        "id" : "41",
         "sourceId" : "3",
         "tags" : "Relationship"
       }, {
-        "description" : "Administers",
+        "description" : "Uses to administer system",
         "destinationId" : "4",
-        "id" : "36",
-        "linkedRelationshipId" : "35",
+        "id" : "42",
+        "linkedRelationshipId" : "41",
         "sourceId" : "3"
       } ],
       "tags" : "Element,Person"
     } ],
     "softwareSystems" : [ {
       "containers" : [ {
+        "description" : "Single-page application providing UI for students, teachers, and admins",
         "documentation" : { },
         "id" : "5",
-        "name" : "Website View",
+        "name" : "Web Application",
         "properties" : {
           "structurizr.dsl.identifier" : "ss.webui"
         },
         "relationships" : [ {
-          "description" : "Makes API calls to",
-          "destinationId" : "9",
+          "description" : "Makes HTTPS API calls to",
+          "destinationId" : "6",
           "id" : "43",
           "sourceId" : "5",
-          "tags" : "Relationship"
+          "tags" : "Relationship",
+          "technology" : "JSON/REST"
         } ],
-        "tags" : "Element,Container"
+        "tags" : "Element,Container",
+        "technology" : "React/TypeScript"
       }, {
+        "description" : "API gateway handling routing, authentication, rate limiting, and request validation",
         "documentation" : { },
         "id" : "6",
-        "name" : "Teacher View",
+        "name" : "API Gateway",
         "properties" : {
-          "structurizr.dsl.identifier" : "ss.teacherui"
+          "structurizr.dsl.identifier" : "ss.apigateway"
         },
         "relationships" : [ {
-          "description" : "Makes API calls to",
-          "destinationId" : "9",
+          "description" : "Routes course requests to",
+          "destinationId" : "7",
           "id" : "44",
           "sourceId" : "6",
           "tags" : "Relationship"
-        } ],
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "7",
-        "name" : "Admin View",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.adminui"
-        },
-        "relationships" : [ {
-          "description" : "Makes API calls to",
-          "destinationId" : "9",
+        }, {
+          "description" : "Routes enrollment requests to",
+          "destinationId" : "11",
           "id" : "45",
-          "sourceId" : "7",
-          "tags" : "Relationship"
-        } ],
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "8",
-        "name" : "Notifcation UI",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.notify"
-        },
-        "relationships" : [ {
-          "description" : "Notifies",
-          "destinationId" : "1",
-          "id" : "37",
-          "sourceId" : "8",
+          "sourceId" : "6",
           "tags" : "Relationship"
         }, {
-          "description" : "Notifies",
-          "destinationId" : "2",
-          "id" : "39",
-          "sourceId" : "8",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Notifies",
-          "destinationId" : "3",
-          "id" : "41",
-          "sourceId" : "8",
-          "tags" : "Relationship"
-        } ],
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "9",
-        "name" : "ReverseProxy",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.proxy"
-        },
-        "relationships" : [ {
-          "description" : "Forwards to",
-          "destinationId" : "10",
+          "description" : "Routes student requests to",
+          "destinationId" : "17",
           "id" : "46",
-          "sourceId" : "9",
+          "sourceId" : "6",
           "tags" : "Relationship"
         }, {
-          "description" : "Forwards to",
-          "destinationId" : "13",
+          "description" : "Routes survey requests to",
+          "destinationId" : "21",
           "id" : "47",
-          "sourceId" : "9",
+          "sourceId" : "6",
           "tags" : "Relationship"
         }, {
-          "description" : "Forwards to",
-          "destinationId" : "15",
+          "description" : "Validates tokens with",
+          "destinationId" : "26",
           "id" : "48",
-          "sourceId" : "9",
+          "sourceId" : "6",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Caches API responses in",
+          "destinationId" : "27",
+          "id" : "75",
+          "sourceId" : "6",
           "tags" : "Relationship"
         } ],
-        "tags" : "Element,Container"
+        "tags" : "Element,Container",
+        "technology" : "Node.js/Express"
       }, {
         "components" : [ {
           "documentation" : { },
-          "id" : "11",
-          "name" : "EnrollmentCapturer",
+          "id" : "8",
+          "name" : "Search Handler",
           "properties" : {
-            "structurizr.dsl.identifier" : "ss.coursemngr.enrollcapt"
+            "structurizr.dsl.identifier" : "ss.courseservice.searchhandler"
           },
           "tags" : "Element,Component"
         }, {
           "documentation" : { },
-          "id" : "12",
-          "name" : "Course Validation",
+          "id" : "9",
+          "name" : "Course Manager",
           "properties" : {
-            "structurizr.dsl.identifier" : "ss.coursemngr.coursevalid"
+            "structurizr.dsl.identifier" : "ss.courseservice.coursemanager"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "10",
+          "name" : "Course Validator",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.courseservice.coursevalidator"
           },
           "tags" : "Element,Component"
         } ],
+        "description" : "Manages course catalog, search, viewing, and course metadata",
         "documentation" : { },
-        "id" : "10",
-        "name" : "One Course Manager",
+        "id" : "7",
+        "name" : "Course Service",
         "properties" : {
-          "structurizr.dsl.identifier" : "ss.coursemngr"
+          "structurizr.dsl.identifier" : "ss.courseservice"
         },
         "relationships" : [ {
-          "description" : "Reads from / Writes to",
-          "destinationId" : "24",
+          "description" : "Reads/writes course data",
+          "destinationId" : "29",
           "id" : "49",
-          "sourceId" : "10",
-          "tags" : "Relationship"
+          "sourceId" : "7",
+          "tags" : "Relationship",
+          "technology" : "SQL"
         }, {
-          "description" : "Reads from / Writes to",
-          "destinationId" : "23",
+          "description" : "Caches course catalog",
+          "destinationId" : "27",
           "id" : "50",
-          "sourceId" : "10",
+          "sourceId" : "7",
           "tags" : "Relationship"
         }, {
-          "description" : "Authorizes",
-          "destinationId" : "17",
+          "description" : "Retrieves course materials from",
+          "destinationId" : "30",
           "id" : "51",
-          "sourceId" : "10",
+          "sourceId" : "7",
           "tags" : "Relationship"
         }, {
-          "description" : "Send notifications",
-          "destinationId" : "8",
+          "description" : "Publishes course events to",
+          "destinationId" : "28",
           "id" : "52",
-          "sourceId" : "10",
+          "sourceId" : "7",
           "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Java/Spring Boot"
+      }, {
+        "components" : [ {
+          "documentation" : { },
+          "id" : "12",
+          "name" : "Enrollment Handler",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.enrollmentservice.enrollmenthandler"
+          },
+          "tags" : "Element,Component"
         }, {
-          "description" : "Logs an action",
-          "destinationId" : "18",
+          "documentation" : { },
+          "id" : "13",
+          "name" : "Ticket Validator",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.enrollmentservice.ticketvalidator"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "14",
+          "name" : "Prerequisite Checker",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.enrollmentservice.prereqchecker"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "15",
+          "name" : "Capacity Manager",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.enrollmentservice.capacitymanager"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "16",
+          "name" : "Waitlist Manager",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.enrollmentservice.waitlistmanager"
+          },
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Handles student enrollments, unenrollments, and waitlist management",
+        "documentation" : { },
+        "id" : "11",
+        "name" : "Enrollment Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.enrollmentservice"
+        },
+        "relationships" : [ {
+          "description" : "Reads/writes enrollment data",
+          "destinationId" : "29",
           "id" : "53",
-          "sourceId" : "10",
-          "tags" : "Relationship"
-        } ],
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "13",
-        "name" : "Course Dashboard",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.coursedash"
-        },
-        "relationships" : [ {
-          "description" : "Reads",
-          "destinationId" : "24",
-          "id" : "59",
-          "sourceId" : "13",
-          "tags" : "Relationship"
+          "sourceId" : "11",
+          "tags" : "Relationship",
+          "technology" : "SQL"
         }, {
-          "description" : "Reads",
-          "destinationId" : "23",
-          "id" : "60",
-          "sourceId" : "13",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Authorizes",
-          "destinationId" : "17",
-          "id" : "61",
-          "sourceId" : "13",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Send notifications",
-          "destinationId" : "8",
-          "id" : "62",
-          "sourceId" : "13",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Logs an action",
-          "destinationId" : "18",
-          "id" : "63",
-          "sourceId" : "13",
-          "tags" : "Relationship"
-        } ],
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "14",
-        "name" : "Study Progress Manager",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.progressmngr"
-        },
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "15",
-        "name" : "Survey Manager",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.surveymngr"
-        },
-        "relationships" : [ {
-          "description" : "Reads from / writes to",
-          "destinationId" : "19",
+          "description" : "Caches enrollment status",
+          "destinationId" : "27",
           "id" : "54",
-          "sourceId" : "15",
+          "sourceId" : "11",
           "tags" : "Relationship"
         }, {
-          "description" : "Reads from / writes to",
-          "destinationId" : "21",
+          "description" : "Publishes enrollment events to",
+          "destinationId" : "28",
           "id" : "55",
-          "sourceId" : "15",
+          "sourceId" : "11",
           "tags" : "Relationship"
         }, {
-          "description" : "Authorizes",
-          "destinationId" : "17",
+          "description" : "Validates course availability with",
+          "destinationId" : "7",
           "id" : "56",
-          "sourceId" : "15",
+          "sourceId" : "11",
           "tags" : "Relationship"
         }, {
-          "description" : "Send notifications",
-          "destinationId" : "8",
+          "description" : "Validates prerequisites with",
+          "destinationId" : "17",
           "id" : "57",
-          "sourceId" : "15",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Logs an action",
-          "destinationId" : "18",
-          "id" : "58",
-          "sourceId" : "15",
+          "sourceId" : "11",
           "tags" : "Relationship"
         } ],
-        "tags" : "Element,Container"
+        "tags" : "Element,Container",
+        "technology" : "Java/Spring Boot"
       }, {
-        "documentation" : { },
-        "id" : "16",
-        "name" : "StudyProgressManager",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.studyprogress"
-        },
-        "tags" : "Element,Container"
-      }, {
+        "components" : [ {
+          "documentation" : { },
+          "id" : "18",
+          "name" : "Progress Tracker",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentservice.progresstracker"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "19",
+          "name" : "Plan Manager",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentservice.planmanager"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "20",
+          "name" : "Requirement Calculator",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentservice.requirementcalculator"
+          },
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Manages student profiles, study progress tracking, and academic planning",
         "documentation" : { },
         "id" : "17",
-        "name" : "Authenticator",
+        "name" : "Student Service",
         "properties" : {
-          "structurizr.dsl.identifier" : "ss.authwallet"
-        },
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "18",
-        "name" : "Logger",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.logger"
+          "structurizr.dsl.identifier" : "ss.studentservice"
         },
         "relationships" : [ {
-          "description" : "stores to",
+          "description" : "Reads/writes student data",
+          "destinationId" : "29",
+          "id" : "58",
+          "sourceId" : "17",
+          "tags" : "Relationship",
+          "technology" : "SQL"
+        }, {
+          "description" : "Caches student profiles",
+          "destinationId" : "27",
+          "id" : "59",
+          "sourceId" : "17",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Publishes student events to",
           "destinationId" : "28",
-          "id" : "67",
-          "sourceId" : "18",
+          "id" : "60",
+          "sourceId" : "17",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Fetches course requirements from",
+          "destinationId" : "7",
+          "id" : "61",
+          "sourceId" : "17",
           "tags" : "Relationship"
         } ],
-        "tags" : "Element,Container"
+        "tags" : "Element,Container",
+        "technology" : "Java/Spring Boot"
       }, {
-        "documentation" : { },
-        "id" : "19",
-        "name" : "Survey Repository",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.surveyrepo"
-        },
-        "relationships" : [ {
-          "description" : "reads from / stores to",
-          "destinationId" : "26",
-          "id" : "66",
-          "sourceId" : "19",
-          "tags" : "Relationship"
+        "components" : [ {
+          "documentation" : { },
+          "id" : "22",
+          "name" : "Survey Handler",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.surveyservice.surveyhandler"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "23",
+          "name" : "Comment Manager",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.surveyservice.commentmanager"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "24",
+          "name" : "Moderation Service",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.surveyservice.moderationservice"
+          },
+          "tags" : "Element,Component"
         } ],
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "20",
-        "name" : "Student Repository",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.studrepo"
-        },
-        "relationships" : [ {
-          "description" : "reads from / stores to",
-          "destinationId" : "25",
-          "id" : "65",
-          "sourceId" : "20",
-          "tags" : "Relationship"
-        } ],
-        "tags" : "Element,Container"
-      }, {
+        "description" : "Handles course surveys, comments, ratings, and content moderation",
         "documentation" : { },
         "id" : "21",
-        "name" : "Survey Cache",
+        "name" : "Survey Service",
         "properties" : {
-          "structurizr.dsl.identifier" : "ss.survcache"
-        },
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "22",
-        "name" : "Students Cache",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.studcache"
-        },
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "23",
-        "name" : "Course Cache",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.coursecache"
-        },
-        "tags" : "Element,Container"
-      }, {
-        "documentation" : { },
-        "id" : "24",
-        "name" : "Course Repository",
-        "properties" : {
-          "structurizr.dsl.identifier" : "ss.courserepo"
+          "structurizr.dsl.identifier" : "ss.surveyservice"
         },
         "relationships" : [ {
-          "description" : "reads from",
+          "description" : "Reads/writes survey data",
+          "destinationId" : "29",
+          "id" : "62",
+          "sourceId" : "21",
+          "tags" : "Relationship",
+          "technology" : "SQL"
+        }, {
+          "description" : "Caches popular surveys",
           "destinationId" : "27",
+          "id" : "63",
+          "sourceId" : "21",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Publishes survey events to",
+          "destinationId" : "28",
           "id" : "64",
-          "sourceId" : "24",
+          "sourceId" : "21",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Validates survey eligibility with",
+          "destinationId" : "17",
+          "id" : "65",
+          "sourceId" : "21",
           "tags" : "Relationship"
         } ],
-        "tags" : "Element,Container"
+        "tags" : "Element,Container",
+        "technology" : "Java/Spring Boot"
       }, {
+        "description" : "Sends email, SMS, push notifications, and in-app messages",
         "documentation" : { },
         "id" : "25",
-        "name" : "Students DB",
+        "name" : "Notification Service",
         "properties" : {
-          "structurizr.dsl.identifier" : "ss.studentdb"
+          "structurizr.dsl.identifier" : "ss.notificationservice"
         },
-        "tags" : "Element,Container,Database"
+        "relationships" : [ {
+          "description" : "Sends emails via",
+          "destinationId" : "32",
+          "id" : "35",
+          "sourceId" : "25",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Consumes events from",
+          "destinationId" : "28",
+          "id" : "66",
+          "sourceId" : "25",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Logs notifications to",
+          "destinationId" : "29",
+          "id" : "67",
+          "sourceId" : "25",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Sends notifications to",
+          "destinationId" : "1",
+          "id" : "68",
+          "sourceId" : "25",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Sends notifications to",
+          "destinationId" : "2",
+          "id" : "70",
+          "sourceId" : "25",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Sends notifications to",
+          "destinationId" : "3",
+          "id" : "72",
+          "sourceId" : "25",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Node.js"
       }, {
+        "description" : "Centralized authentication and role-based authorization",
         "documentation" : { },
         "id" : "26",
-        "name" : "Surveys / deleted surveys DB",
+        "name" : "Auth Service",
         "properties" : {
-          "structurizr.dsl.identifier" : "ss.surveydb"
+          "structurizr.dsl.identifier" : "ss.authservice"
         },
-        "tags" : "Element,Container,Database"
+        "relationships" : [ {
+          "description" : "Validates credentials with",
+          "destinationId" : "31",
+          "id" : "33",
+          "sourceId" : "26",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Keycloak/OAuth2"
       }, {
+        "description" : "Distributed cache for courses, student data, and session management",
         "documentation" : { },
         "id" : "27",
-        "name" : "Course DB",
+        "name" : "Cache Layer",
         "properties" : {
-          "structurizr.dsl.identifier" : "ss.coursedb"
+          "structurizr.dsl.identifier" : "ss.cachelayer"
         },
-        "tags" : "Element,Container,Database"
+        "tags" : "Element,Container",
+        "technology" : "Redis"
       }, {
+        "description" : "Async message broker for event-driven communication between services",
         "documentation" : { },
         "id" : "28",
-        "name" : "Logging Storage",
+        "name" : "Message Queue",
         "properties" : {
-          "structurizr.dsl.identifier" : "ss.logdb"
+          "structurizr.dsl.identifier" : "ss.messagequeue"
         },
-        "tags" : "Element,Container,Database"
+        "relationships" : [ {
+          "description" : "Triggers notifications in",
+          "destinationId" : "25",
+          "id" : "74",
+          "sourceId" : "28",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "RabbitMQ"
+      }, {
+        "description" : "Relational database with schemas for courses, students, enrollments, and surveys",
+        "documentation" : { },
+        "id" : "29",
+        "name" : "Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.database"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "PostgreSQL"
+      }, {
+        "description" : "Object storage for course materials, syllabi, and attachments",
+        "documentation" : { },
+        "id" : "30",
+        "name" : "File Storage",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.filestorage"
+        },
+        "tags" : "Element,Container,Storage",
+        "technology" : "S3/MinIO"
       } ],
       "documentation" : { },
       "id" : "4",
       "location" : "Unspecified",
-      "name" : "Software System",
+      "name" : "SIS Enrollment System",
       "properties" : {
         "structurizr.dsl.identifier" : "ss"
       },
       "relationships" : [ {
-        "description" : "Fetches user's identity",
-        "destinationId" : "29",
-        "id" : "30",
-        "sourceId" : "4",
-        "tags" : "Relationship"
+        "description" : "Validates credentials with",
+        "destinationId" : "31",
+        "id" : "34",
+        "linkedRelationshipId" : "33",
+        "sourceId" : "4"
       }, {
-        "description" : "Notifies",
+        "description" : "Sends emails via",
+        "destinationId" : "32",
+        "id" : "36",
+        "linkedRelationshipId" : "35",
+        "sourceId" : "4"
+      }, {
+        "description" : "Sends notifications to",
         "destinationId" : "1",
-        "id" : "38",
-        "linkedRelationshipId" : "37",
+        "id" : "69",
+        "linkedRelationshipId" : "68",
         "sourceId" : "4"
       }, {
-        "description" : "Notifies",
+        "description" : "Sends notifications to",
         "destinationId" : "2",
-        "id" : "40",
-        "linkedRelationshipId" : "39",
+        "id" : "71",
+        "linkedRelationshipId" : "70",
         "sourceId" : "4"
       }, {
-        "description" : "Notifies",
+        "description" : "Sends notifications to",
         "destinationId" : "3",
-        "id" : "42",
-        "linkedRelationshipId" : "41",
+        "id" : "73",
+        "linkedRelationshipId" : "72",
         "sourceId" : "4"
       } ],
       "tags" : "Element,Software System"
     }, {
+      "description" : "University SSO/LDAP system",
       "documentation" : { },
-      "id" : "29",
+      "id" : "31",
       "location" : "Unspecified",
-      "name" : "Authentication System",
+      "name" : "External Auth System",
       "properties" : {
-        "structurizr.dsl.identifier" : "auth"
+        "structurizr.dsl.identifier" : "authsystem"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "University email server",
+      "documentation" : { },
+      "id" : "32",
+      "location" : "Unspecified",
+      "name" : "Email System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "emailsystem"
       },
       "tags" : "Element,Software System"
     } ]
   },
   "name" : "SIS",
   "properties" : {
-    "structurizr.dsl" : "d29ya3NwYWNlICJTSVMiICJFbnJvbGxtZW50IiB7CgogICAgIWlkZW50aWZpZXJzIGhpZXJhcmNoaWNhbAoKICAgIG1vZGVsIHsKICAgICAgICBzdHVkZW50ID0gcGVyc29uICJTdHVkZW50IgoJdGVhY2hlciA9IHBlcnNvbiAiVGVhY2hlciIKCWFkbWluID0gcGVyc29uICJBZG1pbiIKCiAgICAgICAgc3MgPSBzb2Z0d2FyZVN5c3RlbSAiU29mdHdhcmUgU3lzdGVtIiB7CgkgICAgd2ViVUkgPSBjb250YWluZXIgIldlYnNpdGUgVmlldyIKICAgICAgICAgICAgdGVhY2hlclVJID0gY29udGFpbmVyICJUZWFjaGVyIFZpZXciCiAgICAgICAgICAgIGFkbWluVUkgPSBjb250YWluZXIgIkFkbWluIFZpZXciCgkgICAgbm90aWZ5ID0gY29udGFpbmVyICJOb3RpZmNhdGlvbiBVSSIKCSAgICBwcm94eSA9IGNvbnRhaW5lciAiUmV2ZXJzZVByb3h5IgogICAgICAgICAgICBjb3Vyc2VNbmdyID0gY29udGFpbmVyICJPbmUgQ291cnNlIE1hbmFnZXIiIHsKCQllbnJvbGxDYXB0ID0gY29tcG9uZW50ICJFbnJvbGxtZW50Q2FwdHVyZXIiCgkJY291cnNlVmFsaWQgPSBjb21wb25lbnQgIkNvdXJzZSBWYWxpZGF0aW9uIgogICAgICAgICAgICB9CiAgICAgICAgICAgIGNvdXJzZURhc2ggPSBjb250YWluZXIgIkNvdXJzZSBEYXNoYm9hcmQiCiAgICAgICAgICAgIHByb2dyZXNzTW5nciA9IGNvbnRhaW5lciAiU3R1ZHkgUHJvZ3Jlc3MgTWFuYWdlciIKICAgICAgICAgICAgc3VydmV5TW5nciA9IGNvbnRhaW5lciAiU3VydmV5IE1hbmFnZXIiCiAgICAgICAgICAgIHN0dWR5UHJvZ3Jlc3MgPSBjb250YWluZXIgIlN0dWR5UHJvZ3Jlc3NNYW5hZ2VyIgogICAgICAgICAgICBhdXRoV2FsbGV0ID0gY29udGFpbmVyICJBdXRoZW50aWNhdG9yIgoKCSAgICBsb2dnZXIgPSBjb250YWluZXIgIkxvZ2dlciIKCgkgICAgc3VydmV5UmVwbyA9IGNvbnRhaW5lciAiU3VydmV5IFJlcG9zaXRvcnkiCiAgICAgICAgICAgIHN0dWRSZXBvID0gY29udGFpbmVyICJTdHVkZW50IFJlcG9zaXRvcnkiCiAgICAgICAgICAgIHN1cnZDYWNoZSA9IGNvbnRhaW5lciAiU3VydmV5IENhY2hlIgoJICAgIHN0dWRDYWNoZSA9IGNvbnRhaW5lciAiU3R1ZGVudHMgQ2FjaGUiCgkgICAgY291cnNlQ2FjaGUgPSBjb250YWluZXIgIkNvdXJzZSBDYWNoZSIKICAgICAgICAgICAgY291cnNlUmVwbyA9IGNvbnRhaW5lciAiQ291cnNlIFJlcG9zaXRvcnkiIAoKICAgICAgICAgICAgc3R1ZGVudERCID0gY29udGFpbmVyICJTdHVkZW50cyBEQiIgeyAKCQkJCXRhZ3MgIkRhdGFiYXNlIiAKCQkJfQkKCSAgICBzdXJ2ZXlEQiA9IGNvbnRhaW5lciAiU3VydmV5cyAvIGRlbGV0ZWQgc3VydmV5cyBEQiIgeyAKCQkJCXRhZ3MgIkRhdGFiYXNlIiAKCQkJfQogICAgICAgICAgICBjb3Vyc2VEQiA9IGNvbnRhaW5lciAiQ291cnNlIERCIiB7IAoJCQkJdGFncyAiRGF0YWJhc2UiIAoJCQl9CiAgICAgICAgICAgIGxvZ0RCID0gY29udGFpbmVyICJMb2dnaW5nIFN0b3JhZ2UiIHsgCgkJCQl0YWdzICJEYXRhYmFzZSIgCgkJCX0KICAgICAgICAgICAgCiAgICAgICAgfQkKCglhdXRoID0gc29mdHdhcmVTeXN0ZW0gIkF1dGhlbnRpY2F0aW9uIFN5c3RlbSIKCiAgICAgICAgc3MgLT4gYXV0aCAiRmV0Y2hlcyB1c2VyJ3MgaWRlbnRpdHkiCgogICAgICAgIHN0dWRlbnQgLT4gc3Mud2ViVUkgIlVzZXMiCgl0ZWFjaGVyIC0+IHNzLnRlYWNoZXJVSSAiVXNlcyIKCWFkbWluIC0+IHNzLmFkbWluVUkgIkFkbWluaXN0ZXJzIgoKCXNzLm5vdGlmeSAtPiBzdHVkZW50ICJOb3RpZmllcyIKCXNzLm5vdGlmeSAtPiB0ZWFjaGVyICJOb3RpZmllcyIKICAgICAgICBzcy5ub3RpZnkgLT4gYWRtaW4gIk5vdGlmaWVzIgoKICAgICAgICBzcy53ZWJVSSAtPiBzcy5wcm94eSAiTWFrZXMgQVBJIGNhbGxzIHRvIgoJc3MudGVhY2hlclVJIC0+IHNzLnByb3h5ICJNYWtlcyBBUEkgY2FsbHMgdG8iCiAgICAgICAgc3MuYWRtaW5VSSAtPiBzcy5wcm94eSAiTWFrZXMgQVBJIGNhbGxzIHRvIgogICAgICAgIAoJc3MucHJveHkgLT4gc3MuY291cnNlTW5nciAiRm9yd2FyZHMgdG8iCglzcy5wcm94eSAtPiBzcy5jb3Vyc2VEYXNoICJGb3J3YXJkcyB0byIKCXNzLnByb3h5IC0+IHNzLnN1cnZleU1uZ3IgIkZvcndhcmRzIHRvIgoKCXNzLmNvdXJzZU1uZ3IgLT4gc3MuY291cnNlUmVwbyAiUmVhZHMgZnJvbSAvIFdyaXRlcyB0byIKICAgICAgICBzcy5jb3Vyc2VNbmdyIC0+IHNzLmNvdXJzZUNhY2hlICJSZWFkcyBmcm9tIC8gV3JpdGVzIHRvIgoJc3MuY291cnNlTW5nciAtPiBzcy5hdXRoV2FsbGV0ICJBdXRob3JpemVzIgogICAgICAgIHNzLmNvdXJzZU1uZ3IgLT4gc3Mubm90aWZ5ICJTZW5kIG5vdGlmaWNhdGlvbnMiCiAgICAgICAgc3MuY291cnNlTW5nciAtPiBzcy5Mb2dnZXIgIkxvZ3MgYW4gYWN0aW9uIgoKCXNzLnN1cnZleU1uZ3IgLT4gc3Muc3VydmV5UmVwbyAiUmVhZHMgZnJvbSAvIHdyaXRlcyB0byIKICAgICAgICBzcy5zdXJ2ZXlNbmdyIC0+IHNzLnN1cnZDYWNoZSAiUmVhZHMgZnJvbSAvIHdyaXRlcyB0byIKCXNzLnN1cnZleU1uZ3IgLT4gc3MuYXV0aFdhbGxldCAiQXV0aG9yaXplcyIKICAgICAgICBzcy5zdXJ2ZXlNbmdyIC0+IHNzLm5vdGlmeSAiU2VuZCBub3RpZmljYXRpb25zIgogICAgICAgIHNzLnN1cnZleU1uZ3IgLT4gc3MuTG9nZ2VyICJMb2dzIGFuIGFjdGlvbiIKCglzcy5jb3Vyc2VEYXNoIC0+IHNzLmNvdXJzZVJlcG8gIlJlYWRzIgogICAgICAgIHNzLmNvdXJzZURhc2ggLT4gc3MuY291cnNlQ2FjaGUgIlJlYWRzIgoJc3MuY291cnNlRGFzaCAtPiBzcy5hdXRoV2FsbGV0ICJBdXRob3JpemVzIgogICAgICAgIHNzLmNvdXJzZURhc2ggLT4gc3Mubm90aWZ5ICJTZW5kIG5vdGlmaWNhdGlvbnMiCiAgICAgICAgc3MuY291cnNlRGFzaCAtPiBzcy5Mb2dnZXIgIkxvZ3MgYW4gYWN0aW9uIgoKICAgICAgICBzcy5jb3Vyc2VSZXBvIC0+IHNzLmNvdXJzZURCICJyZWFkcyBmcm9tIgogICAgICAgIHNzLnN0dWRSZXBvIC0+IHNzLnN0dWRlbnREQiAicmVhZHMgZnJvbSAvIHN0b3JlcyB0byIKICAgICAgICBzcy5zdXJ2ZXlSZXBvIC0+IHNzLnN1cnZleURCICJyZWFkcyBmcm9tIC8gc3RvcmVzIHRvIgoJc3MubG9nZ2VyIC0+IHNzLmxvZ0RCICJzdG9yZXMgdG8iCiAgICAgICAgCiAgICB9CgogICAgdmlld3MgewogICAgICAgIHN5c3RlbUNvbnRleHQgc3MgIkxldmVsMSIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIHNzICJTSVNFbnJvbGxtZW50LUxldmVsMiIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgY29tcG9uZW50IHNzLmNvdXJzZU1uZ3IgIkNvdXJzZU1hbmFnZXItTGV2ZWwzIiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvbGF5b3V0IGxyCiAgICAgICAgfQoKICAgICAgICBzdHlsZXMgewogICAgICAgICAgICBlbGVtZW50ICJFbGVtZW50IiB7CiAgICAgICAgICAgICAgICBjb2xvciAjZjg4NzI4CiAgICAgICAgICAgICAgICBzdHJva2UgI2Y4ODcyOAogICAgICAgICAgICAgICAgc3Ryb2tlV2lkdGggNwogICAgICAgICAgICAgICAgc2hhcGUgcm91bmRlZGJveAogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIlBlcnNvbiIgewogICAgICAgICAgICAgICAgc2hhcGUgcGVyc29uCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiRGF0YWJhc2UiIHsKICAgICAgICAgICAgICAgIHNoYXBlIGN5bGluZGVyCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiQm91bmRhcnkiIHsKICAgICAgICAgICAgICAgIHN0cm9rZVdpZHRoIDUKICAgICAgICAgICAgfQogICAgICAgICAgICByZWxhdGlvbnNoaXAgIlJlbGF0aW9uc2hpcCIgewogICAgICAgICAgICAgICAgdGhpY2tuZXNzIDQKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KCiAgICBjb25maWd1cmF0aW9uIHsKICAgICAgICBzY29wZSBzb2Z0d2FyZXN5c3RlbQogICAgfQoKfQ=="
+    "structurizr.dsl" : "d29ya3NwYWNlICJTSVMiICJFbnJvbGxtZW50IiB7CgogICAgIWlkZW50aWZpZXJzIGhpZXJhcmNoaWNhbAoKICAgIG1vZGVsIHsKICAgICAgICBzdHVkZW50ID0gcGVyc29uICJTdHVkZW50IiAiVW5pdmVyc2l0eSBzdHVkZW50IGVucm9sbGluZyBpbiBjb3Vyc2VzIgoJdGVhY2hlciA9IHBlcnNvbiAiVGVhY2hlciIgIkNvdXJzZSBpbnN0cnVjdG9yIgoJYWRtaW4gPSBwZXJzb24gIkFkbWluIiAiU3lzdGVtIGFkbWluaXN0cmF0b3IiCgogICAgICAgIHNzID0gc29mdHdhcmVTeXN0ZW0gIlNJUyBFbnJvbGxtZW50IFN5c3RlbSIgewoJICAgICMgUHJlc2VudGF0aW9uIExheWVyCgkgICAgd2ViVUkgPSBjb250YWluZXIgIldlYiBBcHBsaWNhdGlvbiIgewogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiUmVhY3QvVHlwZVNjcmlwdCIKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJTaW5nbGUtcGFnZSBhcHBsaWNhdGlvbiBwcm92aWRpbmcgVUkgZm9yIHN0dWRlbnRzLCB0ZWFjaGVycywgYW5kIGFkbWlucyIKICAgICAgICAgICAgfQoKCSAgICAjIEFQSSBMYXllcgoJICAgIGFwaUdhdGV3YXkgPSBjb250YWluZXIgIkFQSSBHYXRld2F5IiB7CiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJOb2RlLmpzL0V4cHJlc3MiCiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiQVBJIGdhdGV3YXkgaGFuZGxpbmcgcm91dGluZywgYXV0aGVudGljYXRpb24sIHJhdGUgbGltaXRpbmcsIGFuZCByZXF1ZXN0IHZhbGlkYXRpb24iCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgICMgQnVzaW5lc3MgTG9naWMgTGF5ZXIgLSBEb21haW4gU2VydmljZXMKICAgICAgICAgICAgY291cnNlU2VydmljZSA9IGNvbnRhaW5lciAiQ291cnNlIFNlcnZpY2UiIHsKICAgICAgICAgICAgICAgIHRlY2hub2xvZ3kgIkphdmEvU3ByaW5nIEJvb3QiCiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiTWFuYWdlcyBjb3Vyc2UgY2F0YWxvZywgc2VhcmNoLCB2aWV3aW5nLCBhbmQgY291cnNlIG1ldGFkYXRhIgoKICAgICAgICAgICAgICAgIHNlYXJjaEhhbmRsZXIgPSBjb21wb25lbnQgIlNlYXJjaCBIYW5kbGVyIgogICAgICAgICAgICAgICAgY291cnNlTWFuYWdlciA9IGNvbXBvbmVudCAiQ291cnNlIE1hbmFnZXIiCiAgICAgICAgICAgICAgICBjb3Vyc2VWYWxpZGF0b3IgPSBjb21wb25lbnQgIkNvdXJzZSBWYWxpZGF0b3IiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVucm9sbG1lbnRTZXJ2aWNlID0gY29udGFpbmVyICJFbnJvbGxtZW50IFNlcnZpY2UiIHsKICAgICAgICAgICAgICAgIHRlY2hub2xvZ3kgIkphdmEvU3ByaW5nIEJvb3QiCiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiSGFuZGxlcyBzdHVkZW50IGVucm9sbG1lbnRzLCB1bmVucm9sbG1lbnRzLCBhbmQgd2FpdGxpc3QgbWFuYWdlbWVudCIKCiAgICAgICAgICAgICAgICBlbnJvbGxtZW50SGFuZGxlciA9IGNvbXBvbmVudCAiRW5yb2xsbWVudCBIYW5kbGVyIgogICAgICAgICAgICAgICAgdGlja2V0VmFsaWRhdG9yID0gY29tcG9uZW50ICJUaWNrZXQgVmFsaWRhdG9yIgogICAgICAgICAgICAgICAgcHJlcmVxQ2hlY2tlciA9IGNvbXBvbmVudCAiUHJlcmVxdWlzaXRlIENoZWNrZXIiCiAgICAgICAgICAgICAgICBjYXBhY2l0eU1hbmFnZXIgPSBjb21wb25lbnQgIkNhcGFjaXR5IE1hbmFnZXIiCiAgICAgICAgICAgICAgICB3YWl0bGlzdE1hbmFnZXIgPSBjb21wb25lbnQgIldhaXRsaXN0IE1hbmFnZXIiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIHN0dWRlbnRTZXJ2aWNlID0gY29udGFpbmVyICJTdHVkZW50IFNlcnZpY2UiIHsKICAgICAgICAgICAgICAgIHRlY2hub2xvZ3kgIkphdmEvU3ByaW5nIEJvb3QiCiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiTWFuYWdlcyBzdHVkZW50IHByb2ZpbGVzLCBzdHVkeSBwcm9ncmVzcyB0cmFja2luZywgYW5kIGFjYWRlbWljIHBsYW5uaW5nIgoKICAgICAgICAgICAgICAgIHByb2dyZXNzVHJhY2tlciA9IGNvbXBvbmVudCAiUHJvZ3Jlc3MgVHJhY2tlciIKICAgICAgICAgICAgICAgIHBsYW5NYW5hZ2VyID0gY29tcG9uZW50ICJQbGFuIE1hbmFnZXIiCiAgICAgICAgICAgICAgICByZXF1aXJlbWVudENhbGN1bGF0b3IgPSBjb21wb25lbnQgIlJlcXVpcmVtZW50IENhbGN1bGF0b3IiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIHN1cnZleVNlcnZpY2UgPSBjb250YWluZXIgIlN1cnZleSBTZXJ2aWNlIiB7CiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJKYXZhL1NwcmluZyBCb290IgogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkhhbmRsZXMgY291cnNlIHN1cnZleXMsIGNvbW1lbnRzLCByYXRpbmdzLCBhbmQgY29udGVudCBtb2RlcmF0aW9uIgoKICAgICAgICAgICAgICAgIHN1cnZleUhhbmRsZXIgPSBjb21wb25lbnQgIlN1cnZleSBIYW5kbGVyIgogICAgICAgICAgICAgICAgY29tbWVudE1hbmFnZXIgPSBjb21wb25lbnQgIkNvbW1lbnQgTWFuYWdlciIKICAgICAgICAgICAgICAgIG1vZGVyYXRpb25TZXJ2aWNlID0gY29tcG9uZW50ICJNb2RlcmF0aW9uIFNlcnZpY2UiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgICMgSW5mcmFzdHJ1Y3R1cmUgU2VydmljZXMKICAgICAgICAgICAgbm90aWZpY2F0aW9uU2VydmljZSA9IGNvbnRhaW5lciAiTm90aWZpY2F0aW9uIFNlcnZpY2UiIHsKICAgICAgICAgICAgICAgIHRlY2hub2xvZ3kgIk5vZGUuanMiCiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiU2VuZHMgZW1haWwsIFNNUywgcHVzaCBub3RpZmljYXRpb25zLCBhbmQgaW4tYXBwIG1lc3NhZ2VzIgogICAgICAgICAgICB9CgogICAgICAgICAgICBhdXRoU2VydmljZSA9IGNvbnRhaW5lciAiQXV0aCBTZXJ2aWNlIiB7CiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJLZXljbG9hay9PQXV0aDIiCiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiQ2VudHJhbGl6ZWQgYXV0aGVudGljYXRpb24gYW5kIHJvbGUtYmFzZWQgYXV0aG9yaXphdGlvbiIKICAgICAgICAgICAgfQoKCSAgICBjYWNoZUxheWVyID0gY29udGFpbmVyICJDYWNoZSBMYXllciIgewogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiUmVkaXMiCiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiRGlzdHJpYnV0ZWQgY2FjaGUgZm9yIGNvdXJzZXMsIHN0dWRlbnQgZGF0YSwgYW5kIHNlc3Npb24gbWFuYWdlbWVudCIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgbWVzc2FnZVF1ZXVlID0gY29udGFpbmVyICJNZXNzYWdlIFF1ZXVlIiB7CiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJSYWJiaXRNUSIKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJBc3luYyBtZXNzYWdlIGJyb2tlciBmb3IgZXZlbnQtZHJpdmVuIGNvbW11bmljYXRpb24gYmV0d2VlbiBzZXJ2aWNlcyIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgIyBEYXRhIExheWVyCiAgICAgICAgICAgIGRhdGFiYXNlID0gY29udGFpbmVyICJEYXRhYmFzZSIgewogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiUG9zdGdyZVNRTCIKICAgICAgICAgICAgICAgIHRhZ3MgIkRhdGFiYXNlIgogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlJlbGF0aW9uYWwgZGF0YWJhc2Ugd2l0aCBzY2hlbWFzIGZvciBjb3Vyc2VzLCBzdHVkZW50cywgZW5yb2xsbWVudHMsIGFuZCBzdXJ2ZXlzIgogICAgICAgICAgICB9CgogICAgICAgICAgICBmaWxlU3RvcmFnZSA9IGNvbnRhaW5lciAiRmlsZSBTdG9yYWdlIiB7CiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJTMy9NaW5JTyIKICAgICAgICAgICAgICAgIHRhZ3MgIlN0b3JhZ2UiCiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiT2JqZWN0IHN0b3JhZ2UgZm9yIGNvdXJzZSBtYXRlcmlhbHMsIHN5bGxhYmksIGFuZCBhdHRhY2htZW50cyIKICAgICAgICAgICAgfQoKICAgICAgICB9CgoJYXV0aFN5c3RlbSA9IHNvZnR3YXJlU3lzdGVtICJFeHRlcm5hbCBBdXRoIFN5c3RlbSIgewogICAgICAgICAgICBkZXNjcmlwdGlvbiAiVW5pdmVyc2l0eSBTU08vTERBUCBzeXN0ZW0iCiAgICAgICAgfQoKICAgICAgICBlbWFpbFN5c3RlbSA9IHNvZnR3YXJlU3lzdGVtICJFbWFpbCBTeXN0ZW0iIHsKICAgICAgICAgICAgZGVzY3JpcHRpb24gIlVuaXZlcnNpdHkgZW1haWwgc2VydmVyIgogICAgICAgIH0KCiAgICAgICAgIyBFeHRlcm5hbCBzeXN0ZW0gcmVsYXRpb25zaGlwcwogICAgICAgIHNzLmF1dGhTZXJ2aWNlIC0+IGF1dGhTeXN0ZW0gIlZhbGlkYXRlcyBjcmVkZW50aWFscyB3aXRoIgogICAgICAgIHNzLm5vdGlmaWNhdGlvblNlcnZpY2UgLT4gZW1haWxTeXN0ZW0gIlNlbmRzIGVtYWlscyB2aWEiCgogICAgICAgICMgVXNlciB0byBVSSByZWxhdGlvbnNoaXBzCiAgICAgICAgc3R1ZGVudCAtPiBzcy53ZWJVSSAiVXNlcyB0byBzZWFyY2ggY291cnNlcywgZW5yb2xsLCB2aWV3IHByb2dyZXNzIgoJdGVhY2hlciAtPiBzcy53ZWJVSSAiVXNlcyB0byBtYW5hZ2UgY291cnNlcyBhbmQgdmlldyBlbnJvbGxtZW50cyIKCWFkbWluIC0+IHNzLndlYlVJICJVc2VzIHRvIGFkbWluaXN0ZXIgc3lzdGVtIgoKICAgICAgICAjIFVJIHRvIEFQSSBHYXRld2F5CiAgICAgICAgc3Mud2ViVUkgLT4gc3MuYXBpR2F0ZXdheSAiTWFrZXMgSFRUUFMgQVBJIGNhbGxzIHRvIiAiSlNPTi9SRVNUIgoKCSMgQVBJIEdhdGV3YXkgdG8gU2VydmljZXMKCXNzLmFwaUdhdGV3YXkgLT4gc3MuY291cnNlU2VydmljZSAiUm91dGVzIGNvdXJzZSByZXF1ZXN0cyB0byIKCXNzLmFwaUdhdGV3YXkgLT4gc3MuZW5yb2xsbWVudFNlcnZpY2UgIlJvdXRlcyBlbnJvbGxtZW50IHJlcXVlc3RzIHRvIgoJc3MuYXBpR2F0ZXdheSAtPiBzcy5zdHVkZW50U2VydmljZSAiUm91dGVzIHN0dWRlbnQgcmVxdWVzdHMgdG8iCglzcy5hcGlHYXRld2F5IC0+IHNzLnN1cnZleVNlcnZpY2UgIlJvdXRlcyBzdXJ2ZXkgcmVxdWVzdHMgdG8iCglzcy5hcGlHYXRld2F5IC0+IHNzLmF1dGhTZXJ2aWNlICJWYWxpZGF0ZXMgdG9rZW5zIHdpdGgiCgoJIyBDb3Vyc2UgU2VydmljZSByZWxhdGlvbnNoaXBzCglzcy5jb3Vyc2VTZXJ2aWNlIC0+IHNzLmRhdGFiYXNlICJSZWFkcy93cml0ZXMgY291cnNlIGRhdGEiICJTUUwiCiAgICAgICAgc3MuY291cnNlU2VydmljZSAtPiBzcy5jYWNoZUxheWVyICJDYWNoZXMgY291cnNlIGNhdGFsb2ciCiAgICAgICAgc3MuY291cnNlU2VydmljZSAtPiBzcy5maWxlU3RvcmFnZSAiUmV0cmlldmVzIGNvdXJzZSBtYXRlcmlhbHMgZnJvbSIKICAgICAgICBzcy5jb3Vyc2VTZXJ2aWNlIC0+IHNzLm1lc3NhZ2VRdWV1ZSAiUHVibGlzaGVzIGNvdXJzZSBldmVudHMgdG8iCgogICAgICAgICMgRW5yb2xsbWVudCBTZXJ2aWNlIHJlbGF0aW9uc2hpcHMKICAgICAgICBzcy5lbnJvbGxtZW50U2VydmljZSAtPiBzcy5kYXRhYmFzZSAiUmVhZHMvd3JpdGVzIGVucm9sbG1lbnQgZGF0YSIgIlNRTCIKICAgICAgICBzcy5lbnJvbGxtZW50U2VydmljZSAtPiBzcy5jYWNoZUxheWVyICJDYWNoZXMgZW5yb2xsbWVudCBzdGF0dXMiCiAgICAgICAgc3MuZW5yb2xsbWVudFNlcnZpY2UgLT4gc3MubWVzc2FnZVF1ZXVlICJQdWJsaXNoZXMgZW5yb2xsbWVudCBldmVudHMgdG8iCiAgICAgICAgc3MuZW5yb2xsbWVudFNlcnZpY2UgLT4gc3MuY291cnNlU2VydmljZSAiVmFsaWRhdGVzIGNvdXJzZSBhdmFpbGFiaWxpdHkgd2l0aCIKICAgICAgICBzcy5lbnJvbGxtZW50U2VydmljZSAtPiBzcy5zdHVkZW50U2VydmljZSAiVmFsaWRhdGVzIHByZXJlcXVpc2l0ZXMgd2l0aCIKCiAgICAgICAgIyBTdHVkZW50IFNlcnZpY2UgcmVsYXRpb25zaGlwcwogICAgICAgIHNzLnN0dWRlbnRTZXJ2aWNlIC0+IHNzLmRhdGFiYXNlICJSZWFkcy93cml0ZXMgc3R1ZGVudCBkYXRhIiAiU1FMIgogICAgICAgIHNzLnN0dWRlbnRTZXJ2aWNlIC0+IHNzLmNhY2hlTGF5ZXIgIkNhY2hlcyBzdHVkZW50IHByb2ZpbGVzIgogICAgICAgIHNzLnN0dWRlbnRTZXJ2aWNlIC0+IHNzLm1lc3NhZ2VRdWV1ZSAiUHVibGlzaGVzIHN0dWRlbnQgZXZlbnRzIHRvIgogICAgICAgIHNzLnN0dWRlbnRTZXJ2aWNlIC0+IHNzLmNvdXJzZVNlcnZpY2UgIkZldGNoZXMgY291cnNlIHJlcXVpcmVtZW50cyBmcm9tIgoKICAgICAgICAjIFN1cnZleSBTZXJ2aWNlIHJlbGF0aW9uc2hpcHMKCXNzLnN1cnZleVNlcnZpY2UgLT4gc3MuZGF0YWJhc2UgIlJlYWRzL3dyaXRlcyBzdXJ2ZXkgZGF0YSIgIlNRTCIKICAgICAgICBzcy5zdXJ2ZXlTZXJ2aWNlIC0+IHNzLmNhY2hlTGF5ZXIgIkNhY2hlcyBwb3B1bGFyIHN1cnZleXMiCiAgICAgICAgc3Muc3VydmV5U2VydmljZSAtPiBzcy5tZXNzYWdlUXVldWUgIlB1Ymxpc2hlcyBzdXJ2ZXkgZXZlbnRzIHRvIgogICAgICAgIHNzLnN1cnZleVNlcnZpY2UgLT4gc3Muc3R1ZGVudFNlcnZpY2UgIlZhbGlkYXRlcyBzdXJ2ZXkgZWxpZ2liaWxpdHkgd2l0aCIKCiAgICAgICAgIyBOb3RpZmljYXRpb24gU2VydmljZSByZWxhdGlvbnNoaXBzCiAgICAgICAgc3Mubm90aWZpY2F0aW9uU2VydmljZSAtPiBzcy5tZXNzYWdlUXVldWUgIkNvbnN1bWVzIGV2ZW50cyBmcm9tIgogICAgICAgIHNzLm5vdGlmaWNhdGlvblNlcnZpY2UgLT4gc3MuZGF0YWJhc2UgIkxvZ3Mgbm90aWZpY2F0aW9ucyB0byIKICAgICAgICBzcy5ub3RpZmljYXRpb25TZXJ2aWNlIC0+IHN0dWRlbnQgIlNlbmRzIG5vdGlmaWNhdGlvbnMgdG8iCiAgICAgICAgc3Mubm90aWZpY2F0aW9uU2VydmljZSAtPiB0ZWFjaGVyICJTZW5kcyBub3RpZmljYXRpb25zIHRvIgogICAgICAgIHNzLm5vdGlmaWNhdGlvblNlcnZpY2UgLT4gYWRtaW4gIlNlbmRzIG5vdGlmaWNhdGlvbnMgdG8iCgogICAgICAgIHNzLm1lc3NhZ2VRdWV1ZSAtPiBzcy5ub3RpZmljYXRpb25TZXJ2aWNlICJUcmlnZ2VycyBub3RpZmljYXRpb25zIGluIgoKICAgICAgICAjIENvbW1vbiBpbmZyYXN0cnVjdHVyZSByZWxhdGlvbnNoaXBzCiAgICAgICAgc3MuYXBpR2F0ZXdheSAtPiBzcy5jYWNoZUxheWVyICJDYWNoZXMgQVBJIHJlc3BvbnNlcyBpbiIKCiAgICB9CgogICAgdmlld3MgewogICAgICAgIHN5c3RlbUNvbnRleHQgc3MgIlN5c3RlbUNvbnRleHQiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgbHIKICAgICAgICAgICAgZGVzY3JpcHRpb24gIlN5c3RlbSBjb250ZXh0IGRpYWdyYW0gc2hvd2luZyBTSVMgRW5yb2xsbWVudCBTeXN0ZW0gYW5kIGV4dGVybmFsIHN5c3RlbXMiCiAgICAgICAgfQoKICAgICAgICBjb250YWluZXIgc3MgIkNvbnRhaW5lcnMiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgdGIKICAgICAgICAgICAgZGVzY3JpcHRpb24gIkNvbnRhaW5lciBkaWFncmFtIHNob3dpbmcgbWFqb3IgYXJjaGl0ZWN0dXJhbCBjb21wb25lbnRzIgogICAgICAgIH0KCiAgICAgICAgY29tcG9uZW50IHNzLmNvdXJzZVNlcnZpY2UgIkNvdXJzZVNlcnZpY2UtQ29tcG9uZW50cyIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgICAgICBkZXNjcmlwdGlvbiAiQ291cnNlIFNlcnZpY2UgaW50ZXJuYWwgY29tcG9uZW50cyIKICAgICAgICB9CgogICAgICAgIGNvbXBvbmVudCBzcy5lbnJvbGxtZW50U2VydmljZSAiRW5yb2xsbWVudFNlcnZpY2UtQ29tcG9uZW50cyIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCB0YgogICAgICAgICAgICBkZXNjcmlwdGlvbiAiRW5yb2xsbWVudCBTZXJ2aWNlIGludGVybmFsIGNvbXBvbmVudHMiCiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgc3Muc3R1ZGVudFNlcnZpY2UgIlN0dWRlbnRTZXJ2aWNlLUNvbXBvbmVudHMiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgbHIKICAgICAgICAgICAgZGVzY3JpcHRpb24gIlN0dWRlbnQgU2VydmljZSBpbnRlcm5hbCBjb21wb25lbnRzIgogICAgICAgIH0KCiAgICAgICAgY29tcG9uZW50IHNzLnN1cnZleVNlcnZpY2UgIlN1cnZleVNlcnZpY2UtQ29tcG9uZW50cyIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgICAgICBkZXNjcmlwdGlvbiAiU3VydmV5IFNlcnZpY2UgaW50ZXJuYWwgY29tcG9uZW50cyIKICAgICAgICB9CgogICAgICAgIGR5bmFtaWMgc3MgIkVucm9sbG1lbnRGbG93IiAiU3R1ZGVudCBlbnJvbGxtZW50IGZsb3ciIHsKICAgICAgICAgICAgc3R1ZGVudCAtPiBzcy53ZWJVSSAiU2VsZWN0cyBjb3Vyc2UgdG8gZW5yb2xsIgogICAgICAgICAgICBzcy53ZWJVSSAtPiBzcy5hcGlHYXRld2F5ICJQT1NUIC9lbnJvbGxtZW50cyIKICAgICAgICAgICAgc3MuYXBpR2F0ZXdheSAtPiBzcy5hdXRoU2VydmljZSAiVmFsaWRhdGVzIHRva2VuIgogICAgICAgICAgICBzcy5hcGlHYXRld2F5IC0+IHNzLmVucm9sbG1lbnRTZXJ2aWNlICJGb3J3YXJkIGVucm9sbG1lbnQgcmVxdWVzdCIKICAgICAgICAgICAgc3MuZW5yb2xsbWVudFNlcnZpY2UgLT4gc3Muc3R1ZGVudFNlcnZpY2UgIkNoZWNrIHByZXJlcXVpc2l0ZXMiCiAgICAgICAgICAgIHNzLmVucm9sbG1lbnRTZXJ2aWNlIC0+IHNzLmNvdXJzZVNlcnZpY2UgIkNoZWNrIGNhcGFjaXR5IgogICAgICAgICAgICBzcy5lbnJvbGxtZW50U2VydmljZSAtPiBzcy5kYXRhYmFzZSAiQ3JlYXRlIGVucm9sbG1lbnQiCiAgICAgICAgICAgIHNzLmVucm9sbG1lbnRTZXJ2aWNlIC0+IHNzLm1lc3NhZ2VRdWV1ZSAiUHVibGlzaCBlbnJvbGxtZW50IGV2ZW50IgogICAgICAgICAgICBzcy5tZXNzYWdlUXVldWUgLT4gc3Mubm90aWZpY2F0aW9uU2VydmljZSAiTm90aWZ5IGFib3V0IGVucm9sbG1lbnQiCiAgICAgICAgICAgIHNzLm5vdGlmaWNhdGlvblNlcnZpY2UgLT4gc3R1ZGVudCAiU2VuZCBjb25maXJtYXRpb24gZW1haWwiCiAgICAgICAgICAgIGF1dG9sYXlvdXQgbHIKICAgICAgICB9CgogICAgICAgIHN0eWxlcyB7CiAgICAgICAgICAgIGVsZW1lbnQgIkVsZW1lbnQiIHsKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzExNjhiZAogICAgICAgICAgICAgICAgZm9udFNpemUgMjQKICAgICAgICAgICAgICAgIHNoYXBlIHJvdW5kZWRib3gKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJQZXJzb24iIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzA4NDI3YgogICAgICAgICAgICAgICAgc2hhcGUgcGVyc29uCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiU29mdHdhcmUgU3lzdGVtIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMxMTY4YmQKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJDb250YWluZXIiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzQzOGRkNQogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkNvbXBvbmVudCIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjODViYmYwCiAgICAgICAgICAgICAgICBjb2xvciAjMDAwMDAwCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiRGF0YWJhc2UiIHsKICAgICAgICAgICAgICAgIHNoYXBlIGN5bGluZGVyCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM0MzhkZDUKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJTdG9yYWdlIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBmb2xkZXIKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzQzOGRkNQogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIldlYkFwcCIgewogICAgICAgICAgICAgICAgc2hhcGUgd2ViYnJvd3NlcgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkdhdGV3YXkiIHsKICAgICAgICAgICAgICAgIHNoYXBlIGhleGFnb24KICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJJbmZyYXN0cnVjdHVyZSIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjOTk5OTk5CiAgICAgICAgICAgIH0KICAgICAgICAgICAgcmVsYXRpb25zaGlwICJSZWxhdGlvbnNoaXAiIHsKICAgICAgICAgICAgICAgIHRoaWNrbmVzcyAyCiAgICAgICAgICAgICAgICBjb2xvciAjNzA3MDcwCiAgICAgICAgICAgICAgICBmb250U2l6ZSAyNAogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICB0aGVtZSBkZWZhdWx0CiAgICB9CgogICAgY29uZmlndXJhdGlvbiB7CiAgICAgICAgc2NvcGUgc29mdHdhcmVzeXN0ZW0KICAgIH0KCn0="
   },
   "views" : {
     "componentViews" : [ {
@@ -506,55 +595,71 @@
         "rankSeparation" : 300,
         "vertices" : false
       },
-      "containerId" : "10",
+      "containerId" : "7",
+      "description" : "Course Service internal components",
       "dimensions" : {
-        "height" : 1411,
-        "width" : 1037
+        "height" : 2011,
+        "width" : 1080
       },
       "elements" : [ {
-        "id" : "11",
-        "x" : 293,
-        "y" : 185
+        "id" : "8",
+        "x" : 315,
+        "y" : 772
       }, {
-        "id" : "12",
-        "x" : 293,
-        "y" : 785
+        "id" : "9",
+        "x" : 315,
+        "y" : 1372
+      }, {
+        "id" : "10",
+        "x" : 315,
+        "y" : 172
       } ],
       "externalContainerBoundariesVisible" : false,
-      "key" : "CourseManager-Level3",
+      "key" : "CourseService-Components",
       "order" : 3
-    } ],
-    "configuration" : {
-      "branding" : { },
-      "lastSavedView" : "CourseManager-Level3",
-      "metadataSymbols" : "SquareBrackets",
-      "styles" : {
-        "elements" : [ {
-          "color" : "#f88728",
-          "shape" : "RoundedBox",
-          "stroke" : "#f88728",
-          "strokeWidth" : 7,
-          "tag" : "Element"
-        }, {
-          "shape" : "Person",
-          "tag" : "Person"
-        }, {
-          "shape" : "Cylinder",
-          "tag" : "Database"
-        }, {
-          "strokeWidth" : 5,
-          "tag" : "Boundary"
-        } ],
-        "relationships" : [ {
-          "tag" : "Relationship",
-          "thickness" : 4
-        } ]
-      },
-      "terminology" : { }
-    },
-    "containerViews" : [ {
+    }, {
       "automaticLayout" : {
-        "applied" : false,
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "11",
+      "description" : "Enrollment Service internal components",
+      "dimensions" : {
+        "height" : 811,
+        "width" : 3890
+      },
+      "elements" : [ {
+        "id" : "12",
+        "x" : 3220,
+        "y" : 172
+      }, {
+        "id" : "13",
+        "x" : 2470,
+        "y" : 172
+      }, {
+        "id" : "14",
+        "x" : 1720,
+        "y" : 172
+      }, {
+        "id" : "15",
+        "x" : 970,
+        "y" : 172
+      }, {
+        "id" : "16",
+        "x" : 220,
+        "y" : 172
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "EnrollmentService-Components",
+      "order" : 4
+    }, {
+      "automaticLayout" : {
+        "applied" : true,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
@@ -562,126 +667,249 @@
         "rankSeparation" : 300,
         "vertices" : false
       },
+      "containerId" : "17",
+      "description" : "Student Service internal components",
+      "dimensions" : {
+        "height" : 2011,
+        "width" : 1102
+      },
       "elements" : [ {
-        "id" : "1",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "2",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "3",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "5",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "6",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "7",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "8",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "9",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "10",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "13",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "14",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "15",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "16",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "17",
-        "x" : 0,
-        "y" : 0
-      }, {
         "id" : "18",
-        "x" : 0,
-        "y" : 0
+        "x" : 326,
+        "y" : 172
       }, {
         "id" : "19",
-        "x" : 0,
-        "y" : 0
+        "x" : 326,
+        "y" : 772
       }, {
         "id" : "20",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "21",
-        "x" : 0,
-        "y" : 0
-      }, {
+        "x" : 326,
+        "y" : 1372
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "StudentService-Components",
+      "order" : 5
+    }, {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "21",
+      "description" : "Survey Service internal components",
+      "dimensions" : {
+        "height" : 2011,
+        "width" : 1080
+      },
+      "elements" : [ {
         "id" : "22",
-        "x" : 0,
-        "y" : 0
+        "x" : 315,
+        "y" : 172
       }, {
         "id" : "23",
-        "x" : 0,
-        "y" : 0
+        "x" : 315,
+        "y" : 772
       }, {
         "id" : "24",
-        "x" : 0,
-        "y" : 0
+        "x" : 315,
+        "y" : 1372
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "SurveyService-Components",
+      "order" : 6
+    } ],
+    "configuration" : {
+      "branding" : { },
+      "lastSavedView" : "Containers",
+      "metadataSymbols" : "SquareBrackets",
+      "styles" : {
+        "elements" : [ {
+          "background" : "#1168bd",
+          "color" : "#ffffff",
+          "fontSize" : 24,
+          "shape" : "RoundedBox",
+          "tag" : "Element"
+        }, {
+          "background" : "#08427b",
+          "shape" : "Person",
+          "tag" : "Person"
+        }, {
+          "background" : "#1168bd",
+          "tag" : "Software System"
+        }, {
+          "background" : "#438dd5",
+          "tag" : "Container"
+        }, {
+          "background" : "#85bbf0",
+          "color" : "#000000",
+          "tag" : "Component"
+        }, {
+          "background" : "#438dd5",
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        }, {
+          "background" : "#438dd5",
+          "shape" : "Folder",
+          "tag" : "Storage"
+        }, {
+          "shape" : "WebBrowser",
+          "tag" : "WebApp"
+        }, {
+          "shape" : "Hexagon",
+          "tag" : "Gateway"
+        }, {
+          "background" : "#999999",
+          "tag" : "Infrastructure"
+        } ],
+        "relationships" : [ {
+          "color" : "#707070",
+          "fontSize" : 24,
+          "tag" : "Relationship",
+          "thickness" : 2
+        } ]
+      },
+      "terminology" : { },
+      "themes" : [ "https://static.structurizr.com/themes/default/theme.json" ]
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "description" : "Container diagram showing major architectural components",
+      "dimensions" : {
+        "height" : 5061,
+        "width" : 7350
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 5349,
+        "y" : 4371
+      }, {
+        "id" : "2",
+        "x" : 6049,
+        "y" : 4371
+      }, {
+        "id" : "3",
+        "x" : 6749,
+        "y" : 4371
+      }, {
+        "id" : "5",
+        "x" : 3941,
+        "y" : 171
+      }, {
+        "id" : "6",
+        "x" : 2445,
+        "y" : 771
+      }, {
+        "id" : "7",
+        "x" : 1166,
+        "y" : 2571
+      }, {
+        "id" : "11",
+        "x" : 1916,
+        "y" : 1371
+      }, {
+        "id" : "17",
+        "x" : 2312,
+        "y" : 1971
+      }, {
+        "id" : "21",
+        "x" : 3895,
+        "y" : 1371
       }, {
         "id" : "25",
-        "x" : 0,
-        "y" : 0
+        "x" : 3941,
+        "y" : 3771
       }, {
         "id" : "26",
-        "x" : 0,
-        "y" : 0
+        "x" : 858,
+        "y" : 1371
       }, {
         "id" : "27",
-        "x" : 0,
-        "y" : 0
+        "x" : 3283,
+        "y" : 3171
       }, {
         "id" : "28",
-        "x" : 0,
-        "y" : 0
+        "x" : 2533,
+        "y" : 3171
+      }, {
+        "id" : "29",
+        "x" : 2003,
+        "y" : 4421
+      }, {
+        "id" : "30",
+        "x" : 1474,
+        "y" : 3171
+      }, {
+        "id" : "31",
+        "x" : 199,
+        "y" : 1971
+      }, {
+        "id" : "32",
+        "x" : 4599,
+        "y" : 4421
       } ],
       "externalSoftwareSystemBoundariesVisible" : false,
-      "key" : "SISEnrollment-Level2",
+      "key" : "Containers",
       "order" : 2,
       "relationships" : [ {
-        "id" : "31"
-      }, {
         "id" : "33"
       }, {
         "id" : "35"
       }, {
-        "id" : "37"
+        "id" : "37",
+        "vertices" : [ {
+          "x" : 5066,
+          "y" : 3325
+        }, {
+          "x" : 5066,
+          "y" : 1517
+        } ]
       }, {
-        "id" : "39"
+        "id" : "39",
+        "vertices" : [ {
+          "x" : 5787,
+          "y" : 3325
+        }, {
+          "x" : 5787,
+          "y" : 1517
+        }, {
+          "x" : 4845,
+          "y" : 771
+        } ]
       }, {
-        "id" : "41"
+        "id" : "41",
+        "vertices" : [ {
+          "x" : 6837,
+          "y" : 3325
+        }, {
+          "x" : 6837,
+          "y" : 1517
+        }, {
+          "x" : 5253,
+          "y" : 771
+        } ]
       }, {
         "id" : "43"
       }, {
-        "id" : "44"
+        "id" : "44",
+        "vertices" : [ {
+          "x" : 1766,
+          "y" : 1371
+        }, {
+          "x" : 1591,
+          "y" : 1971
+        } ]
       }, {
         "id" : "45"
       }, {
@@ -691,25 +919,68 @@
       }, {
         "id" : "48"
       }, {
-        "id" : "49"
+        "id" : "49",
+        "vertices" : [ {
+          "x" : 1324,
+          "y" : 3171
+        }, {
+          "x" : 1324,
+          "y" : 3471
+        } ]
       }, {
-        "id" : "50"
+        "id" : "50",
+        "vertices" : [ {
+          "x" : 3133,
+          "y" : 3171
+        } ]
       }, {
         "id" : "51"
       }, {
         "id" : "52"
       }, {
-        "id" : "53"
+        "id" : "53",
+        "vertices" : [ {
+          "x" : 1591,
+          "y" : 1971
+        }, {
+          "x" : 1016,
+          "y" : 2571
+        }, {
+          "x" : 1016,
+          "y" : 2871
+        }, {
+          "x" : 1249,
+          "y" : 3471
+        }, {
+          "x" : 1512,
+          "y" : 4071
+        } ]
       }, {
-        "id" : "54"
+        "id" : "54",
+        "vertices" : [ {
+          "x" : 2912,
+          "y" : 1971
+        } ]
       }, {
-        "id" : "55"
+        "id" : "55",
+        "vertices" : [ {
+          "x" : 2162,
+          "y" : 2271
+        } ]
       }, {
-        "id" : "56"
+        "id" : "56",
+        "vertices" : [ {
+          "x" : 1841,
+          "y" : 1971
+        } ]
       }, {
         "id" : "57"
       }, {
-        "id" : "58"
+        "id" : "58",
+        "vertices" : [ {
+          "x" : 2383,
+          "y" : 3171
+        } ]
       }, {
         "id" : "59"
       }, {
@@ -717,23 +988,68 @@
       }, {
         "id" : "61"
       }, {
-        "id" : "62"
+        "id" : "62",
+        "vertices" : [ {
+          "x" : 4078,
+          "y" : 2271
+        }, {
+          "x" : 3883,
+          "y" : 3471
+        } ]
       }, {
-        "id" : "63"
+        "id" : "63",
+        "vertices" : [ {
+          "x" : 3849,
+          "y" : 2871
+        } ]
       }, {
         "id" : "64"
       }, {
         "id" : "65"
       }, {
-        "id" : "66"
+        "id" : "66",
+        "vertices" : [ {
+          "x" : 3520,
+          "y" : 3483
+        } ]
       }, {
         "id" : "67"
+      }, {
+        "id" : "68",
+        "vertices" : [ {
+          "x" : 5199,
+          "y" : 4371
+        } ]
+      }, {
+        "id" : "70",
+        "vertices" : [ {
+          "x" : 5899,
+          "y" : 4371
+        } ]
+      }, {
+        "id" : "72",
+        "vertices" : [ {
+          "x" : 6599,
+          "y" : 4371
+        } ]
+      }, {
+        "id" : "74",
+        "vertices" : [ {
+          "x" : 3403,
+          "y" : 3758
+        } ]
+      }, {
+        "id" : "75",
+        "vertices" : [ {
+          "x" : 3324,
+          "y" : 2571
+        } ]
       } ],
       "softwareSystemId" : "4"
     } ],
-    "systemContextViews" : [ {
+    "dynamicViews" : [ {
       "automaticLayout" : {
-        "applied" : false,
+        "applied" : true,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
@@ -741,44 +1057,209 @@
         "rankSeparation" : 300,
         "vertices" : false
       },
+      "description" : "Student enrollment flow",
+      "dimensions" : {
+        "height" : 3005,
+        "width" : 4570
+      },
+      "elementId" : "4",
       "elements" : [ {
         "id" : "1",
-        "x" : 0,
-        "y" : 0
+        "x" : 3969,
+        "y" : 2226
       }, {
-        "id" : "2",
-        "x" : 0,
-        "y" : 0
+        "id" : "5",
+        "x" : 219,
+        "y" : 1672
       }, {
-        "id" : "3",
-        "x" : 0,
-        "y" : 0
+        "id" : "6",
+        "x" : 969,
+        "y" : 1372
       }, {
-        "id" : "4",
-        "x" : 0,
-        "y" : 0
+        "id" : "7",
+        "x" : 2469,
+        "y" : 172
+      }, {
+        "id" : "11",
+        "x" : 1719,
+        "y" : 1372
+      }, {
+        "id" : "17",
+        "x" : 2469,
+        "y" : 1972
+      }, {
+        "id" : "25",
+        "x" : 3219,
+        "y" : 1672
+      }, {
+        "id" : "26",
+        "x" : 1719,
+        "y" : 772
+      }, {
+        "id" : "28",
+        "x" : 2469,
+        "y" : 1372
       }, {
         "id" : "29",
-        "x" : 0,
-        "y" : 0
+        "x" : 2469,
+        "y" : 772
+      } ],
+      "externalBoundariesVisible" : false,
+      "key" : "EnrollmentFlow",
+      "order" : 7,
+      "relationships" : [ {
+        "description" : "Selects course to enroll",
+        "id" : "37",
+        "order" : "1",
+        "response" : false,
+        "vertices" : [ {
+          "x" : 2698,
+          "y" : 2726
+        }, {
+          "x" : 1940,
+          "y" : 2726
+        } ]
+      }, {
+        "description" : "POST /enrollments",
+        "id" : "43",
+        "order" : "2",
+        "response" : false
+      }, {
+        "description" : "Validates token",
+        "id" : "48",
+        "order" : "3",
+        "response" : false
+      }, {
+        "description" : "Forward enrollment request",
+        "id" : "45",
+        "order" : "4",
+        "response" : false
+      }, {
+        "description" : "Check prerequisites",
+        "id" : "57",
+        "order" : "5",
+        "response" : false
+      }, {
+        "description" : "Check capacity",
+        "id" : "56",
+        "order" : "6",
+        "response" : false,
+        "vertices" : [ {
+          "x" : 2169,
+          "y" : 1222
+        }, {
+          "x" : 2469,
+          "y" : 622
+        } ]
+      }, {
+        "description" : "Create enrollment",
+        "id" : "53",
+        "order" : "7",
+        "response" : false
+      }, {
+        "description" : "Publish enrollment event",
+        "id" : "55",
+        "order" : "8",
+        "response" : false
+      }, {
+        "description" : "Notify about enrollment",
+        "id" : "74",
+        "order" : "9",
+        "response" : false
+      }, {
+        "description" : "Send confirmation email",
+        "id" : "68",
+        "order" : "10",
+        "response" : false
+      } ]
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "description" : "System context diagram showing SIS Enrollment System and external systems",
+      "dimensions" : {
+        "height" : 2700,
+        "width" : 2300
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 199,
+        "y" : 851
+      }, {
+        "id" : "2",
+        "x" : 1674,
+        "y" : 151
+      }, {
+        "id" : "3",
+        "x" : 1674,
+        "y" : 851
+      }, {
+        "id" : "4",
+        "x" : 899,
+        "y" : 901
+      }, {
+        "id" : "31",
+        "x" : 1649,
+        "y" : 1551
+      }, {
+        "id" : "32",
+        "x" : 1649,
+        "y" : 2151
       } ],
       "enterpriseBoundaryVisible" : true,
-      "key" : "Level1",
+      "key" : "SystemContext",
       "order" : 1,
       "relationships" : [ {
-        "id" : "30"
-      }, {
-        "id" : "32"
-      }, {
         "id" : "34"
       }, {
-        "id" : "36"
+        "id" : "36",
+        "vertices" : [ {
+          "x" : 1649,
+          "y" : 2001
+        } ]
       }, {
-        "id" : "38"
+        "id" : "38",
+        "vertices" : [ {
+          "x" : 761,
+          "y" : 1201
+        } ]
       }, {
-        "id" : "40"
+        "id" : "40",
+        "vertices" : [ {
+          "x" : 1396,
+          "y" : 591
+        } ]
       }, {
-        "id" : "42"
+        "id" : "42",
+        "vertices" : [ {
+          "x" : 1499,
+          "y" : 901
+        } ]
+      }, {
+        "id" : "69",
+        "vertices" : [ {
+          "x" : 761,
+          "y" : 901
+        } ]
+      }, {
+        "id" : "71",
+        "vertices" : [ {
+          "x" : 1601,
+          "y" : 810
+        } ]
+      }, {
+        "id" : "73",
+        "vertices" : [ {
+          "x" : 1499,
+          "y" : 1201
+        } ]
       } ],
       "softwareSystemId" : "4"
     } ]
