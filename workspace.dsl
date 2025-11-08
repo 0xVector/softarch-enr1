@@ -12,6 +12,22 @@ workspace "SIS" "Enrollment" {
 	    webUI = container "Web Application" {
                 technology "React/TypeScript"
                 description "Single-page application providing UI for students, teachers, and admins"
+
+                courseSearchView = component "Course Search View" {
+                    description "Provides UI for searching, filtering, and displaying lists of courses."
+                }
+                courseDetailView = component "Course Detail View" {
+                    description "Displays detailed information for a single course and initiates enrollment."
+                }
+                studentDashboardView = component "Student Dashboard View" {
+                    description "Allows students to view their enrolled courses, study plans, and leave courses."
+                }
+                surveyView = component "Survey View" {
+                    description "Provides the UI for viewing and submitting course surveys and comments."
+                }
+                adminDashboardView = component "Admin Dashboard View" {
+                    description "Provides UI for administrative tasks like course and user management."
+                }
             }
 
 	    # API Layer
@@ -36,6 +52,9 @@ workspace "SIS" "Enrollment" {
                 }
                 searchHandler = component "Search Handler" {
                     description "Handles course search and filtering logic."
+                }
+                waitlistManager = component "Waitlist Manager" {
+                    description "Manages the authoritative waitlist for courses in the Course DB."
                 }
             }
 
@@ -151,12 +170,30 @@ workspace "SIS" "Enrollment" {
             }
 
             # Data Layer
-            database = container "Database" {
+            courseDB = container "Course DB" {
                 technology "PostgreSQL"
                 tags "Database"
-                description "Relational database with schemas for courses, students, enrollments, and surveys"
+                description "Relational database with schemas for courses and tickets."
             }
-            
+
+            studentDB = container "Student DB" {
+                technology "PostgreSQL"
+                tags "Database"
+                description "Relational database for student profiles, progress, and operational logs."
+            }
+
+            surveyDB = container "Survey DB" {
+                technology "PostgreSQL"
+                tags "Database"
+                description "Relational database for surveys and comments."
+            }
+
+            logDB = container "Log DB" {
+                technology "PostgreSQL"
+                tags "Database"
+                description "Centralized database for storing audit logs, events, and operational metrics."
+            }
+
             enrollmentDB = container "Enrollment DB" {
                 technology "PostgreSQL"
                 tags "Database"
@@ -184,12 +221,22 @@ workspace "SIS" "Enrollment" {
         ss.notificationService -> emailSystem "Sends emails via"
 
         # User to UI relationships
-        student -> ss.webUI "Uses to search courses, enroll, view progress"
-	teacher -> ss.webUI "Uses to manage courses and view enrollments"
-	admin -> ss.webUI "Uses to administer system"
+        student -> ss.webUI.courseSearchView "Searches and filters courses"
+        student -> ss.webUI.courseDetailView "Views course details and enrolls"
+        student -> ss.webUI.studentDashboardView "Manages study progress and leaves courses"
+        student -> ss.webUI.surveyView "Views and writes course surveys"
+
+        teacher -> ss.webUI.courseSearchView "Views course catalog"
+        teacher -> ss.webUI.adminDashboardView "Manages course participants"
+
+	    admin -> ss.webUI.adminDashboardView "Administers system, creates courses, and manages users"
 
         # UI to API Gateway
-        ss.webUI -> ss.apiGateway "Makes HTTPS API calls to" "JSON/REST"
+        ss.webUI.courseSearchView -> ss.apiGateway "Makes API calls to search courses" "JSON/REST"
+        ss.webUI.courseDetailView -> ss.apiGateway "Makes API calls to get course details and enroll" "JSON/REST"
+        ss.webUI.studentDashboardView -> ss.apiGateway "Makes API calls to manage student data" "JSON/REST"
+        ss.webUI.surveyView -> ss.apiGateway "Makes API calls to manage surveys" "JSON/REST"
+        ss.webUI.adminDashboardView -> ss.apiGateway "Makes API calls for administrative tasks" "JSON/REST"
 
 	# API Gateway to Services
 	ss.apiGateway -> ss.courseService.courseAPIController "Routes course requests to"
@@ -203,6 +250,8 @@ workspace "SIS" "Enrollment" {
     ss.courseService.courseBusinessLogic -> ss.courseService.courseRepository "Uses to persist data"
     ss.courseService.searchHandler -> ss.courseService.courseRepository "Fetches courses"
     ss.courseService.courseBusinessLogic -> ss.courseService.searchHandler "Uses"
+    ss.courseService.courseBusinessLogic -> ss.courseService.waitlistManager "Uses to manage waitlists on capacity failure"
+    ss.courseService.waitlistManager -> ss.courseService.courseRepository "Reads/writes waitlist data"
 
     # Component-level relationships within Enrollment Service
     ss.enrollmentService.enrollmentAPIController -> ss.enrollmentService.enrollmentBusinessLogic "Uses"
@@ -232,18 +281,19 @@ workspace "SIS" "Enrollment" {
     ss.studentService.progressTracker -> ss.studentService.studentRepository "Fetches student's study history"
 
 	# Course Service relationships
-	ss.courseService.courseRepository -> ss.database "Reads/writes course data" "SQL"
+	ss.courseService.courseRepository -> ss.courseDB "Reads/writes course data" "SQL"
         ss.courseService.courseBusinessLogic -> ss.fileStorage "Retrieves course materials from"
         ss.courseService.courseBusinessLogic -> ss.messageQueue "Publishes course and search events to"
 
         # Enrollment Service relationships
         ss.enrollmentService.enrollmentRepository -> ss.enrollmentDB "Reads/writes enrollment data to its dedicated DB" "SQL"
-        ss.enrollmentService.ticketRepository -> ss.enrollmentDB "Reads/updates ticker data to its dedicated DB" "SQL
-        ss.enrollmentService.enrollmentBusinessLogic -> ss.messageQueue "Publishes enrollment and leave events to"
+        ss.enrollmentService.ticketRepository -> ss.enrollmentDB "Reads/updates ticker data to its dedicated DB" "SQL"
+        ss.enrollmentService.enrollmentBusinessLogic -> ss.messageQueue "Publishes EnrollmentRequested and leave events"
+        ss.courseService.courseBusinessLogic -> ss.messageQueue "Publishes EnrollmentConfirmed/Failed/Waitlisted events"
         ss.enrollmentService.enrollmentBusinessLogic -> ss.messageQueue "Consumes course and student events to update local data"
 
         # Student Service relationships
-        ss.studentService.studentRepository -> ss.database "Reads/writes student data" "SQL"
+        ss.studentService.studentRepository -> ss.studentDB "Reads/writes student data" "SQL"
         ss.studentService.studentBusinessLogic -> ss.messageQueue "Publishes student events to"
         ss.studentService.progressTracker -> ss.courseService.courseBusinessLogic "Fetches course requirements from"
         ss.studentService.requirementCalculator -> ss.courseService.courseBusinessLogic "Fetches mandatory courses"
@@ -261,17 +311,17 @@ workspace "SIS" "Enrollment" {
 
 
         # Survey Service relationships
-	ss.surveyService.surveyRepository -> ss.database "Reads/writes survey data" "SQL"
+	ss.surveyService.surveyRepository -> ss.surveyDB "Reads/writes survey data" "SQL"
         ss.surveyService.surveyBusinessLogic -> ss.messageQueue "Publishes survey events to"
         ss.surveyService.surveyBusinessLogic -> ss.studentService.studentBusinessLogic "Validates survey eligibility with"
 
         # Reporting Service relationships
         ss.reportingService -> ss.messageQueue "Consumes events for logging and analytics"
-        ss.reportingService -> ss.database "Writes aggregated reports and logs to" "SQL"
+        ss.reportingService -> ss.logDB "Writes aggregated reports and logs to" "SQL"
 
         # Notification Service relationships
         ss.notificationService -> ss.messageQueue "Consumes events from"
-        ss.notificationService -> ss.database "Logs notifications to"
+        ss.notificationService -> ss.logDB "Logs notifications to"
         ss.notificationService -> student "Sends notifications to"
         ss.notificationService -> teacher "Sends notifications to"
         ss.notificationService -> admin "Sends notifications to"
@@ -293,6 +343,20 @@ workspace "SIS" "Enrollment" {
             description "Container diagram showing major architectural components"
         }
 
+        component ss.webUI "WebApp-Components" {
+            include *
+            autolayout tb
+
+            include ss.webUI.courseSearchView
+            include ss.webUI.courseDetailView
+            include ss.webUI.studentDashboardView
+            include ss.webUI.surveyView
+            include ss.webUI.adminDashboardView
+
+            description "High-level component structure of the Single-Page Application."
+        }
+
+
         component ss.courseService "CourseService-Components" {
             include *
             autolayout lr
@@ -301,6 +365,7 @@ workspace "SIS" "Enrollment" {
             include ss.courseService.courseBusinessLogic
             include ss.courseService.courseRepository
             include ss.courseService.searchHandler
+            include ss.courseService.waitlistManager
             
             autolayout tb
             description "Course Service internal components"
@@ -354,15 +419,33 @@ workspace "SIS" "Enrollment" {
         }
 
         dynamic ss "EnrollmentFlow" "Student enrollment flow" {
-            student -> ss.webUI "Selects course to enroll"
-            ss.webUI -> ss.apiGateway "POST /enrollments"
-            ss.apiGateway -> ss.authService "Validates token"
-            ss.apiGateway -> ss.enrollmentService "Forward enrollment request"
-            ss.enrollmentService -> ss.enrollmentDB "Validates and creates enrollment"
-            ss.enrollmentService -> ss.messageQueue "Publish enrollment event"
-            ss.messageQueue -> ss.notificationService "Notify about enrollment"
-            ss.notificationService -> student "Send confirmation email"
+            student -> ss.webUI "Clicks 'Enroll' on a course"
+            ss.webUI -> ss.apiGateway "GET /enrollments/tickets (fetches available tickets)"
+            ss.apiGateway -> ss.enrollmentService "Validates prerequisites against local DB"
+            student -> ss.webUI "Selects a ticket and confirms"
+            ss.webUI -> ss.apiGateway "POST /enrollments (with selected ticket)"
+            ss.apiGateway -> ss.enrollmentService "Forwards final enrollment request"
+            ss.enrollmentService -> ss.messageQueue "Publishes EnrollmentRequested event"
+            ss.messageQueue -> ss.courseService "Arbitrates final enrollment and capacity"
+            ss.courseService -> ss.messageQueue "Publishes EnrollmentConfirmed/Failed/Waitlisted"
+            ss.messageQueue -> ss.notificationService "Notifies student of final outcome"
             autolayout lr
+        }
+
+        dynamic ss.enrollmentService "EnrollmentService-InternalFlow" "Component interactions inside the Enrollment Service during an enrollment" {
+            ss.apiGateway -> ss.enrollmentService.enrollmentAPIController "Forwards GET request for tickets"
+            ss.enrollmentService.enrollmentAPIController -> ss.enrollmentService.enrollmentBusinessLogic "Uses to validate and fetch tickets"
+            ss.enrollmentService.enrollmentBusinessLogic -> ss.enrollmentService.prereqChecker "Checks prerequisites"
+            ss.enrollmentService.prereqChecker -> ss.enrollmentService.enrollmentRepository "Fetches student/course data from replica"
+            ss.enrollmentService.enrollmentBusinessLogic -> ss.enrollmentService.ticketSearchHandler "Fetches available tickets"
+            ss.enrollmentService.ticketSearchHandler -> ss.enrollmentService.ticketRepository "Reads ticket data from replica"
+
+            ss.apiGateway -> ss.enrollmentService.enrollmentAPIController "Forwards POST request to enroll"
+            ss.enrollmentService.enrollmentAPIController -> ss.enrollmentService.enrollmentBusinessLogic "Uses to process final enrollment"
+            ss.enrollmentService.enrollmentBusinessLogic -> ss.enrollmentService.ticketValidator "Validates selected ticket"
+            ss.enrollmentService.ticketValidator -> ss.enrollmentService.ticketRepository "Fetches ticket details from replica"
+            ss.enrollmentService.enrollmentBusinessLogic -> ss.messageQueue "Publishes EnrollmentRequested event for arbitration"
+            autolayout tb
         }
 
         styles {
