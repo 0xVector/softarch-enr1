@@ -448,6 +448,25 @@ workspace "SIS" "Enrollment" {
             autolayout tb
         }
 
+        dynamic ss.surveyService "surveyService-InternalFlow-Comment" "Component interactions inside the Survey Service whan writing a comment" {
+            ss.apiGateway -> ss.surveyService.surveyAPIController "Forwards comment submission request"
+            ss.surveyService.surveyAPIController -> ss.surveyService.surveyBusinessLogic "Uses to check and send/store comments"
+            ss.surveyService.surveyBusinessLogic -> ss.surveyService.commentManager "Uses to process comments"
+            ss.surveyService.commentManager -> ss.surveyService.moderationService "Checks comments for moderation"
+            ss.surveyService.commentManager -> ss.surveyService.surveyRepository "If moderate writes/stores comments"
+           autolayout tb
+        }
+
+        dynamic ss.surveyService "surveyService-InternalFlow-Survey" "Component interactions inside the Survey Service whan submitting a survey" {
+            ss.apiGateway -> ss.surveyService.surveyAPIController "Forwards survey submission request"
+            ss.surveyService.surveyAPIController -> ss.surveyService.surveyBusinessLogic "Uses to check and send/store comments"
+            ss.surveyService.surveyBusinessLogic -> ss.surveyService.surveyHandler "Uses to process surveys"
+            ss.surveyService.surveyHandler -> ss.surveyService.moderationService "Checks surveys for moderation"
+            ss.surveyService.surveyHandler -> ss.surveyService.surveyValidator "Validates submitted forms"
+            ss.surveyService.surveyHandler -> ss.surveyService.surveyRepository "If moderate and complete writes/stores surveys"
+            autolayout tb
+        }
+
         styles {
             element "Element" {
                 color #ffffff
