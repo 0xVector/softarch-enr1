@@ -431,7 +431,6 @@ workspace "SIS" "Enrollment" {
             ss.messageQueue -> ss.notificationService "Notifies student of final outcome"
             autolayout lr
         }
-
         dynamic ss.enrollmentService "EnrollmentService-InternalFlow" "Component interactions inside the Enrollment Service during an enrollment" {
             ss.apiGateway -> ss.enrollmentService.enrollmentAPIController "Forwards GET request for tickets"
             ss.enrollmentService.enrollmentAPIController -> ss.enrollmentService.enrollmentBusinessLogic "Uses to validate and fetch tickets"
@@ -447,8 +446,7 @@ workspace "SIS" "Enrollment" {
             ss.enrollmentService.enrollmentBusinessLogic -> ss.messageQueue "Publishes EnrollmentRequested event for arbitration"
             autolayout tb
         }
-
-        dynamic ss.surveyService "surveyService-InternalFlow-Comment" "Component interactions inside the Survey Service whan writing a comment" {
+        dynamic ss.surveyService "surveyService-InternalFlow-Comment" "Component interactions inside the Survey Service when writing a comment" {
             ss.apiGateway -> ss.surveyService.surveyAPIController "Forwards comment submission request"
             ss.surveyService.surveyAPIController -> ss.surveyService.surveyBusinessLogic "Uses to check and send/store comments"
             ss.surveyService.surveyBusinessLogic -> ss.surveyService.commentManager "Uses to process comments"
@@ -457,7 +455,7 @@ workspace "SIS" "Enrollment" {
            autolayout tb
         }
 
-        dynamic ss.surveyService "surveyService-InternalFlow-Survey" "Component interactions inside the Survey Service whan submitting a survey" {
+        dynamic ss.surveyService "surveyService-InternalFlow-Survey" "Component interactions inside the Survey Service when submitting a survey" {
             ss.apiGateway -> ss.surveyService.surveyAPIController "Forwards survey submission request"
             ss.surveyService.surveyAPIController -> ss.surveyService.surveyBusinessLogic "Uses to check and send/store comments"
             ss.surveyService.surveyBusinessLogic -> ss.surveyService.surveyHandler "Uses to process surveys"
@@ -466,6 +464,27 @@ workspace "SIS" "Enrollment" {
             ss.surveyService.surveyHandler -> ss.surveyService.surveyRepository "If moderate and complete writes/stores surveys"
             autolayout tb
         }
+        dynamic ss.studentService "StudentService-InternalFlow-ViewDuties" "Component interactions inside the Student Service when viewing duties" {
+            ss.apiGateway -> ss.studentService.studentAPIController "Forwards GET request for duties"
+            ss.studentService.studentAPIController -> ss.studentService.studentBusinessLogic "Uses to orchestrate fetching duties"     
+            ss.studentService.studentBusinessLogic -> ss.studentService.studentRepository "Fetches student profile (major, specialization)"
+            ss.studentService.studentRepository -> ss.studentDB "Reads student data"
+            ss.studentService.studentBusinessLogic -> ss.studentService.progressTracker "Uses to get completed courses/credits"
+            ss.studentService.progressTracker -> ss.studentService.studentRepository "Fetches student's study history"
+            ss.studentService.studentBusinessLogic -> ss.studentService.requirementCalculator "Uses to calculate remaining requirements"
+            ss.studentService.requirementCalculator -> ss.courseService "Fetches mandatory courses and credit reqs"        
+            autolayout tb
+        }
+
+        dynamic ss.studentService "StudentService-InternalFlow-SavePlan" "Component interactions inside the Student Service when saving a plan" {
+            ss.apiGateway -> ss.studentService.studentAPIController "Forwards POST request to save plan"
+            ss.studentService.studentAPIController -> ss.studentService.studentBusinessLogic "Uses to orchestrate saving the plan"      
+            ss.studentService.studentBusinessLogic -> ss.studentService.planManager "Uses to validate and store plan"
+            ss.studentService.planManager -> ss.studentService.studentRepository "Writes/overwrites student plan"
+            ss.studentService.studentRepository -> ss.studentDB "Saves plan to database"      
+            autolayout tb
+        }
+
 
         styles {
             element "Element" {
