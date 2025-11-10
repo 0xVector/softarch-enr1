@@ -563,6 +563,32 @@ workspace "SIS" "Enrollment" {
             autolayout lr
         }
 
+        dynamic ss "CourseViewFlow" "Student views course details and checks enrollment eligibility" {
+            student -> ss.webUI "Navigates to course detail page"
+            ss.webUI -> ss.apiGateway "GET /courses/{courseId} (fetch course details)"
+            ss.apiGateway -> ss.courseService "Forwards request for course data"
+            ss.courseService -> ss.courseDB "Queries course information"
+            ss.courseDB -> ss.courseService "Returns course details (title, description, metadata)"
+            ss.courseService -> ss.apiGateway "Returns course data"
+            ss.apiGateway -> ss.webUI "Displays course information to user"
+            student -> ss.webUI "Clicks 'Can I enroll?' button"
+            ss.webUI -> ss.apiGateway "GET /enrollments/eligibility?courseId={id} (check eligibility)"
+            ss.apiGateway -> ss.enrollmentService "Validates enrollment eligibility"
+            ss.enrollmentService -> ss.enrollmentDB "Checks prerequisites, capacity, and credit limits"
+            ss.enrollmentDB -> ss.enrollmentService "Returns eligibility result"
+            ss.enrollmentService -> ss.apiGateway "Returns eligibility status (TRUE/FALSE)"
+            ss.apiGateway -> ss.webUI "Displays eligibility notification"
+            student -> ss.webUI "Clicks 'comments' to view course surveys"
+            ss.webUI -> ss.apiGateway "GET /surveys/course/{courseId} (fetch comments)"
+            ss.apiGateway -> ss.surveyService "Forwards request for course surveys"
+            ss.surveyService -> ss.surveyDB "Queries comments and ratings"
+            ss.surveyDB -> ss.surveyService "Returns comments (author, date, ratings)"
+            ss.surveyService -> ss.apiGateway "Returns survey data"
+            ss.apiGateway -> ss.webUI "Displays comments section to user"
+
+            autolayout tb
+        }
+
         deployment ss "Production" {
             include *
             autoLayout tb
