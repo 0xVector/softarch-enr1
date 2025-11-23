@@ -153,4 +153,3 @@ This document summarizes the key architectural decisions made during the design 
     *   **Eventual Consistency**: As mentioned in Decision #3, this introduces a delay. The system state is not updated instantaneously across all services.
     *   **Increased Complexity**: Requires managing a message broker. Debugging a distributed flow across multiple services can be more complex than debugging a single synchronous call stack.
     *   **Asynchronous User Experience**: The UI must be designed to handle pending states and asynchronous feedback, which can be more challenging than a simple request/response model.
-```
