@@ -145,7 +145,18 @@ This diagram shows how our containers are deployed in a production environment.
 *   An **API Gateway** acts as the entry point, routing traffic to the appropriate services.
 *   Static assets for the **Web Application** are served from a web server node.
 
-*   **Team Member**: [Name]
+*   **Team Member**: Matúš Jurčák
+
+### Deployment Diagram: Development Environment
+
+This diagram shows how our containers are deployed in a development environment.
+
+*   All services are grouped into a single **Service Container** for simplicity.
+*   The databases are hosted in a managed **Database Cluster**.
+*   An **API Gateway** acts as the entry point, routing traffic to the appropriate services.
+*   Static assets for the **Web Application** are served from a web server node.
+
+*   **Team Member**: Matúš Jurčák
 
 ---
 

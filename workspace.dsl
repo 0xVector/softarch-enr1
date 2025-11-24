@@ -208,60 +208,6 @@ workspace "SIS" "Enrollment" {
 
         }
 
-        deploymentEnvironment "Production" {
-            deploymentNode "Web application" "Single-page application providing UI for students, teachers, and admins" "React/TypeScript" {
-                webUIInstance = containerInstance ss.webUI
-            }
-
-            deploymentNode "API Gateway Server" "Handles all HTTP requests" "Node.js/Express" {
-                apiGatewayInstance = containerInstance ss.apiGateway
-            }
-
-            deploymentNode "Course Service Node" "Manages courses" "Java/Spring Boot" {
-                courseServiceInstance = containerInstance ss.courseService
-            }
-
-            deploymentNode "Enrollment Service Node" "Handles enrollments" "Java/Spring Boot" {
-                enrollmentServiceInstance = containerInstance ss.enrollmentService
-            }
-
-            deploymentNode "Student Service Node" "Manages student data" "Java/Spring Boot" {
-                studentServiceInstance = containerInstance ss.studentService
-            }
-
-            deploymentNode "Survey Service Node" "Manages surveys" "Java/Spring Boot" {
-                surveyServiceInstance = containerInstance ss.surveyService
-            }
-
-            deploymentNode "Reporting Service Node" "Generates reports" "Python/FastAPI" {
-                reportingServiceInstance = containerInstance ss.reportingService
-            }
-
-            deploymentNode "Notification Service Node" "Sends notifications" "Node.js" {
-                notificationServiceInstance = containerInstance ss.notificationService
-            }
-
-            deploymentNode "Auth Service Node" "Handles auth" "Keycloak/OAuth2" {
-                authServiceInstance = containerInstance ss.authService
-            }
-
-            deploymentNode "Message Queue Node" "Event broker" "RabbitMQ" {
-                messageQueueInstance = containerInstance ss.messageQueue
-            }
-
-            deploymentNode "Database Cluster" "Production DB cluster" "PostgreSQL"{
-                courseDBInstance = containerInstance ss.courseDB
-                enrollmentDBInstance = containerInstance ss.enrollmentDB
-                studentDBInstance = containerInstance ss.studentDB
-                surveyDBInstance = containerInstance ss.surveyDB
-                logDBInstance = containerInstance ss.logDB
-            }
-
-            deploymentNode "File Storage Node" "Object storage for course materials" {
-                fileStorageInstance = containerInstance ss.fileStorage
-            }
-
-        }
 
         authSystem = softwareSystem "External Auth System" {
             description "University SSO/LDAP system"
@@ -292,6 +238,11 @@ workspace "SIS" "Enrollment" {
         ss.webUI.studentDashboardView -> ss.apiGateway "Makes API calls to manage student data" "JSON/REST"
         ss.webUI.surveyView -> ss.apiGateway "Makes API calls to manage surveys" "JSON/REST"
         ss.webUI.adminDashboardView -> ss.apiGateway "Makes API calls for administrative tasks" "JSON/REST"
+        
+        // ss.apiGateway -> ss.courseService "Routes course requests to"
+        // ss.apiGateway -> ss.enrollmentService "Routes enrollment requests to"
+        // ss.apiGateway -> ss.studentService "Routes student requests to"
+        // ss.apiGateway -> ss.surveyService "Routes survey requests to"
 
         # API Gateway to Services
         ss.apiGateway -> ss.courseService.courseAPIController "Routes course requests to"
@@ -299,6 +250,7 @@ workspace "SIS" "Enrollment" {
         ss.apiGateway -> ss.studentService.studentAPIController "Routes student requests to"
         ss.apiGateway -> ss.surveyService.surveyAPIController "Routes survey requests to"
         ss.apiGateway -> ss.authService "Validates tokens with"
+
 
         # Component-level relationships within Course Service
         ss.courseService.courseAPIController -> ss.courseService.courseBusinessLogic "Uses"
@@ -382,6 +334,103 @@ workspace "SIS" "Enrollment" {
         ss.notificationService -> admin "Sends notifications to"
 
         ss.messageQueue -> ss.notificationService "Triggers notifications in"
+
+        deploymentEnvironment "Production" {
+            deploymentNode "Web application" "Single-page application providing UI for students, teachers, and admins" "React/TypeScript" {
+                webUIInstance = containerInstance ss.webUI
+            }
+
+            deploymentNode "API Gateway Server" "Handles all HTTP requests" "Node.js/Express" {
+                apiGatewayInstance = containerInstance ss.apiGateway
+            }
+
+            deploymentNode "Course Service Node" "Manages courses" "Java/Spring Boot" {
+                courseServiceInstance = containerInstance ss.courseService
+            }
+
+            deploymentNode "Enrollment Service Node" "Handles enrollments" "Java/Spring Boot" {
+                enrollmentServiceInstance = containerInstance ss.enrollmentService
+            }
+
+            deploymentNode "Student Service Node" "Manages student data" "Java/Spring Boot" {
+                studentServiceInstance = containerInstance ss.studentService
+            }
+
+            deploymentNode "Survey Service Node" "Manages surveys" "Java/Spring Boot" {
+                surveyServiceInstance = containerInstance ss.surveyService
+            }
+
+            deploymentNode "Reporting Service Node" "Generates reports" "Python/FastAPI" {
+                reportingServiceInstance = containerInstance ss.reportingService
+            }
+
+            deploymentNode "Notification Service Node" "Sends notifications" "Node.js" {
+                notificationServiceInstance = containerInstance ss.notificationService
+            }
+
+            deploymentNode "Auth Service Node" "Handles auth" "Keycloak/OAuth2" {
+                authServiceInstance = containerInstance ss.authService
+            }
+
+            deploymentNode "Message Queue Node" "Event broker" "RabbitMQ" {
+                messageQueueInstance = containerInstance ss.messageQueue
+            }
+
+            deploymentNode "Database Server" "" "" {
+                deploymentNode "Database Cluster" "Primary DB cluster" "PostgreSQL"{
+                    courseDBInstance = containerInstance ss.courseDB
+                    enrollmentDBInstance = containerInstance ss.enrollmentDB
+                    studentDBInstance = containerInstance ss.studentDB
+                    surveyDBInstance = containerInstance ss.surveyDB
+                }
+
+                deploymentNode "Log storage" "Database for logs and reports" "PostgreSQL" {
+                    logDBInstance = containerInstance ss.logDB
+                }
+            }
+
+        }
+
+        deploymentEnvironment "Development" {
+            deploymentNode "Web application" "Single-page application providing UI for students, teachers, and admins" "React/TypeScript" {
+                webUIInstance = containerInstance ss.webUI
+            }
+
+            deploymentNode "API Gateway Server" "Handles all HTTP requests" "Node.js/Express" {
+                apiGatewayInstance = containerInstance ss.apiGateway
+            }
+
+            deploymentNode "Service container" "Service container" "Java/Spring Boot" {
+                courseServiceInstance = containerInstance ss.courseService
+                enrollmentServiceInstance = containerInstance ss.enrollmentService
+                studentServiceInstance = containerInstance ss.studentService
+                surveyServiceInstance = containerInstance ss.surveyService
+                reportingServiceInstance = containerInstance ss.reportingService
+                notificationServiceInstance = containerInstance ss.notificationService
+                authServiceInstance = containerInstance ss.authService
+            }
+
+            deploymentNode "Message Queue Node" "Event broker" "RabbitMQ" {
+                messageQueueInstance = containerInstance ss.messageQueue
+            }
+
+            deploymentNode "File Storage Node" "Object storage for course materials" {
+                fileStorageInstance = containerInstance ss.fileStorage
+            }
+
+            deploymentNode "Database Server" "" "" {
+                deploymentNode "Database Cluster" "Primary DB cluster" "PostgreSQL"{
+                    courseDBInstance = containerInstance ss.courseDB
+                    enrollmentDBInstance = containerInstance ss.enrollmentDB
+                    studentDBInstance = containerInstance ss.studentDB
+                    surveyDBInstance = containerInstance ss.surveyDB
+                }
+
+                deploymentNode "Log storage" "Database for logs and reports" "PostgreSQL" {
+                    logDBInstance = containerInstance ss.logDB
+                }
+            }
+        }
     }
 
     views {
@@ -591,8 +640,18 @@ workspace "SIS" "Enrollment" {
 
         deployment ss "Production" {
             include *
+        
             autoLayout tb
             
+            description "Deployment diagram showing production environment setup"
+        }
+
+        deployment ss "Development" {
+            include *
+        
+            autoLayout tb
+            
+            description "Deployment diagram showing development environment setup"
         }
 
         styles {
