@@ -110,6 +110,9 @@ workspace "SIS" "Enrollment" {
                 studentRepository = component "Student Repository" {
                     description "Manages persistence operations for student data."
                 }
+                dbPrepopulator = component "DB Prepopulator" {
+                    description "Prepopulates the student database with initial data on startup."
+                }
                 progressTracker = component "Progress Tracker" {
                     description "Tracks student academic progress, including past and current courses."
                 }
@@ -280,6 +283,7 @@ workspace "SIS" "Enrollment" {
         ss.studentService.planManager -> ss.studentService.studentRepository "Fetches student plans"
         ss.studentService.requirementCalculator -> ss.studentService.studentRepository "Fetches student's specialization"
         ss.studentService.progressTracker -> ss.studentService.studentRepository "Fetches student's study history"
+        ss.studentService.dbPrepopulator -> ss.studentService.studentRepository "Uses to write initial data"
 
         # Course Service relationships
         ss.courseService.courseRepository -> ss.courseDB "Reads/writes course data" "SQL"
@@ -492,6 +496,7 @@ workspace "SIS" "Enrollment" {
             include ss.studentService.studentAPIController
             include ss.studentService.studentBusinessLogic
             include ss.studentService.studentRepository
+            include ss.studentService.dbPrepopulator
             include ss.studentService.progressTracker
             include ss.studentService.planManager
             include ss.studentService.requirementCalculator
