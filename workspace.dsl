@@ -238,11 +238,6 @@ workspace "SIS" "Enrollment" {
         ss.webUI.studentDashboardView -> ss.apiGateway "Makes API calls to manage student data" "JSON/REST"
         ss.webUI.surveyView -> ss.apiGateway "Makes API calls to manage surveys" "JSON/REST"
         ss.webUI.adminDashboardView -> ss.apiGateway "Makes API calls for administrative tasks" "JSON/REST"
-        
-        // ss.apiGateway -> ss.courseService "Routes course requests to"
-        // ss.apiGateway -> ss.enrollmentService "Routes enrollment requests to"
-        // ss.apiGateway -> ss.studentService "Routes student requests to"
-        // ss.apiGateway -> ss.surveyService "Routes survey requests to"
 
         # API Gateway to Services
         ss.apiGateway -> ss.courseService.courseAPIController "Routes course requests to"
@@ -250,7 +245,6 @@ workspace "SIS" "Enrollment" {
         ss.apiGateway -> ss.studentService.studentAPIController "Routes student requests to"
         ss.apiGateway -> ss.surveyService.surveyAPIController "Routes survey requests to"
         ss.apiGateway -> ss.authService "Validates tokens with"
-
 
         # Component-level relationships within Course Service
         ss.courseService.courseAPIController -> ss.courseService.courseBusinessLogic "Uses"
