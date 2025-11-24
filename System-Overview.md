@@ -22,7 +22,7 @@ The system provides the following core features:
 - **2. View a Course**
 
   - **User Story**: As a user, I want to view detailed information about a specific course, including its description, prerequisites, and comments from other students.
-  - **Team Member**: Matúš Jurčák
+  - **Team Member**: Matúš Jurčák, Lukáš Hellesch
 
 - **3. Enroll in Course**
 
@@ -41,7 +41,7 @@ The system provides the following core features:
 
 - **6. View Remaining Mandatory Courses**
   - **User Story**: As a student, I want to see a clear overview of the mandatory courses I still need to complete for my degree, and plan my future schedule accordingly.
-  - **Team Member**: Jakub Maťa
+  - **Team Member**: Jakub Maťa, Lukáš Hellesch
 
 ## See details [here](Features-and-Responsibilities.md)
 
