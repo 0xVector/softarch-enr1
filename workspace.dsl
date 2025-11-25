@@ -40,7 +40,7 @@ workspace "SIS" "Enrollment" {
             courseService = container "Course Service" {
                 technology "Java/Spring Boot"
                 description "Manages course catalog, search, viewing, and course metadata"
-                
+
                 courseAPIController = component "Course API Controller" {
                     description "Handles incoming HTTP requests for course-related operations."
                 }
@@ -61,7 +61,7 @@ workspace "SIS" "Enrollment" {
             enrollmentService = container "Enrollment Service" {
                 technology "Java/Spring Boot"
                 description "Handles student enrollments, unenrollments, and waitlist management"
-                
+
                 enrollmentAPIController = component "Enrollment API Controller" {
                     description "Handles incoming HTTP requests for enrollment-related operations."
                 }
@@ -100,7 +100,7 @@ workspace "SIS" "Enrollment" {
             studentService = container "Student Service" {
                 technology "Java/Spring Boot"
                 description "Manages student profiles, study progress tracking, and academic planning"
-                
+
                 studentAPIController = component "Student API Controller" {
                     description "Handles incoming HTTP requests for student-related operations."
                 }
@@ -127,7 +127,7 @@ workspace "SIS" "Enrollment" {
             surveyService = container "Survey Service" {
                 technology "Java/Spring Boot"
                 description "Handles course surveys, comments, ratings, and content moderation"
-                
+
                 surveyAPIController = component "Survey API Controller" {
                     description "Handles incoming HTTP requests for survey-related operations."
                 }
@@ -461,13 +461,13 @@ workspace "SIS" "Enrollment" {
         component ss.courseService "CourseService-Components" {
             include *
             autolayout lr
-            
+
             include ss.courseService.courseAPIController
             include ss.courseService.courseBusinessLogic
             include ss.courseService.courseRepository
             include ss.courseService.searchHandler
             include ss.courseService.waitlistManager
-            
+
             autolayout tb
             description "Course Service internal components"
         }
@@ -475,7 +475,7 @@ workspace "SIS" "Enrollment" {
         component ss.enrollmentService "EnrollmentService-Components" {
             include *
             autolayout tb
-            
+
             include ss.enrollmentService.enrollmentAPIController
             include ss.enrollmentService.enrollmentBusinessLogic
             include ss.enrollmentService.enrollmentRepository
@@ -492,7 +492,7 @@ workspace "SIS" "Enrollment" {
         component ss.studentService "StudentService-Components" {
             include *
             autolayout lr
-            
+
             include ss.studentService.studentAPIController
             include ss.studentService.studentBusinessLogic
             include ss.studentService.studentRepository
@@ -508,7 +508,7 @@ workspace "SIS" "Enrollment" {
         component ss.surveyService "SurveyService-Components" {
             include *
             autolayout lr
-            
+
             include ss.surveyService.surveyAPIController
             include ss.surveyService.surveyBusinessLogic
             include ss.surveyService.surveyRepository
@@ -582,22 +582,22 @@ workspace "SIS" "Enrollment" {
         }
         dynamic ss.studentService "StudentService-InternalFlow-ViewDuties" "Component interactions inside the Student Service when viewing duties" {
             ss.apiGateway -> ss.studentService.studentAPIController "Forwards GET request for duties"
-            ss.studentService.studentAPIController -> ss.studentService.studentBusinessLogic "Uses to orchestrate fetching duties"     
+            ss.studentService.studentAPIController -> ss.studentService.studentBusinessLogic "Uses to orchestrate fetching duties"
             ss.studentService.studentBusinessLogic -> ss.studentService.studentRepository "Fetches student profile (major, specialization)"
             ss.studentService.studentRepository -> ss.studentDB "Reads student data"
             ss.studentService.studentBusinessLogic -> ss.studentService.progressTracker "Uses to get completed courses/credits"
             ss.studentService.progressTracker -> ss.studentService.studentRepository "Fetches student's study history"
             ss.studentService.studentBusinessLogic -> ss.studentService.requirementCalculator "Uses to calculate remaining requirements"
-            ss.studentService.requirementCalculator -> ss.courseService "Fetches mandatory courses and credit reqs"        
+            ss.studentService.requirementCalculator -> ss.courseService "Fetches mandatory courses and credit reqs"
             autolayout tb
         }
 
         dynamic ss.studentService "StudentService-InternalFlow-SavePlan" "Component interactions inside the Student Service when saving a plan" {
             ss.apiGateway -> ss.studentService.studentAPIController "Forwards POST request to save plan"
-            ss.studentService.studentAPIController -> ss.studentService.studentBusinessLogic "Uses to orchestrate saving the plan"      
+            ss.studentService.studentAPIController -> ss.studentService.studentBusinessLogic "Uses to orchestrate saving the plan"
             ss.studentService.studentBusinessLogic -> ss.studentService.planManager "Uses to validate and store plan"
             ss.studentService.planManager -> ss.studentService.studentRepository "Writes/overwrites student plan"
-            ss.studentService.studentRepository -> ss.studentDB "Saves plan to database"      
+            ss.studentService.studentRepository -> ss.studentDB "Saves plan to database"
             autolayout tb
         }
     */  
@@ -680,45 +680,31 @@ workspace "SIS" "Enrollment" {
             autolayout lr
         }
 
-        dynamic ss "CourseViewFlow" "Student views course details and checks enrollment eligibility" {
-            student -> ss.webUI "Navigates to course detail page"
-            ss.webUI -> ss.apiGateway "GET /courses/{courseId} (fetch course details)"
-            ss.apiGateway -> ss.courseService "Forwards request for course data"
-            ss.courseService -> ss.courseDB "Queries course information"
-            ss.courseDB -> ss.courseService "Returns course details (title, description, metadata)"
-            ss.courseService -> ss.apiGateway "Returns course data"
-            ss.apiGateway -> ss.webUI "Displays course information to user"
-            student -> ss.webUI "Clicks 'Can I enroll?' button"
-            ss.webUI -> ss.apiGateway "GET /enrollments/eligibility?courseId={id} (check eligibility)"
-            ss.apiGateway -> ss.enrollmentService "Validates enrollment eligibility"
-            ss.enrollmentService -> ss.enrollmentDB "Checks prerequisites, capacity, and credit limits"
-            ss.enrollmentDB -> ss.enrollmentService "Returns eligibility result"
-            ss.enrollmentService -> ss.apiGateway "Returns eligibility status (TRUE/FALSE)"
-            ss.apiGateway -> ss.webUI "Displays eligibility notification"
-            student -> ss.webUI "Clicks 'comments' to view course surveys"
-            ss.webUI -> ss.apiGateway "GET /surveys/course/{courseId} (fetch comments)"
-            ss.apiGateway -> ss.surveyService "Forwards request for course surveys"
-            ss.surveyService -> ss.surveyDB "Queries comments and ratings"
-            ss.surveyDB -> ss.surveyService "Returns comments (author, date, ratings)"
-            ss.surveyService -> ss.apiGateway "Returns survey data"
-            ss.apiGateway -> ss.webUI "Displays comments section to user"
+        dynamic ss "CourseViewFlow" "Student views course details" {
+            student -> ss.webUI "Views a course"
+            ss.webUI -> ss.apiGateway "Fetches course details"
+            ss.apiGateway -> ss.courseService "Gets course details"
+            ss.courseService -> ss.courseDB "Selects course information"
+            ss.courseDB -> ss.courseService "Returns course details"
+            ss.courseService -> ss.apiGateway "Returns course details"
+            ss.apiGateway -> ss.webUI "Displays course details"
 
-            autolayout tb
+            autolayout lr
         }
 
         deployment ss "Production" {
             include *
-        
+
             autoLayout tb
-            
+
             description "Deployment diagram showing production environment setup"
         }
 
         deployment ss "Development" {
             include *
-        
+
             autoLayout tb
-            
+
             description "Deployment diagram showing development environment setup"
         }
 
