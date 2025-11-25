@@ -342,7 +342,7 @@ workspace "SIS" "Enrollment" {
                 apiGatewayInstance = containerInstance ss.apiGateway
             }
 
-            deploymentNode "Course Service Node" "Manages courses" "Java/Spring Boot" {
+           deploymentNode "Course Service Node" "Manages courses" "Java/Spring Boot" {
                 courseServiceInstance = containerInstance ss.courseService
             }
 
@@ -546,6 +546,7 @@ workspace "SIS" "Enrollment" {
             ss.messageQueue -> ss.notificationService "Notifies student of final outcome"
             autolayout lr
         }
+        /*
         dynamic ss.enrollmentService "EnrollmentService-InternalFlow" "Component interactions inside the Enrollment Service during an enrollment" {
             ss.apiGateway -> ss.enrollmentService.enrollmentAPIController "Forwards GET request for tickets"
             ss.enrollmentService.enrollmentAPIController -> ss.enrollmentService.enrollmentBusinessLogic "Uses to validate and fetch tickets"
@@ -599,7 +600,75 @@ workspace "SIS" "Enrollment" {
             ss.studentService.studentRepository -> ss.studentDB "Saves plan to database"      
             autolayout tb
         }
+    */  
+        dynamic ss "EnrollmentServiceFlow" "High-level interactions during student enrollment" {
+            student -> ss.webUI "Requests enrollment / views tickets"
+            ss.webUI -> ss.apiGateway "GET /enrollments/tickets"
+            ss.apiGateway -> ss.enrollmentService "Fetches available tickets"
+            ss.enrollmentService -> ss.enrollmentDB "Reads ticket and prerequisite data"
+            ss.enrollmentDB -> ss.enrollmentService "Returns data"
 
+            student -> ss.webUI "Confirms enrollment"
+            ss.webUI -> ss.apiGateway "POST /enrollments"
+            ss.apiGateway -> ss.enrollmentService "Processes enrollment"
+            ss.enrollmentService -> ss.enrollmentDB "Writes enrollment record"
+            ss.enrollmentService -> ss.messageQueue "Publishes EnrollmentRequested"
+            ss.messageQueue -> ss.courseService "Arbitrates capacity / final approval"
+            ss.courseService -> ss.messageQueue "Publishes Enrollment Confirmed/Failed"
+            ss.messageQueue -> ss.notificationService "Notifies student"
+            autolayout tb
+        }
+        dynamic ss "CommentFlow" "Interactions when writing a comment" {
+            student -> ss.webUI "Clicks Send comment"
+            ss.webUI -> ss.apiGateway "POSTs comment written"
+            ss.apiGateway -> ss.surveyService "Validates comment for moderation"
+            ss.surveyService -> ss.messageQueue "Publishes comment sent"
+            ss.surveyService -> ss.surveyDB "Stores comment"
+            ss.messageQueue -> ss.notificationService "Notifies course owner that comment was written"
+            
+            autolayout tb
+        }
+
+        dynamic ss "SurveyFlow" "Interactions when submitting a survey" {
+            student -> ss.webUI "Clicks Submit survey"
+            ss.webUI -> ss.apiGateway "POSTs survey submitted"
+            ss.apiGateway -> ss.surveyService "Validates form correctness."
+            ss.surveyService -> ss.studentService "Validates user for elegibility."
+            ss.surveyService -> ss.messageQueue "Publishes survey submitted"
+            ss.surveyService -> ss.surveyDB "Stores survey form"
+            ss.messageQueue -> ss.notificationService "Notifies course owner that survey was written"
+            
+            autolayout tb
+            
+        }
+        dynamic ss "StudentViewDutiesFlow" "Interactions when viewing study duties" {
+            student -> ss.webUI "Opens Duties page"
+            ss.webUI -> ss.apiGateway "GET /student/duties"
+            ss.apiGateway -> ss.studentService "Fetches student profile and progress"
+
+            ss.studentService -> ss.studentDB "Reads student profile and history"
+            ss.studentDB -> ss.studentService "Returns data"
+
+            ss.studentService -> ss.courseService "Fetches mandatory courses & requirements"
+            ss.courseService -> ss.courseDB "Reads course requirement data"
+            ss.courseDB -> ss.courseService "Returns results"
+
+            ss.studentService -> ss.apiGateway "Returns duties overview"
+            ss.apiGateway -> ss.webUI "Displays duties"
+            autolayout tb
+        }
+        dynamic ss "StudentSavePlanFlow" "Interactions when saving a study plan" {
+            student -> ss.webUI "Edits and saves plan"
+            ss.webUI -> ss.apiGateway "POST /student/plan"
+            ss.apiGateway -> ss.studentService "Validates and stores plan"
+
+            ss.studentService -> ss.studentDB "Writes updated plan"
+            ss.studentDB -> ss.studentService "Confirms save"
+
+            ss.studentService -> ss.apiGateway "Returns success"
+            ss.apiGateway -> ss.webUI "Displays confirmation"
+            autolayout tb
+        }
         dynamic ss "LeaveCourseFlow" "Student leaves a course" {
             student -> ss.webUI "Clicks 'Leave Course' on a selected course"
             ss.webUI -> ss.apiGateway "POST /enrollments/leave (leave selected course)"
