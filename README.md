@@ -1,3 +1,5 @@
 # Software architectures team Tue ENR1
 
-[SharePoint](https://cunicz-my.sharepoint.com/:f:/g/personal/11165798_cuni_cz/EjVVRpkl9ShNg5M32JX3ftsB_iCvSPe10qQhRrTrcGT4BQ?e=Vn1I3S)
+See [System-Overview.md](System-Overview.md) for the main documentation
+See [Features-and-Responsibilities.md](Features-and-Responsibilities.md) for the list of Features and their responsibilities
+See [diagram-notes.md](diagram-notes.md) for some interesting desisions
