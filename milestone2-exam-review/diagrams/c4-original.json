@@ -1,0 +1,1587 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2025-12-05T19:37:35Z",
+  "model" : {
+    "people" : [ {
+      "id" : "1",
+      "location" : "Unspecified",
+      "name" : "Teacher",
+      "properties" : {
+        "structurizr.dsl.identifier" : "teacher"
+      },
+      "relationships" : [ {
+        "description" : "Schedules exams, awards grades",
+        "destinationId" : "7",
+        "id" : "47",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Validates as a teacher",
+        "destinationId" : "41",
+        "id" : "62",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Validates as a teacher",
+        "destinationId" : "35",
+        "id" : "63",
+        "linkedRelationshipId" : "62",
+        "sourceId" : "1"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "id" : "2",
+      "location" : "Unspecified",
+      "name" : "Student",
+      "properties" : {
+        "structurizr.dsl.identifier" : "student"
+      },
+      "relationships" : [ {
+        "description" : "Registers for exams, views results",
+        "destinationId" : "7",
+        "id" : "46",
+        "sourceId" : "2",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Validates as a student",
+        "destinationId" : "34",
+        "id" : "51",
+        "sourceId" : "2",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Validates as a student",
+        "destinationId" : "28",
+        "id" : "52",
+        "linkedRelationshipId" : "51",
+        "sourceId" : "2"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "id" : "3",
+      "location" : "Unspecified",
+      "name" : "Manager",
+      "properties" : {
+        "structurizr.dsl.identifier" : "manager"
+      },
+      "relationships" : [ {
+        "description" : "Monitors exam schedules",
+        "destinationId" : "7",
+        "id" : "48",
+        "sourceId" : "3",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "documentation" : { },
+      "id" : "4",
+      "location" : "Unspecified",
+      "name" : "Email Service",
+      "properties" : {
+        "structurizr.dsl.identifier" : "emailservice"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "containers" : [ {
+        "description" : "SIS interface for communication with SIS inner databases",
+        "documentation" : { },
+        "id" : "6",
+        "name" : "SIS Database Interface",
+        "properties" : {
+          "structurizr.dsl.identifier" : "sis.dbinterface"
+        },
+        "tags" : "Element,Container"
+      } ],
+      "description" : "Rest of the study information system",
+      "documentation" : { },
+      "id" : "5",
+      "location" : "Unspecified",
+      "name" : "SIS",
+      "properties" : {
+        "structurizr.dsl.identifier" : "sis"
+      },
+      "relationships" : [ {
+        "description" : "Autenticates users, sends data from shared SIS databases...",
+        "destinationId" : "7",
+        "id" : "49",
+        "sourceId" : "5",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Software System"
+    }, {
+      "containers" : [ {
+        "documentation" : { },
+        "id" : "8",
+        "name" : "Exam Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.examdb"
+        },
+        "tags" : "Element,Container,Database"
+      }, {
+        "components" : [ {
+          "description" : "Handles student UI events for exam sign-up and grade viewing (merged Dashboard Controller + original Sign-up Controller).",
+          "documentation" : { },
+          "id" : "10",
+          "name" : "Sign-up Controller",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentviewpoint.signupcontroller"
+          },
+          "relationships" : [ {
+            "description" : "Sends student's sign-up or exam-term request",
+            "destinationId" : "11",
+            "id" : "85",
+            "sourceId" : "10",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Requests grades for the authenticated student",
+            "destinationId" : "15",
+            "id" : "98",
+            "sourceId" : "10",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Manages main business logic for exam sign-up: coordinates services, translations and workflow.",
+          "documentation" : { },
+          "id" : "11",
+          "name" : "Sign-up Manager",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentviewpoint.signupmanager"
+          },
+          "relationships" : [ {
+            "description" : "Requests exam terms",
+            "destinationId" : "12",
+            "id" : "86",
+            "sourceId" : "11",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Requests student profile / sign-up info",
+            "destinationId" : "14",
+            "id" : "87",
+            "sourceId" : "11",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Requests eligibility validation",
+            "destinationId" : "16",
+            "id" : "88",
+            "sourceId" : "11",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Send to ntfHandler about change",
+            "destinationId" : "42",
+            "id" : "103",
+            "sourceId" : "11",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Forms queries, interacts with exam term data in the database and returns available terms.",
+          "documentation" : { },
+          "id" : "12",
+          "name" : "Exam Term Service",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentviewpoint.examtermservice"
+          },
+          "relationships" : [ {
+            "description" : "Filters exam terms by rules",
+            "destinationId" : "13",
+            "id" : "89",
+            "sourceId" : "12",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Reads and updates exam term data",
+            "destinationId" : "8",
+            "id" : "90",
+            "sourceId" : "12",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Validity check for exam term data",
+            "destinationId" : "16",
+            "id" : "97",
+            "sourceId" : "12",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Filters exam terms by capacity, room constraints and other conditions.",
+          "documentation" : { },
+          "id" : "13",
+          "name" : "Room Filter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentviewpoint.roomfilter"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Fetches and updates student-related data used during exam sign-up.",
+          "documentation" : { },
+          "id" : "14",
+          "name" : "Student Service",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentviewpoint.studentservice"
+          },
+          "relationships" : [ {
+            "description" : "Reads and updates student sign-up records",
+            "destinationId" : "6",
+            "id" : "92",
+            "sourceId" : "14",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Reads and updates student sign-up records",
+            "destinationId" : "5",
+            "id" : "93",
+            "linkedRelationshipId" : "92",
+            "sourceId" : "14"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Enables viewing and filtering of grades (merged Read-only API, Data Getter and Rules).",
+          "documentation" : { },
+          "id" : "15",
+          "name" : "Grade Reader",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentviewpoint.gradereader"
+          },
+          "relationships" : [ {
+            "description" : "Reads grades of the student",
+            "destinationId" : "6",
+            "id" : "99",
+            "sourceId" : "15",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Reads grades of the student",
+            "destinationId" : "5",
+            "id" : "100",
+            "linkedRelationshipId" : "99",
+            "sourceId" : "15"
+          }, {
+            "description" : "Requests validation of database data",
+            "destinationId" : "16",
+            "id" : "101",
+            "sourceId" : "15",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Checks if the student is qualified for an exam and validates integrity of data returned from databases (merged validators).",
+          "documentation" : { },
+          "id" : "16",
+          "name" : "Validator",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentviewpoint.validator"
+          },
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Student-facing application combining dashboard (student part), exam sign-up and grade viewing.",
+        "documentation" : { },
+        "id" : "9",
+        "name" : "Student Viewpoint",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.studentviewpoint"
+        },
+        "relationships" : [ {
+          "description" : "Calls for sending notifications to users",
+          "destinationId" : "43",
+          "id" : "75",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Calls for sending notifications to users",
+          "destinationId" : "42",
+          "id" : "76",
+          "linkedRelationshipId" : "75",
+          "sourceId" : "9"
+        }, {
+          "description" : "Reads and updates exam term data",
+          "destinationId" : "8",
+          "id" : "91",
+          "linkedRelationshipId" : "90",
+          "sourceId" : "9"
+        }, {
+          "description" : "Reads and updates student sign-up records",
+          "destinationId" : "6",
+          "id" : "94",
+          "linkedRelationshipId" : "92",
+          "sourceId" : "9"
+        }, {
+          "description" : "Reads and updates student sign-up records",
+          "destinationId" : "5",
+          "id" : "95",
+          "linkedRelationshipId" : "92",
+          "sourceId" : "9"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "components" : [ {
+          "description" : "Filters subjects for the given teacher",
+          "documentation" : { },
+          "group" : "Exam Term Handler",
+          "id" : "18",
+          "name" : "Subject Filter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherviewpoint.subjectfilter"
+          },
+          "relationships" : [ {
+            "description" : "Gives list of subjects of the teacher",
+            "destinationId" : "21",
+            "id" : "111",
+            "sourceId" : "18",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Filters free rooms with given parameters from the database for the given term",
+          "documentation" : { },
+          "group" : "Exam Term Handler",
+          "id" : "19",
+          "name" : "Room Filter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherviewpoint.roomfilter"
+          },
+          "relationships" : [ {
+            "description" : "Gives list of available rooms",
+            "destinationId" : "21",
+            "id" : "110",
+            "sourceId" : "19",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Communicates with the dashboard to present the exam editor to the teacher",
+          "documentation" : { },
+          "group" : "Exam Term Handler",
+          "id" : "20",
+          "name" : "Exams Editor API",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherviewpoint.examseditorapi"
+          },
+          "relationships" : [ {
+            "description" : "Gives actual values from user",
+            "destinationId" : "21",
+            "id" : "117",
+            "sourceId" : "20",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Creates exam term with parameters given by the teacher, restricted by data read from the databases",
+          "documentation" : { },
+          "group" : "Exam Term Handler",
+          "id" : "21",
+          "name" : "Exam Term Editor",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherviewpoint.examseditor"
+          },
+          "relationships" : [ {
+            "description" : "Saves changes",
+            "destinationId" : "8",
+            "id" : "112",
+            "sourceId" : "21",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Alerts about changes",
+            "destinationId" : "42",
+            "id" : "114",
+            "sourceId" : "21",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Sets values to show",
+            "destinationId" : "20",
+            "id" : "116",
+            "sourceId" : "21",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles request for SIS database interface",
+          "documentation" : { },
+          "group" : "Exam Term Handler",
+          "id" : "22",
+          "name" : "SIS Data Getter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherviewpoint.sisdatagetter"
+          },
+          "relationships" : [ {
+            "description" : "Requests data",
+            "destinationId" : "6",
+            "id" : "104",
+            "sourceId" : "22",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Requests data",
+            "destinationId" : "5",
+            "id" : "105",
+            "linkedRelationshipId" : "104",
+            "sourceId" : "22"
+          }, {
+            "description" : "Sends subject data",
+            "destinationId" : "18",
+            "id" : "108",
+            "sourceId" : "22",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Sends room data",
+            "destinationId" : "19",
+            "id" : "109",
+            "sourceId" : "22",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Filters data from the exam database",
+          "documentation" : { },
+          "group" : "Awarding Grades Handler",
+          "id" : "23",
+          "name" : "Exams Filter",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherviewpoint.examsfilter"
+          },
+          "relationships" : [ {
+            "description" : "Requests the data from databases.",
+            "destinationId" : "26",
+            "id" : "123",
+            "sourceId" : "23",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Communicates with the dashboard to present the grades editor to the teacher",
+          "documentation" : { },
+          "group" : "Awarding Grades Handler",
+          "id" : "24",
+          "name" : "Grades Editor API",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherviewpoint.gradeseditorapi"
+          },
+          "relationships" : [ {
+            "description" : "Requests the data from sis database.",
+            "destinationId" : "6",
+            "id" : "119",
+            "sourceId" : "24",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Requests the data from sis database.",
+            "destinationId" : "5",
+            "id" : "120",
+            "linkedRelationshipId" : "119",
+            "sourceId" : "24"
+          }, {
+            "description" : "Requests writing grade.",
+            "destinationId" : "25",
+            "id" : "121",
+            "sourceId" : "24",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Adds additional filtering constraints.",
+            "destinationId" : "23",
+            "id" : "122",
+            "sourceId" : "24",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Allows creating, editing and deleting grades",
+          "documentation" : { },
+          "group" : "Awarding Grades Handler",
+          "id" : "25",
+          "name" : "Grade Editor",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherviewpoint.gradeseditor"
+          },
+          "relationships" : [ {
+            "description" : "Stores grades to the database",
+            "destinationId" : "6",
+            "id" : "128",
+            "sourceId" : "25",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Stores grades to the database",
+            "destinationId" : "5",
+            "id" : "129",
+            "linkedRelationshipId" : "128",
+            "sourceId" : "25"
+          }, {
+            "description" : "Alerts about changes",
+            "destinationId" : "42",
+            "id" : "130",
+            "sourceId" : "25",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Loads data from databases",
+          "documentation" : { },
+          "group" : "Awarding Grades Handler",
+          "id" : "26",
+          "name" : "Database Data Loader",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherviewpoint.dbdataloader"
+          },
+          "relationships" : [ {
+            "description" : "Gets data from SIS databases.",
+            "destinationId" : "6",
+            "id" : "124",
+            "sourceId" : "26",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Gets data from SIS databases.",
+            "destinationId" : "5",
+            "id" : "125",
+            "linkedRelationshipId" : "124",
+            "sourceId" : "26"
+          }, {
+            "description" : "Requests data from internal db.",
+            "destinationId" : "27",
+            "id" : "126",
+            "sourceId" : "26",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Abstraction over exams database",
+          "documentation" : { },
+          "group" : "Awarding Grades Handler",
+          "id" : "27",
+          "name" : "Exam repository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherviewpoint.examrepository"
+          },
+          "relationships" : [ {
+            "description" : "Gets data from db.",
+            "destinationId" : "8",
+            "id" : "127",
+            "sourceId" : "27",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Controls creating, editing and deleting of the exam terms",
+        "documentation" : { },
+        "id" : "17",
+        "name" : "Teacher Viewpoint",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.teacherviewpoint"
+        },
+        "relationships" : [ {
+          "description" : "Calls for sending notifications to users",
+          "destinationId" : "43",
+          "id" : "73",
+          "sourceId" : "17",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Calls for sending notifications to users",
+          "destinationId" : "42",
+          "id" : "74",
+          "linkedRelationshipId" : "73",
+          "sourceId" : "17"
+        }, {
+          "description" : "Requests data",
+          "destinationId" : "6",
+          "id" : "106",
+          "linkedRelationshipId" : "104",
+          "sourceId" : "17"
+        }, {
+          "description" : "Requests data",
+          "destinationId" : "5",
+          "id" : "107",
+          "linkedRelationshipId" : "104",
+          "sourceId" : "17"
+        }, {
+          "description" : "Saves changes",
+          "destinationId" : "8",
+          "id" : "113",
+          "linkedRelationshipId" : "112",
+          "sourceId" : "17"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "components" : [ {
+          "description" : "Renders the UI and updates when data changes",
+          "documentation" : { },
+          "id" : "29",
+          "name" : "View Components",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentdashboard.vcomponents"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles UI events",
+          "documentation" : { },
+          "id" : "30",
+          "name" : "Dashboard Controller",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentdashboard.dsbcontroller"
+          },
+          "relationships" : [ {
+            "description" : "Updates UI",
+            "destinationId" : "29",
+            "id" : "54",
+            "sourceId" : "30",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Controls navigation between pages",
+          "documentation" : { },
+          "id" : "31",
+          "name" : "Page Router",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentdashboard.pgrouter"
+          },
+          "relationships" : [ {
+            "description" : "Show correct page and accept page requests",
+            "destinationId" : "30",
+            "id" : "56",
+            "sourceId" : "31",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles communication with backend",
+          "documentation" : { },
+          "id" : "32",
+          "name" : "API Service",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentdashboard.apiservice"
+          },
+          "relationships" : [ {
+            "description" : "Updates results based on data and responds to requests",
+            "destinationId" : "30",
+            "id" : "55",
+            "sourceId" : "32",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Requests and receiveViewpoint",
+            "destinationId" : "9",
+            "id" : "60",
+            "sourceId" : "32",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles real-time notification updates",
+          "documentation" : { },
+          "id" : "33",
+          "name" : "Notification UI Handler",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentdashboard.ntfuihandler"
+          },
+          "relationships" : [ {
+            "description" : "For giving notifications",
+            "destinationId" : "30",
+            "id" : "59",
+            "sourceId" : "33",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles login state",
+          "documentation" : { },
+          "id" : "34",
+          "name" : "Authentication Handler",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.studentdashboard.authhandler"
+          },
+          "relationships" : [ {
+            "description" : "User interacts with UI",
+            "destinationId" : "30",
+            "id" : "53",
+            "sourceId" : "34",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Handles UI to students and teachers",
+        "documentation" : { },
+        "id" : "28",
+        "name" : "Student Dashboard",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.studentdashboard"
+        },
+        "relationships" : [ {
+          "description" : "Requests and receiveViewpoint",
+          "destinationId" : "9",
+          "id" : "61",
+          "linkedRelationshipId" : "60",
+          "sourceId" : "28"
+        }, {
+          "destinationId" : "10",
+          "id" : "84",
+          "sourceId" : "28",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Request viewpoint.",
+          "destinationId" : "11",
+          "id" : "102",
+          "sourceId" : "28",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "components" : [ {
+          "description" : "Renders the UI and updates when data changes",
+          "documentation" : { },
+          "id" : "36",
+          "name" : "View Components",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherdashboard.vcomponents"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles UI events",
+          "documentation" : { },
+          "id" : "37",
+          "name" : "Dashboard Controller",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherdashboard.dsbcontroller"
+          },
+          "relationships" : [ {
+            "description" : "Updates UI",
+            "destinationId" : "36",
+            "id" : "65",
+            "sourceId" : "37",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Controls navigation between pages",
+          "documentation" : { },
+          "id" : "38",
+          "name" : "Page Router",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherdashboard.pgrouter"
+          },
+          "relationships" : [ {
+            "description" : "Show correct page and accept page requests",
+            "destinationId" : "37",
+            "id" : "67",
+            "sourceId" : "38",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles communication with backend",
+          "documentation" : { },
+          "id" : "39",
+          "name" : "API Service",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherdashboard.apiservice"
+          },
+          "relationships" : [ {
+            "description" : "Updates results based on data and responds to requests",
+            "destinationId" : "37",
+            "id" : "66",
+            "sourceId" : "39",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Requests and receiveViewpoint",
+            "destinationId" : "17",
+            "id" : "71",
+            "sourceId" : "39",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles real-time notification updates",
+          "documentation" : { },
+          "id" : "40",
+          "name" : "Notification UI Handler",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherdashboard.ntfuihandler"
+          },
+          "relationships" : [ {
+            "description" : "For giving notifications",
+            "destinationId" : "37",
+            "id" : "70",
+            "sourceId" : "40",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Handles login state",
+          "documentation" : { },
+          "id" : "41",
+          "name" : "Authentication Handler",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.teacherdashboard.authhandler"
+          },
+          "relationships" : [ {
+            "description" : "User interacts with UI",
+            "destinationId" : "37",
+            "id" : "64",
+            "sourceId" : "41",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Handles UI to students and teachers",
+        "documentation" : { },
+        "id" : "35",
+        "name" : "Teacher Dashboard",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.teacherdashboard"
+        },
+        "relationships" : [ {
+          "description" : "Requests and receiveViewpoint",
+          "destinationId" : "17",
+          "id" : "72",
+          "linkedRelationshipId" : "71",
+          "sourceId" : "35"
+        }, {
+          "description" : "Uses exams editor API",
+          "destinationId" : "20",
+          "id" : "115",
+          "sourceId" : "35",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Uses grades editor API",
+          "destinationId" : "24",
+          "id" : "118",
+          "sourceId" : "35",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container"
+      }, {
+        "components" : [ {
+          "description" : "Creates proper notifications based on handler events",
+          "documentation" : { },
+          "id" : "43",
+          "name" : "Notification Maker",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.ntfhandler.ntfmaker"
+          },
+          "relationships" : [ {
+            "description" : "Validates the people exist",
+            "destinationId" : "44",
+            "id" : "77",
+            "sourceId" : "43",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Sends real-time notification events to the student",
+            "destinationId" : "28",
+            "id" : "78",
+            "sourceId" : "43",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Sends real-time notification events to the teacher",
+            "destinationId" : "35",
+            "id" : "79",
+            "sourceId" : "43",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Validates the existence of users",
+          "documentation" : { },
+          "id" : "44",
+          "name" : "User Validator",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.ntfhandler.usrvalidator"
+          },
+          "relationships" : [ {
+            "description" : "Formats emails",
+            "destinationId" : "45",
+            "id" : "80",
+            "sourceId" : "44",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Formats and sends emails",
+          "documentation" : { },
+          "id" : "45",
+          "name" : "Emailer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ss.ntfhandler.emailer"
+          },
+          "relationships" : [ {
+            "description" : "Sends notifications by mail",
+            "destinationId" : "4",
+            "id" : "81",
+            "sourceId" : "45",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Handles messeges about success/failure of user operations",
+        "documentation" : { },
+        "id" : "42",
+        "name" : "Notification Handler",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.ntfhandler"
+        },
+        "relationships" : [ {
+          "description" : "Sends notification data in real-time",
+          "destinationId" : "33",
+          "id" : "57",
+          "sourceId" : "42",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Sends notification data in real-time",
+          "destinationId" : "28",
+          "id" : "58",
+          "linkedRelationshipId" : "57",
+          "sourceId" : "42"
+        }, {
+          "description" : "Sends notification data in real-time",
+          "destinationId" : "40",
+          "id" : "68",
+          "sourceId" : "42",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Sends notification data in real-time",
+          "destinationId" : "35",
+          "id" : "69",
+          "linkedRelationshipId" : "68",
+          "sourceId" : "42"
+        }, {
+          "description" : "Sends notifications by mail",
+          "destinationId" : "4",
+          "id" : "82",
+          "linkedRelationshipId" : "81",
+          "sourceId" : "42"
+        } ],
+        "tags" : "Element,Container"
+      } ],
+      "description" : "Handles scheduling exams, registring for exams and awarding and viewing grades",
+      "documentation" : { },
+      "id" : "7",
+      "location" : "Unspecified",
+      "name" : "Exams Module",
+      "properties" : {
+        "structurizr.dsl.identifier" : "ss"
+      },
+      "relationships" : [ {
+        "description" : "Sends requests",
+        "destinationId" : "5",
+        "id" : "50",
+        "sourceId" : "7",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Sends notifications by mail",
+        "destinationId" : "4",
+        "id" : "83",
+        "linkedRelationshipId" : "81",
+        "sourceId" : "7"
+      }, {
+        "description" : "Reads and updates student sign-up records",
+        "destinationId" : "6",
+        "id" : "96",
+        "linkedRelationshipId" : "92",
+        "sourceId" : "7"
+      } ],
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlICJOYW1lIiAiRGVzY3JpcHRpb24iIHsKCiAgICAhaWRlbnRpZmllcnMgaGllcmFyY2hpY2FsCgogICAgbW9kZWwgewogICAgICAgIHRlYWNoZXIgPSBwZXJzb24gIlRlYWNoZXIiCiAgICAgICAgc3R1ZGVudCA9IHBlcnNvbiAiU3R1ZGVudCIKICAgICAgICBtYW5hZ2VyID0gcGVyc29uICJNYW5hZ2VyIgogICAgICAgIGVtYWlsU2VydmljZSA9IHNvZnR3YXJlU3lzdGVtICJFbWFpbCBTZXJ2aWNlIgogICAgICAgIAogICAgICAgIHNpcyA9IHNvZnR3YXJlU3lzdGVtICJTSVMiIHsKICAgICAgICAgICAgZGVzY3JpcHRpb24gIlJlc3Qgb2YgdGhlIHN0dWR5IGluZm9ybWF0aW9uIHN5c3RlbSIKICAgICAgICAgICAgCiAgICAgICAgICAgIGRiSW50ZXJmYWNlID0gY29udGFpbmVyICJTSVMgRGF0YWJhc2UgSW50ZXJmYWNlIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiU0lTIGludGVyZmFjZSBmb3IgY29tbXVuaWNhdGlvbiB3aXRoIFNJUyBpbm5lciBkYXRhYmFzZXMiCiAgICAgICAgICAgIH0KICAgICAgICAgICAgCiAgICAgICAgfQogICAgICAgIAoKICAgICAgICBzcyA9IHNvZnR3YXJlU3lzdGVtICJFeGFtcyBNb2R1bGUiIHsKICAgICAgICAgICAgZGVzY3JpcHRpb24gIkhhbmRsZXMgc2NoZWR1bGluZyBleGFtcywgcmVnaXN0cmluZyBmb3IgZXhhbXMgYW5kIGF3YXJkaW5nIGFuZCB2aWV3aW5nIGdyYWRlcyIKICAgICAgICAgICAgCiAgICAgICAgICAgIGV4YW1EYiA9IGNvbnRhaW5lciAiRXhhbSBEYXRhYmFzZSIgewogICAgICAgICAgICAgICAgdGFncyAiRGF0YWJhc2UiCiAgICAgICAgICAgIH0KICAgICAgICAgICAgCiAgICAgICAgICAgIAogICAgICAgICAgICBzdHVkZW50Vmlld3BvaW50ID0gY29udGFpbmVyICJTdHVkZW50IFZpZXdwb2ludCIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlN0dWRlbnQtZmFjaW5nIGFwcGxpY2F0aW9uIGNvbWJpbmluZyBkYXNoYm9hcmQgKHN0dWRlbnQgcGFydCksIGV4YW0gc2lnbi11cCBhbmQgZ3JhZGUgdmlld2luZy4iCgogICAgICAgICAgICAgICAgCgogICAgICAgICAgICAgICAgc2lnblVwQ29udHJvbGxlciA9IGNvbXBvbmVudCAiU2lnbi11cCBDb250cm9sbGVyIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkhhbmRsZXMgc3R1ZGVudCBVSSBldmVudHMgZm9yIGV4YW0gc2lnbi11cCBhbmQgZ3JhZGUgdmlld2luZyAobWVyZ2VkIERhc2hib2FyZCBDb250cm9sbGVyICsgb3JpZ2luYWwgU2lnbi11cCBDb250cm9sbGVyKS4iCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgc2lnblVwTWFuYWdlciA9IGNvbXBvbmVudCAiU2lnbi11cCBNYW5hZ2VyIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIk1hbmFnZXMgbWFpbiBidXNpbmVzcyBsb2dpYyBmb3IgZXhhbSBzaWduLXVwOiBjb29yZGluYXRlcyBzZXJ2aWNlcywgdHJhbnNsYXRpb25zIGFuZCB3b3JrZmxvdy4iCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgZXhhbVRlcm1TZXJ2aWNlID0gY29tcG9uZW50ICJFeGFtIFRlcm0gU2VydmljZSIgewogICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJGb3JtcyBxdWVyaWVzLCBpbnRlcmFjdHMgd2l0aCBleGFtIHRlcm0gZGF0YSBpbiB0aGUgZGF0YWJhc2UgYW5kIHJldHVybnMgYXZhaWxhYmxlIHRlcm1zLiIKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICByb29tRmlsdGVyID0gY29tcG9uZW50ICJSb29tIEZpbHRlciIgewogICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJGaWx0ZXJzIGV4YW0gdGVybXMgYnkgY2FwYWNpdHksIHJvb20gY29uc3RyYWludHMgYW5kIG90aGVyIGNvbmRpdGlvbnMuIgogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIHN0dWRlbnRTZXJ2aWNlID0gY29tcG9uZW50ICJTdHVkZW50IFNlcnZpY2UiIHsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiRmV0Y2hlcyBhbmQgdXBkYXRlcyBzdHVkZW50LXJlbGF0ZWQgZGF0YSB1c2VkIGR1cmluZyBleGFtIHNpZ24tdXAuIgogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIGdyYWRlUmVhZGVyID0gY29tcG9uZW50ICJHcmFkZSBSZWFkZXIiIHsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiRW5hYmxlcyB2aWV3aW5nIGFuZCBmaWx0ZXJpbmcgb2YgZ3JhZGVzIChtZXJnZWQgUmVhZC1vbmx5IEFQSSwgRGF0YSBHZXR0ZXIgYW5kIFJ1bGVzKS4iCiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgdmFsaWRhdG9yID0gY29tcG9uZW50ICJWYWxpZGF0b3IiIHsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiQ2hlY2tzIGlmIHRoZSBzdHVkZW50IGlzIHF1YWxpZmllZCBmb3IgYW4gZXhhbSBhbmQgdmFsaWRhdGVzIGludGVncml0eSBvZiBkYXRhIHJldHVybmVkIGZyb20gZGF0YWJhc2VzIChtZXJnZWQgdmFsaWRhdG9ycykuIgogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgICAgIAogICAgICAgICAgICAKICAgICAgICAgICAgdGVhY2hlclZpZXdwb2ludCA9IGNvbnRhaW5lciAiVGVhY2hlciBWaWV3cG9pbnQiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJDb250cm9scyBjcmVhdGluZywgZWRpdGluZyBhbmQgZGVsZXRpbmcgb2YgdGhlIGV4YW0gdGVybXMiCgogICAgICAgICAgICAgICAgZ3JvdXAgIkV4YW0gVGVybSBIYW5kbGVyIiB7CiAgICAgICAgICAgICAgICAgICAgc3ViamVjdEZpbHRlciA9IGNvbXBvbmVudCAiU3ViamVjdCBGaWx0ZXIiIHsKICAgICAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkZpbHRlcnMgc3ViamVjdHMgZm9yIHRoZSBnaXZlbiB0ZWFjaGVyIgogICAgICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAgICAgcm9vbUZpbHRlciA9IGNvbXBvbmVudCAiUm9vbSBGaWx0ZXIiIHsKICAgICAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkZpbHRlcnMgZnJlZSByb29tcyB3aXRoIGdpdmVuIHBhcmFtZXRlcnMgZnJvbSB0aGUgZGF0YWJhc2UgZm9yIHRoZSBnaXZlbiB0ZXJtIgogICAgICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAgICAgZXhhbXNFZGl0b3JBUEkgPSBjb21wb25lbnQgIkV4YW1zIEVkaXRvciBBUEkiIHsKICAgICAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkNvbW11bmljYXRlcyB3aXRoIHRoZSBkYXNoYm9hcmQgdG8gcHJlc2VudCB0aGUgZXhhbSBlZGl0b3IgdG8gdGhlIHRlYWNoZXIiCiAgICAgICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICAgICBleGFtc0VkaXRvciA9IGNvbXBvbmVudCAiRXhhbSBUZXJtIEVkaXRvciIgewogICAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiQ3JlYXRlcyBleGFtIHRlcm0gd2l0aCBwYXJhbWV0ZXJzIGdpdmVuIGJ5IHRoZSB0ZWFjaGVyLCByZXN0cmljdGVkIGJ5IGRhdGEgcmVhZCBmcm9tIHRoZSBkYXRhYmFzZXMiCiAgICAgICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICAgICBzaXNEYXRhR2V0dGVyID0gY29tcG9uZW50ICJTSVMgRGF0YSBHZXR0ZXIiIHsKICAgICAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkhhbmRsZXMgcmVxdWVzdCBmb3IgU0lTIGRhdGFiYXNlIGludGVyZmFjZSIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgZ3JvdXAgIkF3YXJkaW5nIEdyYWRlcyBIYW5kbGVyIiB7CiAgICAgICAgICAgICAgICAgICAgZXhhbXNGaWx0ZXIgPSBjb21wb25lbnQgIkV4YW1zIEZpbHRlciIgewogICAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiRmlsdGVycyBkYXRhIGZyb20gdGhlIGV4YW0gZGF0YWJhc2UiCiAgICAgICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICAgICBncmFkZXNFZGl0b3JBUEkgPSBjb21wb25lbnQgIkdyYWRlcyBFZGl0b3IgQVBJIiB7CiAgICAgICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJDb21tdW5pY2F0ZXMgd2l0aCB0aGUgZGFzaGJvYXJkIHRvIHByZXNlbnQgdGhlIGdyYWRlcyBlZGl0b3IgdG8gdGhlIHRlYWNoZXIiCiAgICAgICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICAgICBncmFkZXNFZGl0b3IgPSBjb21wb25lbnQgIkdyYWRlIEVkaXRvciIgewogICAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiQWxsb3dzIGNyZWF0aW5nLCBlZGl0aW5nIGFuZCBkZWxldGluZyBncmFkZXMiCiAgICAgICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICAgICBkYkRhdGFMb2FkZXIgPSBjb21wb25lbnQgIkRhdGFiYXNlIERhdGEgTG9hZGVyIiB7CiAgICAgICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJMb2FkcyBkYXRhIGZyb20gZGF0YWJhc2VzIgogICAgICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAgICAgZXhhbVJlcG9zaXRvcnkgPSBjb21wb25lbnQgIkV4YW0gcmVwb3NpdG9yeSJ7CiAgICAgICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJBYnN0cmFjdGlvbiBvdmVyIGV4YW1zIGRhdGFiYXNlIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgIAogICAgICAgIAogICAgICAgICAgICBzdHVkZW50RGFzaGJvYXJkID0gY29udGFpbmVyICJTdHVkZW50IERhc2hib2FyZCIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkhhbmRsZXMgVUkgdG8gc3R1ZGVudHMgYW5kIHRlYWNoZXJzIgogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICB2Q29tcG9uZW50cyA9IGNvbXBvbmVudCAiVmlldyBDb21wb25lbnRzIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlJlbmRlcnMgdGhlIFVJIGFuZCB1cGRhdGVzIHdoZW4gZGF0YSBjaGFuZ2VzIgogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICBkc2JDb250cm9sbGVyID0gY29tcG9uZW50ICJEYXNoYm9hcmQgQ29udHJvbGxlciIgewogICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJIYW5kbGVzIFVJIGV2ZW50cyIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgcGdSb3V0ZXIgPSBjb21wb25lbnQgIlBhZ2UgUm91dGVyIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkNvbnRyb2xzIG5hdmlnYXRpb24gYmV0d2VlbiBwYWdlcyIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgQVBJU2VydmljZSA9IGNvbXBvbmVudCAiQVBJIFNlcnZpY2UiIHsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiSGFuZGxlcyBjb21tdW5pY2F0aW9uIHdpdGggYmFja2VuZCIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIG50ZlVJSGFuZGxlciA9IGNvbXBvbmVudCAiTm90aWZpY2F0aW9uIFVJIEhhbmRsZXIiIHsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiSGFuZGxlcyByZWFsLXRpbWUgbm90aWZpY2F0aW9uIHVwZGF0ZXMiCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIGF1dGhIYW5kbGVyID0gY29tcG9uZW50ICJBdXRoZW50aWNhdGlvbiBIYW5kbGVyIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkhhbmRsZXMgbG9naW4gc3RhdGUiCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAgICAgCiAgICAgICAgICAgIAogICAgICAgICAgICB0ZWFjaGVyRGFzaGJvYXJkID0gY29udGFpbmVyICJUZWFjaGVyIERhc2hib2FyZCIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkhhbmRsZXMgVUkgdG8gc3R1ZGVudHMgYW5kIHRlYWNoZXJzIgogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICB2Q29tcG9uZW50cyA9IGNvbXBvbmVudCAiVmlldyBDb21wb25lbnRzIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlJlbmRlcnMgdGhlIFVJIGFuZCB1cGRhdGVzIHdoZW4gZGF0YSBjaGFuZ2VzIgogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICBkc2JDb250cm9sbGVyID0gY29tcG9uZW50ICJEYXNoYm9hcmQgQ29udHJvbGxlciIgewogICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJIYW5kbGVzIFVJIGV2ZW50cyIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgcGdSb3V0ZXIgPSBjb21wb25lbnQgIlBhZ2UgUm91dGVyIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkNvbnRyb2xzIG5hdmlnYXRpb24gYmV0d2VlbiBwYWdlcyIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgQVBJU2VydmljZSA9IGNvbXBvbmVudCAiQVBJIFNlcnZpY2UiIHsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiSGFuZGxlcyBjb21tdW5pY2F0aW9uIHdpdGggYmFja2VuZCIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIG50ZlVJSGFuZGxlciA9IGNvbXBvbmVudCAiTm90aWZpY2F0aW9uIFVJIEhhbmRsZXIiIHsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiSGFuZGxlcyByZWFsLXRpbWUgbm90aWZpY2F0aW9uIHVwZGF0ZXMiCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIGF1dGhIYW5kbGVyID0gY29tcG9uZW50ICJBdXRoZW50aWNhdGlvbiBIYW5kbGVyIiB7CiAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIkhhbmRsZXMgbG9naW4gc3RhdGUiCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAgICAgCiAgICAgICAgICAgIAogICAgICAgICAgICBudGZIYW5kbGVyID0gY29udGFpbmVyICJOb3RpZmljYXRpb24gSGFuZGxlciJ7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiSGFuZGxlcyBtZXNzZWdlcyBhYm91dCBzdWNjZXNzL2ZhaWx1cmUgb2YgdXNlciBvcGVyYXRpb25zIgoKICAgICAgICAgICAgICAgIG50Zk1ha2VyID0gY29tcG9uZW50ICJOb3RpZmljYXRpb24gTWFrZXIiewogICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJDcmVhdGVzIHByb3BlciBub3RpZmljYXRpb25zIGJhc2VkIG9uIGhhbmRsZXIgZXZlbnRzIgogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICB1c3JWYWxpZGF0b3IgPSBjb21wb25lbnQgIlVzZXIgVmFsaWRhdG9yInsKICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiVmFsaWRhdGVzIHRoZSBleGlzdGVuY2Ugb2YgdXNlcnMiCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgIGVtYWlsZXIgPSBjb21wb25lbnQgIkVtYWlsZXIiewogICAgICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJGb3JtYXRzIGFuZCBzZW5kcyBlbWFpbHMiCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAKICAgICAgICB9CiAgICAgICAgCiAgICAgICAgIwogICAgICAgICMgTDEKICAgICAgICAjCiAgICAgICAgc3R1ZGVudCAtPiBzcyAiUmVnaXN0ZXJzIGZvciBleGFtcywgdmlld3MgcmVzdWx0cyIKICAgICAgICB0ZWFjaGVyIC0+IHNzICJTY2hlZHVsZXMgZXhhbXMsIGF3YXJkcyBncmFkZXMiCiAgICAgICAgbWFuYWdlciAtPiBzcyAiTW9uaXRvcnMgZXhhbSBzY2hlZHVsZXMiCiAgICAgICAgc2lzIC0+IHNzICJBdXRlbnRpY2F0ZXMgdXNlcnMsIHNlbmRzIGRhdGEgZnJvbSBzaGFyZWQgU0lTIGRhdGFiYXNlcy4uLiIKICAgICAgICBzcyAtPiBzaXMgIlNlbmRzIHJlcXVlc3RzIgogICAgICAgIAogICAgICAgICMKICAgICAgICAjIEwzCiAgICAgICAgIwoKICAgICAgICAjIEwzIC0gc3R1ZGVudCBkYXNoYm9hcmQgCiAgICAgICAgc3R1ZGVudCAtPiBzcy5zdHVkZW50RGFzaGJvYXJkLmF1dGhIYW5kbGVyICJWYWxpZGF0ZXMgYXMgYSBzdHVkZW50IgogICAgICAgIHNzLnN0dWRlbnREYXNoYm9hcmQuYXV0aEhhbmRsZXIgLT4gc3Muc3R1ZGVudERhc2hib2FyZC5kc2JDb250cm9sbGVyICJVc2VyIGludGVyYWN0cyB3aXRoIFVJIgogICAgICAgIHNzLnN0dWRlbnREYXNoYm9hcmQuZHNiQ29udHJvbGxlciAtPiBzcy5zdHVkZW50RGFzaGJvYXJkLnZDb21wb25lbnRzICJVcGRhdGVzIFVJIgogICAgICAgIHNzLnN0dWRlbnREYXNoYm9hcmQuQVBJU2VydmljZSAtPiBzcy5zdHVkZW50RGFzaGJvYXJkLmRzYkNvbnRyb2xsZXIgIlVwZGF0ZXMgcmVzdWx0cyBiYXNlZCBvbiBkYXRhIGFuZCByZXNwb25kcyB0byByZXF1ZXN0cyIKICAgICAgICBzcy5zdHVkZW50RGFzaGJvYXJkLnBnUm91dGVyIC0+IHNzLnN0dWRlbnREYXNoYm9hcmQuZHNiQ29udHJvbGxlciAiU2hvdyBjb3JyZWN0IHBhZ2UgYW5kIGFjY2VwdCBwYWdlIHJlcXVlc3RzIgogICAgICAgIHNzLm50ZkhhbmRsZXIgLT4gc3Muc3R1ZGVudERhc2hib2FyZC5udGZVSUhhbmRsZXIgIlNlbmRzIG5vdGlmaWNhdGlvbiBkYXRhIGluIHJlYWwtdGltZSIKICAgICAgICBzcy5zdHVkZW50RGFzaGJvYXJkLm50ZlVJSGFuZGxlciAtPiBzcy5zdHVkZW50RGFzaGJvYXJkLmRzYkNvbnRyb2xsZXIgIkZvciBnaXZpbmcgbm90aWZpY2F0aW9ucyIKICAgICAgICBzcy5zdHVkZW50RGFzaGJvYXJkLkFQSVNlcnZpY2UgLT4gc3Muc3R1ZGVudFZpZXdwb2ludCAiUmVxdWVzdHMgYW5kIHJlY2VpdmVWaWV3cG9pbnQKICAgICAgICAKICAgICAgICAjIEwzIC0gdGVhY2hlciBkYXNoYm9hcmQgCiAgICAgICAgdGVhY2hlciAtPiBzcy50ZWFjaGVyRGFzaGJvYXJkLmF1dGhIYW5kbGVyICJWYWxpZGF0ZXMgYXMgYSB0ZWFjaGVyIgogICAgICAgIHNzLnRlYWNoZXJEYXNoYm9hcmQuYXV0aEhhbmRsZXIgLT4gc3MudGVhY2hlckRhc2hib2FyZC5kc2JDb250cm9sbGVyICJVc2VyIGludGVyYWN0cyB3aXRoIFVJIgogICAgICAgIHNzLnRlYWNoZXJEYXNoYm9hcmQuZHNiQ29udHJvbGxlciAtPiBzcy50ZWFjaGVyRGFzaGJvYXJkLnZDb21wb25lbnRzICJVcGRhdGVzIFVJIgogICAgICAgIHNzLnRlYWNoZXJEYXNoYm9hcmQuQVBJU2VydmljZSAtPiBzcy50ZWFjaGVyRGFzaGJvYXJkLmRzYkNvbnRyb2xsZXIgIlVwZGF0ZXMgcmVzdWx0cyBiYXNlZCBvbiBkYXRhIGFuZCByZXNwb25kcyB0byByZXF1ZXN0cyIKICAgICAgICBzcy50ZWFjaGVyRGFzaGJvYXJkLnBnUm91dGVyIC0+IHNzLnRlYWNoZXJEYXNoYm9hcmQuZHNiQ29udHJvbGxlciAiU2hvdyBjb3JyZWN0IHBhZ2UgYW5kIGFjY2VwdCBwYWdlIHJlcXVlc3RzIgogICAgICAgIHNzLm50ZkhhbmRsZXIgLT4gc3MudGVhY2hlckRhc2hib2FyZC5udGZVSUhhbmRsZXIgIlNlbmRzIG5vdGlmaWNhdGlvbiBkYXRhIGluIHJlYWwtdGltZSIKICAgICAgICBzcy50ZWFjaGVyRGFzaGJvYXJkLm50ZlVJSGFuZGxlciAtPiBzcy50ZWFjaGVyRGFzaGJvYXJkLmRzYkNvbnRyb2xsZXIgIkZvciBnaXZpbmcgbm90aWZpY2F0aW9ucyIKICAgICAgICBzcy50ZWFjaGVyRGFzaGJvYXJkLkFQSVNlcnZpY2UgLT4gc3MudGVhY2hlclZpZXdwb2ludCAiUmVxdWVzdHMgYW5kIHJlY2VpdmVWaWV3cG9pbnQKICAgICAgICAKICAgICAgICAjIEwzIC0gbnRmSGFuZGxlcgogICAgICAgIHNzLnRlYWNoZXJWaWV3cG9pbnQgLT4gc3MubnRmSGFuZGxlci5udGZNYWtlciAiQ2FsbHMgZm9yIHNlbmRpbmcgbm90aWZpY2F0aW9ucyB0byB1c2VycyIKICAgICAgICBzcy5zdHVkZW50Vmlld3BvaW50IC0+IHNzLm50ZkhhbmRsZXIubnRmTWFrZXIgIkNhbGxzIGZvciBzZW5kaW5nIG5vdGlmaWNhdGlvbnMgdG8gdXNlcnMiCiAgICAgICAgc3MubnRmSGFuZGxlci5udGZNYWtlciAtPiBzcy5udGZIYW5kbGVyLnVzclZhbGlkYXRvciAiVmFsaWRhdGVzIHRoZSBwZW9wbGUgZXhpc3QiCiAgICAgICAgc3MubnRmSGFuZGxlci5udGZNYWtlciAtPiBzcy5zdHVkZW50RGFzaGJvYXJkICJTZW5kcyByZWFsLXRpbWUgbm90aWZpY2F0aW9uIGV2ZW50cyB0byB0aGUgc3R1ZGVudCIKICAgICAgICBzcy5udGZIYW5kbGVyLm50Zk1ha2VyIC0+IHNzLnRlYWNoZXJEYXNoYm9hcmQgIlNlbmRzIHJlYWwtdGltZSBub3RpZmljYXRpb24gZXZlbnRzIHRvIHRoZSB0ZWFjaGVyIgogICAgICAgIHNzLm50ZkhhbmRsZXIudXNyVmFsaWRhdG9yIC0+IHNzLm50ZkhhbmRsZXIuZW1haWxlciAiRm9ybWF0cyBlbWFpbHMiCiAgICAgICAgc3MubnRmSGFuZGxlci5lbWFpbGVyIC0+IGVtYWlsU2VydmljZSAiU2VuZHMgbm90aWZpY2F0aW9ucyBieSBtYWlsIiAgCiAgICAgICAgCiAgICAgICAgI0wzIC0gc3R1ZGVudCB2aWV3cG9pbnQKICAgICAgICBzcy5zdHVkZW50RGFzaGJvYXJkIC0+IHNzLnN0dWRlbnRWaWV3cG9pbnQuc2lnblVwQ29udHJvbGxlciAiIgogICAgICAgIHNzLnN0dWRlbnRWaWV3cG9pbnQuc2lnblVwQ29udHJvbGxlciAtPiBzcy5zdHVkZW50Vmlld3BvaW50LnNpZ25VcE1hbmFnZXIgIlNlbmRzIHN0dWRlbnQncyBzaWduLXVwIG9yIGV4YW0tdGVybSByZXF1ZXN0IgogICAgICAgIHNzLnN0dWRlbnRWaWV3cG9pbnQuc2lnblVwTWFuYWdlciAtPiBzcy5zdHVkZW50Vmlld3BvaW50LmV4YW1UZXJtU2VydmljZSAiUmVxdWVzdHMgZXhhbSB0ZXJtcyIKICAgICAgICBzcy5zdHVkZW50Vmlld3BvaW50LnNpZ25VcE1hbmFnZXIgLT4gc3Muc3R1ZGVudFZpZXdwb2ludC5zdHVkZW50U2VydmljZSAiUmVxdWVzdHMgc3R1ZGVudCBwcm9maWxlIC8gc2lnbi11cCBpbmZvIgogICAgICAgIHNzLnN0dWRlbnRWaWV3cG9pbnQuc2lnblVwTWFuYWdlciAtPiBzcy5zdHVkZW50Vmlld3BvaW50LnZhbGlkYXRvciAiUmVxdWVzdHMgZWxpZ2liaWxpdHkgdmFsaWRhdGlvbiIKICAgICAgICBzcy5zdHVkZW50Vmlld3BvaW50LmV4YW1UZXJtU2VydmljZSAtPiBzcy5zdHVkZW50Vmlld3BvaW50LnJvb21GaWx0ZXIgIkZpbHRlcnMgZXhhbSB0ZXJtcyBieSBydWxlcyIKICAgICAgICBzcy5zdHVkZW50Vmlld3BvaW50LmV4YW1UZXJtU2VydmljZSAtPiBzcy5leGFtRGIgIlJlYWRzIGFuZCB1cGRhdGVzIGV4YW0gdGVybSBkYXRhIgogICAgICAgIHNzLnN0dWRlbnRWaWV3cG9pbnQuc3R1ZGVudFNlcnZpY2UgLT4gc2lzLmRiSW50ZXJmYWNlICJSZWFkcyBhbmQgdXBkYXRlcyBzdHVkZW50IHNpZ24tdXAgcmVjb3JkcyIKICAgICAgICBzcy5zdHVkZW50Vmlld3BvaW50LmV4YW1UZXJtU2VydmljZSAtPiBzcy5zdHVkZW50Vmlld3BvaW50LnZhbGlkYXRvciAiVmFsaWRpdHkgY2hlY2sgZm9yIGV4YW0gdGVybSBkYXRhIgogICAgICAgIHNzLnN0dWRlbnRWaWV3cG9pbnQuc2lnblVwQ29udHJvbGxlciAtPiBzcy5zdHVkZW50Vmlld3BvaW50LmdyYWRlUmVhZGVyICJSZXF1ZXN0cyBncmFkZXMgZm9yIHRoZSBhdXRoZW50aWNhdGVkIHN0dWRlbnQiCiAgICAgICAgc3Muc3R1ZGVudFZpZXdwb2ludC5ncmFkZVJlYWRlciAtPiBzaXMuZGJJbnRlcmZhY2UgIlJlYWRzIGdyYWRlcyBvZiB0aGUgc3R1ZGVudCIKICAgICAgICBzcy5zdHVkZW50Vmlld3BvaW50LmdyYWRlUmVhZGVyIC0+IHNzLnN0dWRlbnRWaWV3cG9pbnQudmFsaWRhdG9yICJSZXF1ZXN0cyB2YWxpZGF0aW9uIG9mIGRhdGFiYXNlIGRhdGEiCiAgICAgICAgc3Muc3R1ZGVudERhc2hib2FyZCAtPiBzcy5zdHVkZW50Vmlld3BvaW50LnNpZ25VcE1hbmFnZXIgIlJlcXVlc3Qgdmlld3BvaW50LiIKICAgICAgICBzcy5zdHVkZW50Vmlld3BvaW50LnNpZ25VcE1hbmFnZXIgLT4gc3MubnRmSGFuZGxlciAiU2VuZCB0byBudGZIYW5kbGVyIGFib3V0IGNoYW5nZSIKICAgIAogICAgICAgICMgTDMgLSB0ZWFjaGVyIHZpZXdwb2ludAogICAgICAgICMgRXhhbSB0ZXJtIGNyZWF0aW9uCiAgICAgICAgc3MudGVhY2hlclZpZXdwb2ludC5zaXNEYXRhR2V0dGVyIC0+IHNpcy5kYkludGVyZmFjZSAiUmVxdWVzdHMgZGF0YSIKICAgICAgICBzcy50ZWFjaGVyVmlld3BvaW50LnNpc0RhdGFHZXR0ZXIgLT4gc3MudGVhY2hlclZpZXdwb2ludC5zdWJqZWN0RmlsdGVyICJTZW5kcyBzdWJqZWN0IGRhdGEiCiAgICAgICAgc3MudGVhY2hlclZpZXdwb2ludC5zaXNEYXRhR2V0dGVyIC0+IHNzLnRlYWNoZXJWaWV3cG9pbnQucm9vbUZpbHRlciAiU2VuZHMgcm9vbSBkYXRhIgogICAgICAgIHNzLnRlYWNoZXJWaWV3cG9pbnQucm9vbUZpbHRlciAtPiBzcy50ZWFjaGVyVmlld3BvaW50LmV4YW1zRWRpdG9yICJHaXZlcyBsaXN0IG9mIGF2YWlsYWJsZSByb29tcyIKICAgICAgICBzcy50ZWFjaGVyVmlld3BvaW50LnN1YmplY3RGaWx0ZXIgLT4gc3MudGVhY2hlclZpZXdwb2ludC5leGFtc0VkaXRvciAiR2l2ZXMgbGlzdCBvZiBzdWJqZWN0cyBvZiB0aGUgdGVhY2hlciIKICAgICAgICBzcy50ZWFjaGVyVmlld3BvaW50LmV4YW1zRWRpdG9yIC0+IHNzLmV4YW1EYiAiU2F2ZXMgY2hhbmdlcyIKICAgICAgICBzcy50ZWFjaGVyVmlld3BvaW50LmV4YW1zRWRpdG9yIC0+IHNzLm50ZkhhbmRsZXIgIkFsZXJ0cyBhYm91dCBjaGFuZ2VzIgogICAgICAgIHNzLnRlYWNoZXJEYXNoYm9hcmQgLT4gc3MudGVhY2hlclZpZXdwb2ludC5leGFtc0VkaXRvckFQSSAiVXNlcyBleGFtcyBlZGl0b3IgQVBJIgogICAgICAgIHNzLnRlYWNoZXJWaWV3cG9pbnQuZXhhbXNFZGl0b3IgLT4gc3MudGVhY2hlclZpZXdwb2ludC5leGFtc0VkaXRvckFQSSAiU2V0cyB2YWx1ZXMgdG8gc2hvdyIKICAgICAgICBzcy50ZWFjaGVyVmlld3BvaW50LmV4YW1zRWRpdG9yQVBJIC0+IHNzLnRlYWNoZXJWaWV3cG9pbnQuZXhhbXNFZGl0b3IgIkdpdmVzIGFjdHVhbCB2YWx1ZXMgZnJvbSB1c2VyIgoKICAgICAgICAjQXdhcmRpbmcgZ3JhZGUKICAgICAgICBzcy50ZWFjaGVyRGFzaGJvYXJkIC0+IHNzLnRlYWNoZXJWaWV3cG9pbnQuZ3JhZGVzRWRpdG9yQVBJICJVc2VzIGdyYWRlcyBlZGl0b3IgQVBJIgogICAgICAgIHNzLnRlYWNoZXJWaWV3cG9pbnQuZ3JhZGVzRWRpdG9yQXBpIC0+IHNpcy5kYkludGVyZmFjZSAiUmVxdWVzdHMgdGhlIGRhdGEgZnJvbSBzaXMgZGF0YWJhc2UuIgogICAgICAgIHNzLnRlYWNoZXJWaWV3cG9pbnQuZ3JhZGVzRWRpdG9yQVBJIC0+IHNzLnRlYWNoZXJWaWV3cG9pbnQuZ3JhZGVzRWRpdG9yICJSZXF1ZXN0cyB3cml0aW5nIGdyYWRlLiIKICAgICAgICBzcy50ZWFjaGVyVmlld3BvaW50LmdyYWRlc0VkaXRvckFQSSAtPiBzcy50ZWFjaGVyVmlld3BvaW50LmV4YW1zRmlsdGVyICJBZGRzIGFkZGl0aW9uYWwgZmlsdGVyaW5nIGNvbnN0cmFpbnRzLiIKICAgICAgICBzcy50ZWFjaGVyVmlld3BvaW50LmV4YW1zRmlsdGVyIC0+IHNzLnRlYWNoZXJWaWV3cG9pbnQuZGJEYXRhTG9hZGVyICJSZXF1ZXN0cyB0aGUgZGF0YSBmcm9tIGRhdGFiYXNlcy4iCiAgICAgICAgc3MudGVhY2hlclZpZXdwb2ludC5kYkRhdGFMb2FkZXIgLT4gc2lzLmRiSW50ZXJmYWNlICJHZXRzIGRhdGEgZnJvbSBTSVMgZGF0YWJhc2VzLiIKICAgICAgICBzcy50ZWFjaGVyVmlld3BvaW50LmRiRGF0YUxvYWRlciAtPiBzcy50ZWFjaGVyVmlld3BvaW50LmV4YW1SZXBvc2l0b3J5ICJSZXF1ZXN0cyBkYXRhIGZyb20gaW50ZXJuYWwgZGIuIgogICAgICAgIHNzLnRlYWNoZXJWaWV3cG9pbnQuZXhhbVJlcG9zaXRvcnkgLT4gc3MuZXhhbURiICJHZXRzIGRhdGEgZnJvbSBkYi4iCiAgICAgICAgc3MudGVhY2hlclZpZXdwb2ludC5ncmFkZXNFZGl0b3IgLT4gc2lzLmRiSW50ZXJmYWNlICJTdG9yZXMgZ3JhZGVzIHRvIHRoZSBkYXRhYmFzZSIKICAgICAgICBzcy50ZWFjaGVyVmlld3BvaW50LmdyYWRlc0VkaXRvciAtPiBzcy5udGZIYW5kbGVyICJBbGVydHMgYWJvdXQgY2hhbmdlcyIKICAgIH0KCiAgICB2aWV3cyB7CiAgICAgICAgc3lzdGVtQ29udGV4dCBzcyB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvbGF5b3V0IHRiCiAgICAgICAgICAgIHRpdGxlICJDMSDigJMgU3lzdGVtIENvbnRleHQ6IEV4YW1zIFNvZnR3YXJlIFN5c3RlbSIKICAgICAgICB9CiAgICAgICAgCiAgICAgICAgY29udGFpbmVyIHNzIHsKICAgICAgICAgICAgaW5jbHVkZSBzdHVkZW50CiAgICAgICAgICAgIGluY2x1ZGUgdGVhY2hlcgogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgICAgICB0aXRsZSAiQzIg4oCTIFNJUyBFeGFtcyBDb250YWluZXJzIgogICAgICAgIH0KICAgICAgICAKICAgICAgICBjb21wb25lbnQgc3Muc3R1ZGVudERhc2hib2FyZCB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBpbmNsdWRlIHN0dWRlbnQKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgICAgICB0aXRsZSAiQzMg4oCTIFN0dWRlbnQgRGFzaGJvYXJkIENvbXBvbmVudHMiCiAgICAgICAgICAgIAogICAgICAgIH0KICAgICAgICAKICAgICAgICBjb21wb25lbnQgc3MudGVhY2hlckRhc2hib2FyZCB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBpbmNsdWRlIHRlYWNoZXIKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgICAgICB0aXRsZSAiQzMg4oCTIFRlYWNoZXIgRGFzaGJvYXJkIENvbXBvbmVudHMiCiAgICAgICAgICAgIAogICAgICAgIH0KICAgICAgICAKICAgICAgICBjb21wb25lbnQgc3MubnRmSGFuZGxlciB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBpbmNsdWRlIGVtYWlsU2VydmljZQogICAgICAgICAgICBhdXRvbGF5b3V0IGxyCiAgICAgICAgICAgIHRpdGxlICJDMyDigJMgTm90aWZpY2F0aW9uIEhhbmRsZXIgQ29tcG9uZW50cyIKICAgICAgICAgICAgCiAgICAgICAgfQogICAgICAgIAogICAgICAgIGNvbXBvbmVudCBzcy5zdHVkZW50Vmlld3BvaW50IHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgbHIKICAgICAgICAgICAgdGl0bGUgIkMzIOKAkyBTdHVkZW50IFZpZXdwb2ludCBDb21wb25lbnRzIgogICAgICAgIH0KICAgICAgICAKICAgICAgICBjb21wb25lbnQgc3MudGVhY2hlclZpZXdwb2ludCB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBpbmNsdWRlIHRlYWNoZXIKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgICAgICB0aXRsZSAiQzMg4oCTIFRlYWNoZXIgVmlld3BvaW50IENvbXBvbmVudHMiCiAgICAgICAgfQoKICAgICAgICBzdHlsZXMgewogICAgICAgICAgICBlbGVtZW50ICJQZXJzb24iIHsKICAgICAgICAgICAgICAgIHNoYXBlIFBlcnNvbgogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMDg0MjdCCiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KICAgICAgICAgICAgCiAgICAgICAgICAgIGVsZW1lbnQgIlNvZnR3YXJlIFN5c3RlbSIgewogICAgICAgICAgICAgICAgc2hhcGUgUm91bmRlZEJveAogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMTE2OEJECiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGVsZW1lbnQgIkRhdGFiYXNlIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBDeWxpbmRlcgogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICB0aGVtZSBkZWZhdWx0CiAgICB9Cgp9Cgo="
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "28",
+      "elements" : [ {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "29",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "30",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "31",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "32",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "33",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "34",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "42",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-001",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "51"
+      }, {
+        "id" : "53"
+      }, {
+        "id" : "54"
+      }, {
+        "id" : "55"
+      }, {
+        "id" : "56"
+      }, {
+        "id" : "57"
+      }, {
+        "id" : "59"
+      }, {
+        "id" : "60"
+      }, {
+        "id" : "76"
+      } ],
+      "title" : "C3 – Student Dashboard Components"
+    }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "35",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "36",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "37",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "38",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "39",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "40",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "41",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "42",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-002",
+      "order" : 4,
+      "relationships" : [ {
+        "id" : "62"
+      }, {
+        "id" : "64"
+      }, {
+        "id" : "65"
+      }, {
+        "id" : "66"
+      }, {
+        "id" : "67"
+      }, {
+        "id" : "68"
+      }, {
+        "id" : "70"
+      }, {
+        "id" : "71"
+      }, {
+        "id" : "74"
+      } ],
+      "title" : "C3 – Teacher Dashboard Components"
+    }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "42",
+      "elements" : [ {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "28",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "35",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "43",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "44",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "45",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-003",
+      "order" : 5,
+      "relationships" : [ {
+        "id" : "61"
+      }, {
+        "id" : "72"
+      }, {
+        "id" : "73"
+      }, {
+        "id" : "75"
+      }, {
+        "id" : "77"
+      }, {
+        "id" : "78"
+      }, {
+        "id" : "79"
+      }, {
+        "id" : "80"
+      }, {
+        "id" : "81"
+      } ],
+      "title" : "C3 – Notification Handler Components"
+    }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "9",
+      "elements" : [ {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "28",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "42",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-004",
+      "order" : 6,
+      "relationships" : [ {
+        "id" : "100"
+      }, {
+        "id" : "101"
+      }, {
+        "id" : "102"
+      }, {
+        "id" : "103"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "84"
+      }, {
+        "id" : "85"
+      }, {
+        "id" : "86"
+      }, {
+        "id" : "87"
+      }, {
+        "id" : "88"
+      }, {
+        "id" : "89"
+      }, {
+        "id" : "90"
+      }, {
+        "id" : "93"
+      }, {
+        "id" : "97"
+      }, {
+        "id" : "98"
+      } ],
+      "title" : "C3 – Student Viewpoint Components"
+    }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "17",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "25",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "27",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "35",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "42",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-005",
+      "order" : 7,
+      "relationships" : [ {
+        "id" : "105"
+      }, {
+        "id" : "108"
+      }, {
+        "id" : "109"
+      }, {
+        "id" : "110"
+      }, {
+        "id" : "111"
+      }, {
+        "id" : "112"
+      }, {
+        "id" : "114"
+      }, {
+        "id" : "115"
+      }, {
+        "id" : "116"
+      }, {
+        "id" : "117"
+      }, {
+        "id" : "118"
+      }, {
+        "id" : "120"
+      }, {
+        "id" : "121"
+      }, {
+        "id" : "122"
+      }, {
+        "id" : "123"
+      }, {
+        "id" : "125"
+      }, {
+        "id" : "126"
+      }, {
+        "id" : "127"
+      }, {
+        "id" : "129"
+      }, {
+        "id" : "130"
+      }, {
+        "id" : "63"
+      }, {
+        "id" : "69"
+      } ],
+      "title" : "C3 – Teacher Viewpoint Components"
+    } ],
+    "configuration" : {
+      "branding" : { },
+      "lastSavedView" : "SystemContext-001",
+      "metadataSymbols" : "SquareBrackets",
+      "styles" : {
+        "elements" : [ {
+          "background" : "#08427b",
+          "color" : "#ffffff",
+          "shape" : "Person",
+          "tag" : "Person"
+        }, {
+          "background" : "#1168bd",
+          "color" : "#ffffff",
+          "shape" : "RoundedBox",
+          "tag" : "Software System"
+        }, {
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        } ]
+      },
+      "terminology" : { },
+      "themes" : [ "https://static.structurizr.com/themes/default/theme.json" ]
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "28",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "35",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "42",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Container-001",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "107"
+      }, {
+        "id" : "113"
+      }, {
+        "id" : "52"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "63"
+      }, {
+        "id" : "69"
+      }, {
+        "id" : "72"
+      }, {
+        "id" : "74"
+      }, {
+        "id" : "76"
+      }, {
+        "id" : "82"
+      }, {
+        "id" : "91"
+      }, {
+        "id" : "95"
+      } ],
+      "softwareSystemId" : "7",
+      "title" : "C2 – SIS Exams Containers"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "dimensions" : {
+        "height" : 2000,
+        "width" : 2275
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 200,
+        "y" : 165
+      }, {
+        "id" : "2",
+        "x" : 900,
+        "y" : 165
+      }, {
+        "id" : "3",
+        "x" : 1600,
+        "y" : 165
+      }, {
+        "id" : "4",
+        "x" : 1625,
+        "y" : 1465
+      }, {
+        "id" : "5",
+        "x" : 875,
+        "y" : 1465
+      }, {
+        "id" : "7",
+        "x" : 875,
+        "y" : 865
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-001",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "46"
+      }, {
+        "id" : "47"
+      }, {
+        "id" : "48"
+      }, {
+        "id" : "49",
+        "vertices" : [ {
+          "x" : 1250,
+          "y" : 1315
+        } ]
+      }, {
+        "id" : "50",
+        "vertices" : [ {
+          "x" : 950,
+          "y" : 1315
+        } ]
+      }, {
+        "id" : "83"
+      } ],
+      "softwareSystemId" : "7",
+      "title" : "C1 – System Context: Exams Software System"
+    } ]
+  }
+}
