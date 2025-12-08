@@ -184,9 +184,21 @@ workspace "Name" "Description" {
                 ntfMaker = component "Notification Maker"{
                     description "Creates proper notifications based on handler events"
                 }
+
+                deliveryRouter = component "Notification Delivery Router" {
+                    description "Routes notifications to proper channels (UI, email, SMS, etc.)"
+                }
                 
                 usrValidator = component "User Validator"{
                     description "Validates the existence of users"
+                }
+                
+                dashBoardQueue = component "Notification Dashboard Queue"{
+                    description "Queues notifications for the dashboards for asynchronous delivery"
+                }
+
+                emailQueue = component "Notification Email Queue"{
+                    description "Queues email notifications for asynchronous delivery"
                 }
                 
                 emailer = component "Emailer"{
@@ -226,7 +238,7 @@ workspace "Name" "Description" {
         ss.examsApi -> ss.teacherViewpoint "Forwards teacher-related requests (e.g., get exam schedule)"
         #
 
-        # L3 - student dashboard 
+        # L3 - student dashboard
         student -> ss.studentDashboard.authHandler "Validates as a student"
         ss.studentDashboard.authHandler -> ss.studentDashboard.dsbController "User interacts with UI"
         ss.studentDashboard.dsbController -> ss.studentDashboard.vComponents "Updates UI"
@@ -236,7 +248,7 @@ workspace "Name" "Description" {
         ss.studentDashboard.APIService -> ss.reverseProxy "Sends API requests"
         ss.reverseProxy -> ss.studentViewpoint "Redirects"
         
-        # L3 - teacher dashboard 
+        # L3 - teacher dashboard
         teacher -> ss.teacherDashboard.authHandler "Validates as a teacher"
         ss.teacherDashboard.authHandler -> ss.teacherDashboard.dsbController "User interacts with UI"
         ss.teacherDashboard.dsbController -> ss.teacherDashboard.vComponents "Updates UI"
@@ -250,10 +262,13 @@ workspace "Name" "Description" {
         ss.teacherViewpoint -> ss.ntfHandler.ntfMaker "Calls for sending notifications to users"
         ss.studentViewpoint -> ss.ntfHandler.ntfMaker "Calls for sending notifications to users"
         ss.ntfHandler.ntfMaker -> ss.ntfHandler.usrValidator "Validates the people exist"
-        ss.ntfHandler.ntfMaker -> ss.studentDashboard "Sends real-time notification events to the student"
-        ss.ntfHandler.ntfMaker -> ss.teacherDashboard "Sends real-time notification events to the teacher"
-        ss.ntfHandler.usrValidator -> ss.ntfHandler.emailer "Formats emails"
-        ss.ntfHandler.emailer -> emailService "Sends notifications by mail"  
+        ss.ntfHandler.ntfMaker -> ss.ntfHandler.deliveryRouter "Sends created notification for delivery"
+        ss.ntfHandler.deliveryRouter -> ss.ntfHandler.dashBoardQueue "Sends notifications to dashboard queue for async delivery"
+        ss.ntfHandler.deliveryRouter -> ss.ntfHandler.emailQueue "Sends email notifications to email queue for async delivery"
+        ss.ntfHandler.dashBoardQueue -> ss.studentDashboard "Sends real-time notification events to the student"
+        ss.ntfHandler.dashBoardQueue -> ss.teacherDashboard "Sends real-time notification events to the teacher"
+        ss.ntfHandler.emailQueue -> ss.ntfHandler.emailer "Sends email notifications for async delivery"
+        ss.ntfHandler.emailer -> emailService "Sends notifications by mail"
         
         #L3 - student viewpoint
         ss.studentViewpoint.signUpController -> ss.studentViewpoint.signUpManager "Sends student's sign-up or exam-term request"

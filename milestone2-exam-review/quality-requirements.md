@@ -1,3 +1,5 @@
+# RUNTIME
+
 ## Exam DB For Students (Runtime, Availibility)
 - what: Student Viewpoint tries to access ExamDB (normal operation) during peaks and this operation needs to succeed within 2 seconds.
 - how: Student Viewpoint --- (unable to read ExamDB) ---> ExamDB --- (mask & reload, log) ---> 5s downtime
@@ -42,6 +44,18 @@ idea. Let's move this responsibility to the *Reverse Proxy*.
 - how: during high demand periods ---> system scales up resources, during low demand periods ---> system scales down resources
 - solution: The current model separates Teacher and Student handling, allowing for horizontal scaling. These handlers themselves can be scaled
 vertically if needed. For this scaling, *an extra container (e.g. Kubernetes) is required*.
+
+## Notifications queue (Runtime, Performance)
+- what: When a student or teacher performs an action that triggers a notification, the system must deliver UI notifications quickly without blocking other operations, even during high-load periods.
+- how: User ---> (action triggers notification) ---> Notification Handler ---> (enqueue) ---> Notification Queue ---> (async delivery) ---> Dashboard --> notification visible within 1s
+- solution: Separate notification creation (ntfMaker) from notification delivery by introducing a notification queue. This removes blocking the nftMaker and increases throughput.
+
+# DESIGN
+
+## New ways of notifying (Design, Modifiability)
+- what: the system must be designed to easily accommodate new notification methods (e.g., SMS, push notifications) in the future.
+- how: Notification Maker ---> (new notification method added) ---> Notification Handler ---> (new delivery method integrated) ---> 1 week development time
+- solution: Implement a notification delivery router that can direct notifications from the ntfMaker to all the supported notification methods. New methods can be added by implementing a new delivery module and registering it with the router.
 
 ## Interoperability with the rest of the SIS (Design, Interoperability)
 - what: the exam system must be able to communicate with the rest of the system. Other parts of the system must be able to easily access the 
