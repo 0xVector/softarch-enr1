@@ -226,7 +226,6 @@ workspace "Name" "Description" {
         #
         # L1
         #
-        sis -> ss.examsApi "Uses exam services via"
         student -> ss "Registers for exams, views results"
         teacher -> ss "Schedules exams, awards grades"
         manager -> ss "Monitors exam schedules"
@@ -235,6 +234,8 @@ workspace "Name" "Description" {
         
         #
         # L3
+        # L1
+        sis -> ss.reverseProxy "Uses exam services via"
         #
 
         # L3 - Exams API
@@ -242,6 +243,7 @@ workspace "Name" "Description" {
         ss.examsApi -> ss.teacherViewpoint "Forwards teacher-related requests (e.g., get exam schedule)"
         #
 
+        ss.reverseProxy -> ss.examsApi "Forwards SIS requests"
         # L3 - student dashboard
         student -> ss.studentDashboard.authHandler "Validates as a student"
         ss.studentDashboard.authHandler -> ss.studentDashboard.dsbController "User interacts with UI"
