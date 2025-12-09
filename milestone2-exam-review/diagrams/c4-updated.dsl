@@ -104,6 +104,10 @@ workspace "Name" "Description" {
                         description "Allows creating, editing and deleting grades"
                     }
 
+                    gradeSuggestionPluginManager = component "Grader Plugin Manager" {
+                        description "Manages plugins that automatically suggest grades based on test answers"
+                    }
+
                     dbDataLoader = component "Database Data Loader" {
                         description "Loads data from databases"
                     }
@@ -307,6 +311,7 @@ workspace "Name" "Description" {
         ss.teacherViewpoint.examRepository -> ss.examDb "Gets data from db."
         ss.teacherViewpoint.gradesEditor -> sis.dbInterface "Stores grades to the database"
         ss.teacherViewpoint.gradesEditor -> ss.ntfHandler "Alerts about changes"
+        ss.teacherViewpoint.gradesEditor -> ss.teacherViewpoint.gradeSuggestionPluginManager "Gets grade suggestions from"
         ss.teacherViewpoint.dbHealthMonitor -> ss.examDb "Checks heartbeat"
 
         deploymentEnvironment "Production" {

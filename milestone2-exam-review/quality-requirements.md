@@ -50,6 +50,11 @@ vertically if needed. For this scaling, *an extra container (e.g. Kubernetes) is
 - how: User ---> (action triggers notification) ---> Notification Handler ---> (enqueue) ---> Notification Queue ---> (async delivery) ---> Dashboard --> notification visible within 1s
 - solution: Separate notification creation (ntfMaker) from notification delivery by introducing a notification queue. This removes blocking the nftMaker and increases throughput.
 
+## Grade Tampering Prevention (Runtime, Security)
+- what: A teacher (or someone with teacher credentials) attempts to maliciously assign failing grades to all students in bulk, or modify grades outside the normal grading period.
+- how: Teacher ---> (bulk grade modification request) ---> Grade Editor ---> (detect anomaly, block & log) ---> deny bulk operation, require confirmation
+- solution: Implement rate limiting and anomaly detection in the Grade Editor component. Bulk grade changes require additional confirmation steps. Grade modifications outside designated grading periods require further approval. All grade changes are logged with timestamps for audit. *No architectural change needed*.
+
 # DESIGN
 
 ## New ways of notifying (Design, Modifiability)
@@ -58,10 +63,14 @@ vertically if needed. For this scaling, *an extra container (e.g. Kubernetes) is
 - solution: Implement a notification delivery router that can direct notifications from the ntfMaker to all the supported notification methods. New methods can be added by implementing a new delivery module and registering it with the router.
 
 ## Interoperability with the rest of the SIS (Design, Interoperability)
-- what: the exam system must be able to communicate with the rest of the system. Other parts of the system must be able to easily access the 
-functionality this system.
+- what: the exam system must be able to communicate with the rest of the system. Other parts of the system must be able to easily access the functionality this system.
 - how: Exam System <---> (data exchange) <---> SIS 
 - solution: Create an *extra container as an interface for the Exam System*.
+
+## Plugin Architecture for Grade Suggestion (Design, Extensibility)
+- what: The grading system must support adding new plugins that automatically suggest grades based on test answers, reducing manual work for teachers.
+- how: Developer ---> (adds new grade suggestion plugin) ---> Validation Plugin Manager ---> (new plugin active) ---> 1 day development time
+- solution: Validation Plugin Manager uses user created plugins based on a defined interface to suggest grades for students based on different criteria. 
 
 **TODO:** iterate on the C4 model to add qualitative requirements
 
