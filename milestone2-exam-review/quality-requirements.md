@@ -47,7 +47,7 @@ vertically if needed. For this scaling, an external system *(e.g. Kubernetes)* c
 ## Notifications queue (Runtime, Performance)
 - what: When a student or teacher performs an action that triggers a notification, the system must deliver UI notifications quickly without blocking other operations, even during high-load (500 req/sec) periods.
 - how: User ---> (action triggers notification) ---> Notification Handler ---> (enqueue) ---> Notification Queue ---> (async delivery) ---> Dashboard --> notification visible within 1s
-- solution: Separate notification creation (ntfMaker) from notification delivery by introducing a notification queue. This removes blocking the nftMaker and increases throughput.
+- solution: Separate notification generation (ntfMaker) from notification delivery by introducing a notification queue. This removes blocking the nftMaker and increases throughput.
 
 ## Grade Tampering Prevention (Runtime, Security)
 - what: A teacher (or someone with teacher credentials) attempts to maliciously assign failing grades to all students in bulk, or modify grades outside the normal grading period.
