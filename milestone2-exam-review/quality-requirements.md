@@ -1,21 +1,21 @@
 # RUNTIME
 
-## Exam DB For Students (Runtime, Availibility)
+## Exam DB For Students (Runtime, Availability)
 - what: Student Viewpoint tries to access ExamDB (normal operation) during peaks and this operation needs to succeed within 2 seconds.
 - how: Student Viewpoint --- (unable to read ExamDB) ---> ExamDB --- (mask & reload, log) ---> 5s downtime
 - solution: Student Viewpoint will check the heartbeat of the ExamDB. In case of failure, it tries to restart 
 the DB.
-- reasoning: Students often want to sign up for exams as soon as possible, free available space is also limited. Hence high availibility is required. Students need to be assured they have signed up successfully.
+- reasoning: Students often want to sign up for exams as soon as possible, free available space is also limited. Hence high availability is required. Students need to be assured they have signed up successfully.
 
-## Exam DB For Teacher (Runtime, Availibility)
+## Exam DB For Teacher (Runtime, Availability)
 - what: Teacher Viewpoint tries to access ExamDB (normal operation) and this operation needs to succeed within an hour.
 - how: Student Viewpoint --- (unable to read ExamDB) ---> ExamDB --- (mask & reload, log) ---> 1h downtime
 - reasoning: Teachers are not pressured to create exams / change them / distribute marks, plus they're more understanding. 1h downtime should be fair.
 - solution: Teacher Viewpoint will check the heartbeat of the ExamDB. Similar handing as with students higher.
 
-> Note: Separation of DB Availibility of teacher / student viewpoint
+> Note: Separation of DB Availability of teacher / student viewpoint
 
-## Exam perioid sign-up (Runtime, Performance)
+## Exam period sign-up (Runtime, Performance)
 - what: Student wants to sign up for an exam and the system must be responsive enough even during high times.
 - how: Student --- (signing up for an exam during exam period (high demand - 500 requests / second)) --> System --> response within 5s
 - solution: Refactor in Rust. JK probably just profile the hotpaths and improve performance. *No architectural change needed*.
