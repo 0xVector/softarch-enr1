@@ -220,6 +220,12 @@ workspace "Name" "Description" {
                 description "Provides a public API for the rest of the SIS to interact with the Exams Module."
                 technology "REST/JSON"
             }
+
+            sisInterop = container "SIS Interoperability Interface" {
+                description "Provides a standardized interface for the rest of the SIS to access exam data and functionality (e.g., fetching grades, checking exam status)."
+                technology "gRPC/REST"
+                tags "Interface"
+            }
         
         }
         
@@ -241,6 +247,13 @@ workspace "Name" "Description" {
         # L3 - Exams API
         ss.examsApi -> ss.studentViewpoint "Forwards student-related requests (e.g., get grades)"
         ss.examsApi -> ss.teacherViewpoint "Forwards teacher-related requests (e.g., get exam schedule)"
+        
+        # SIS Interoperability
+        ss.sisInterop -> sis.dbInterface "Fetches data from SIS databases via"
+        sis -> ss.sisInterop "Requests exam data and triggers exam-related processes via"
+        ss.sisInterop -> ss.studentViewpoint "Forwards requests for student-specific exam data"
+        ss.sisInterop -> ss.teacherViewpoint "Forwards requests for teacher-specific exam data"
+        ss.sisInterop -> ss.examDb "Reads/Writes shared exam data"
         #
 
         ss.reverseProxy -> ss.examsApi "Forwards SIS requests"
@@ -283,17 +296,17 @@ workspace "Name" "Description" {
         ss.studentViewpoint.signUpManager -> ss.studentViewpoint.validator "Requests eligibility validation"
         ss.studentViewpoint.examTermService -> ss.studentViewpoint.roomFilter "Filters exam terms by rules"
         ss.studentViewpoint.examTermService -> ss.examDb "Reads and updates exam term data"
-        ss.studentViewpoint.studentService -> sis.dbInterface "Reads and updates student sign-up records"
+        ss.studentViewpoint.studentService -> ss.sisInterop "Reads and updates student sign-up records"
         ss.studentViewpoint.examTermService -> ss.studentViewpoint.validator "Validity check for exam term data"
         ss.studentViewpoint.signUpController -> ss.studentViewpoint.gradeReader "Requests grades for the authenticated student"
-        ss.studentViewpoint.gradeReader -> sis.dbInterface "Reads grades of the student"
+        ss.studentViewpoint.gradeReader -> ss.sisInterop "Reads grades of the student"
         ss.studentViewpoint.gradeReader -> ss.studentViewpoint.validator "Requests validation of database data"
         ss.studentViewpoint.signUpManager -> ss.ntfHandler "Send to ntfHandler about change"
         ss.studentViewpoint.dbHealthMonitor -> ss.examDb "Checks heartbeat"
     
         # L3 - teacher viewpoint
         # Exam term creation
-        ss.teacherViewpoint.sisDataGetter -> sis.dbInterface "Requests data"
+        ss.teacherViewpoint.sisDataGetter -> ss.sisInterop "Requests data"
         ss.teacherViewpoint.sisDataGetter -> ss.teacherViewpoint.subjectFilter "Sends subject data"
         ss.teacherViewpoint.sisDataGetter -> ss.teacherViewpoint.roomFilter "Sends room data"
         ss.teacherViewpoint.roomFilter -> ss.teacherViewpoint.examsEditor "Gives list of available rooms"
@@ -304,14 +317,14 @@ workspace "Name" "Description" {
         ss.teacherViewpoint.examsEditorAPI -> ss.teacherViewpoint.examsEditor "Gives actual values from user"
 
         #Awarding grade
-        ss.teacherViewpoint.gradesEditorApi -> sis.dbInterface "Requests the data from sis database."
+        ss.teacherViewpoint.gradesEditorApi -> ss.sisInterop "Requests the data from sis database."
         ss.teacherViewpoint.gradesEditorAPI -> ss.teacherViewpoint.gradesEditor "Requests writing grade."
         ss.teacherViewpoint.gradesEditorAPI -> ss.teacherViewpoint.examsFilter "Adds additional filtering constraints."
         ss.teacherViewpoint.examsFilter -> ss.teacherViewpoint.dbDataLoader "Requests the data from databases."
-        ss.teacherViewpoint.dbDataLoader -> sis.dbInterface "Gets data from SIS databases."
+        ss.teacherViewpoint.dbDataLoader -> ss.sisInterop "Gets data from SIS databases."
         ss.teacherViewpoint.dbDataLoader -> ss.teacherViewpoint.examRepository "Requests data from internal db."
         ss.teacherViewpoint.examRepository -> ss.examDb "Gets data from db."
-        ss.teacherViewpoint.gradesEditor -> sis.dbInterface "Stores grades to the database"
+        ss.teacherViewpoint.gradesEditor -> ss.sisInterop "Stores grades to the database"
         ss.teacherViewpoint.gradesEditor -> ss.ntfHandler "Alerts about changes"
         ss.teacherViewpoint.gradesEditor -> ss.teacherViewpoint.gradeSuggestionPluginManager "Gets grade suggestions from"
         ss.teacherViewpoint.dbHealthMonitor -> ss.examDb "Checks heartbeat"
@@ -349,8 +362,8 @@ workspace "Name" "Description" {
             include student
             include teacher
             include *
-            autolayout lr
-            title "C2 – SIS Exams Containers"
+            autolayout tb
+            title "C2 – SIS Exams Containers (with Interoperability Interface)"
         }
         
         component ss.studentDashboard {
